@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Themes\assets\.DS_Store" />
+    <None Include="wwwroot\Themes\bucket\.DS_Store" />
+    <None Include="wwwroot\Themes\bucket\images\.DS_Store" />
+    <None Include="wwwroot\Themes\design\.DS_Store" />
+    <None Include="wwwroot\Themes\design\diagrams\.DS_Store" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CookinRecipe.BusinessLayers\CookinRecipe.BusinessLayers.csproj" />
+    <ProjectReference Include="..\CookinRecipe.DataLayers\CookinRecipe.DataLayers.csproj" />
+    <ProjectReference Include="..\CookinRecipe.DomainModels\CookinRecipe.DomainModels.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+</Project>

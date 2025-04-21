@@ -1,0 +1,126 @@
+﻿@model CookinRecipe.Web.Models.RecipeDetailModel
+@using CookinRecipe.DomainModels
+@using CookinRecipe.BusinessLayers
+@{
+    Layout = null;
+}
+@{
+    @if (Model.Comments.Count == 0)
+    {
+        <p id="dish-no-comments" class="mx-auto text-center text-sm font-medium text-gray-400 mt-4">
+            Chưa có bình luận
+            nào!
+        </p>
+    }
+    else
+    {
+        <div class="w-full px-4 pt-2 pb-2 mt-4">
+            @foreach (var cmt in Model.Comments)
+            {
+                <div class="flex flex-row w-full p-2 border-t pt-4">
+                    <img class="w-20 h-20 mr-2 object-cover rounded-full cursor-pointer"
+                         src="~/Themes/images/user/@UserDataService.GetUser(cmt.UserID).UserImage" />
+                    <div class="ml-2 w-full">
+                        <div class="flex">
+                            <div class="commentBox">
+                                <h2 class="text-gray-800 text-lg font-medium mb-2 cursor-pointer">@UserDataService.GetUser(cmt.UserID).FullName</h2>
+                                <p id="commentText" class="font-regular text-gray-600">@cmt.CommentContent</p>
+
+                                <textarea id="editInput" class="w-full hidden p-2 border rounded" rows="5"></textarea>
+                                <div class="flex justify-end mt-2 hidden" id="editActions">
+                                    <button onclick="cancelEdit()"
+                                            class="px-3 py-1 bg-gray-300 text-white rounded" type="button">
+                                        Hủy
+                                    </button>
+                                    <button onclick="saveCmt()" type="button"
+                                            class="ml-3 px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded mr-2">
+                                        Lưu
+                                    </button>
+                                </div>
+
+                            </div>
+                            @{
+                                if (User.GetUserData() != null)
+                                {
+                                    if (@UserDataService.GetUser(cmt.UserID).UserID == long.Parse(User.GetUserData().UserId))
+                                    {
+                                        <div class="relative ml-auto">
+                                            <!-- Nút mở menu (icon 3 chấm dọc) -->
+                                            <button onclick="toggleOption(event)" class="p-2" type="button">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                     viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                          d="M12 6v.01M12 12v.01M12 18v.01" />
+                                                </svg>
+                                            </button>
+                                            <!-- Menu tùy chọn -->
+                                            <div id="optionbarComment"
+                                                 class="absolute font-sans right-0 mt-2 w-36 bg-white border rounded shadow-lg overflow-hidden hidden">
+                                                <button class="w-full px-1 py-2 text-center hover:bg-blue-50"
+                                                        onclick="editCmt()" type="button">
+                                                    Chỉnh sửa
+                                                </button>
+                                                <button class="w-full px-1 py-2 text-center hover:bg-blue-50 text-red-500"
+                                                        onclick="deleteCmt()" type="button">
+                                                    Xóa bình luận
+                                                </button>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+
+                            <script>
+                                function toggleOption(event) {
+                                    event.stopPropagation();
+                                    document.getElementById("optionbarComment").classList.toggle("hidden");
+                                }
+
+                                function closeOption(event) {
+                                    if (!document.getElementById("optionbarComment").contains(event.target) && event.target.id !== "optionbar-button") {
+                                        document.getElementById("optionbarComment").classList.add("hidden");
+                                    }
+                                }
+
+                                function editCmt() {
+                                    document.getElementById("optionbarComment").classList.add("hidden");
+                                    document.getElementById("commentText").classList.add("hidden");
+                                    document.getElementById("editInput").classList.remove("hidden");
+                                    document.getElementById("editActions").classList.remove("hidden");
+                                    document.getElementById("editInput").value = document.getElementById("commentText").innerText;
+                                }
+
+                                function saveCmt() {
+                                    document.getElementById("commentText").innerText = document.getElementById("editInput").value;
+                                    cancelEdit();
+                                }
+
+                                function cancelEdit() {
+                                    document.getElementById("commentText").classList.remove("hidden");
+                                    document.getElementById("editInput").classList.add("hidden");
+                                    document.getElementById("editActions").classList.add("hidden");
+                                }
+
+                                function deleteCmt() {
+                                    if (confirm("Bạn có chắc chắn muốn xóa bình luận này?")) {
+                                        alert("Đã xóa bình luận!");
+                                    }
+                                }
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <div class="mx-auto flex justify-center mt-6">
+            <button class="px-4 py-2 mx-1 bg-gray-300 text-gray-700 rounded">«</button>
+            <button class="px-4 py-2 mx-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded">
+                1
+            </button>
+            <button class="px-4 py-2 mx-1 bg-gray-300 text-gray-700 rounded">2</button>
+            <button class="px-4 py-2 mx-1 bg-gray-300 text-gray-700 rounded">3</button>
+            <button class="px-4 py-2 mx-1 bg-gray-300 text-gray-700 rounded">»</button>
+        </div>
+    }
+}

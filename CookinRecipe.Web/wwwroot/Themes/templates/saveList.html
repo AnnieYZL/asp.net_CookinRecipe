@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../styles/main.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="../assets/images/vLOGO.png" type="image/x-icon" />
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/@themesberg/flowbite@1.1.1/dist/flowbite.min.css" />
+    <script async src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@16.1.0/dist/lazyload.min.js">
+    </script>
+    <title>Danh sách lưu</title>
+    <style>
+        .scrollbar-hidden::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+    </style>
+</head>
+
+<body class="bg-blue-50">
+    <!-- Header Navigation Section -->
+    <header class="fixed top-0 w-full z-50">
+        <nav class="rounded-lg mx-auto shadow-lg bg-white shadow-lg fadeInTop">
+            <div class="flex justify-between">
+
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center py-4 px-2 ml-2 mr-5">
+                    <!-- <img src="../assets/images/CookinRecipe.svg" alt="Logo"> -->
+                    <h2 class="text-blue-600 font-bold text-2xl">
+                        CookinRecipe</h2>
+                </a>
+                <!-- Tìm v -->
+                <div class="text-center md:flex hidden mt-1 mr-5 relative">
+                    <button id="toggleButton" class="font-bold items-center flex text-blue-600">
+                        Tìm công thức <div class="mx-1"></div> <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul id="searchList"
+                        class="hidden absolute left-1/2 transform -translate-x-1/2 mt-12 bg-white shadow-lg  rounded-lg w-40">
+                        <li class="cursor-pointer hover:bg-gray-100 p-2 rounded"><a class="hover:text-bl text-sm"
+                                href="example.html">Thực đơn</a></li>
+                        <li class="cursor-pointer hover:bg-gray-100 p-2 rounded"><a class="hover:text-bl text-sm"
+                                href="dishes.html">Món ăn</a></li>
+                        <li class="cursor-pointer hover:bg-gray-100 p-2 rounded"><a class="hover:text-bl text-sm"
+                                href="ingredient.html">Nguyên liệu</a></li>
+                        <li class="cursor-pointer hover:bg-gray-100 p-2 rounded"><a class="hover:text-bl text-sm"
+                                href="#meo">Mẹo tư vấn</a></li>
+                    </ul>
+                    <script>
+                        const button = document.getElementById('toggleButton');
+                        const list = document.getElementById('searchList');
+
+                        button.addEventListener('mouseenter', () => {
+                            list.classList.remove('hidden');
+                        });
+
+                        button.addEventListener('click', () => {
+                            list.classList.toggle('hidden');
+                        });
+
+                        list.addEventListener('mouseleave', () => {
+                            list.classList.add('hidden');
+                        });
+                    </script>
+                </div>
+
+                <div class="relative  md:flex hidden w-1/4 mt-2 mb-2 mx-auto">
+                    <input type="text" placeholder="Bạn muốn nấu món gì?"
+                        class="w-full px-4 py-2 pl-6 pr-10 text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent">
+                    <button class="absolute inset-y-0 right-3 mb-1 flex items-center">
+                        <i class="fas fa-search text-bl"></i>
+                    </button>
+                </div>
+                <!-- Secondary Navbar items -->
+                <div class="ml-auto flex items-center space-x-3 ">
+                    <!-- Message -->
+                    <div class="relative">
+                        <button id="messageButton" class="text-blue-600 hover:text-blue-700">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span
+                                class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">99+</span>
+                        </button>
+                        <div id="messageDropdown"
+                            class="scrollbar-hidden hover:scrollbar-show hidden absolute -right-4 mt-2 w-52 md:w-64 bg-white shadow-lg rounded-lg max-h-60 overflow-y-auto">
+                            <div class="p-2 border-b text-gray-800 font-medium text-xl">Thông báo</div>
+                            <ul class="divide-y divide-gray-200">
+                                <li class="p-3 hover:bg-gray-100">
+                                    <a href="#" class="flex space-x-3">
+                                        <span
+                                            class="bg-blue-500 text-white rounded-full h-8 w-8 flex items-center justify-center">🔔</span>
+                                        <div class="text-sm">
+                                            <p class="font-medium">Bạn có 1 tin nhắn mới</p>
+                                            <span class="text-gray-500 text-xs">2 phút trước</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="p-3 hover:bg-gray-100">
+                                    <a href="#" class="flex space-x-3">
+                                        <span
+                                            class="bg-green-500 text-white rounded-full h-8 w-8 flex items-center justify-center">✅</span>
+                                        <div class="text-sm">
+                                            <p class="font-medium">Đơn hàng của bạn đã được xác nhận</p>
+                                            <span class="text-gray-500 text-xs">10 phút trước</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="p-3 text-center border-t">
+                                <a href="#" class="text-blue-500 font-medium">Xem tất cả thông báo</a>
+                            </div>
+                        </div>
+                        <script>
+                            const messageButton = document.getElementById("messageButton");
+                            const messageDropdown = document.getElementById("messageDropdown");
+
+                            messageButton.addEventListener("click", () => {
+                                messageDropdown.classList.toggle("hidden");
+                            });
+
+                            // Ẩn dropdown khi click bên ngoài
+                            document.addEventListener("click", (event) => {
+                                if (!messageButton.contains(event.target) && !messageDropdown.contains(event.target)) {
+                                    messageDropdown.classList.add("hidden");
+                                }
+                            });
+                        </script>
+                    </div>
+                    <!-- Avatar -->
+                    <div class="relative">
+                        <button id="avaButton" class="text-bl hover:text-blue-800">
+                            <img src="../assets/images/LOGO.png" class="w-8 h-8 rounded-full" alt="user_avatar">
+                        </button>
+                        <div id="avaDropdown"
+                            class="hidden absolute right-0 mt-2 w-52 bg-white shadow-lg rounded-lg overflow-hidden">
+                            <div class="flex p-2">
+                                <img src="../assets/images/LOGO.png" class="rounded-full w-12 h-12">
+                                <div class="ml-2 mr-2">
+                                    <p
+                                        class="text-gray-800 text-md font-bold overflow-ellipsis overflow-hidden whitespace-nowrap font-medium">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta optio explicabo
+                                        ducimus totam eveniet repellat? Animi explicabo libero in vitae nobis! Labore
+                                        inventore atque consequatur recusandae? Id, natus. Suscipit, recusandae!</p>
+                                    <a href="profile.html" class="text-blue-600 text-sm">Xem trang cá nhân</a>
+                                </div>
+                            </div>
+                            <div class="p-2 space-y-1  border-t">
+                                <a href="post.html">
+                                    <div
+                                        class="flex items-center p-1 hover:bg-gray-100 hover:text-bl rounded cursor-pointer">
+                                        <i class="fas fa-pen ml-2"></i>
+                                        <p class="text-sm ml-5">Tạo công thức mới</p>
+                                    </div>
+                                </a>
+                                <a href="likeList.html">
+                                    <div
+                                        class="flex items-center p-1 hover:bg-gray-100 hover:text-bl rounded cursor-pointer">
+                                        <i class="fas fa-thumbs-up ml-2"></i>
+                                        <p class="text-sm ml-5">Đã thích</p>
+                                    </div>
+                                </a>
+                                <a href="saveList.html">
+                                    <div
+                                        class="flex items-center p-1 hover:bg-gray-100 hover:text-bl rounded cursor-pointer">
+                                        <i class="fas fa-bookmark ml-2"></i>
+                                        <p class="text-sm ml-5">Danh sách lưu</p>
+                                    </div>
+                                </a>
+
+                                <a href="#setting">
+                                    <div
+                                        class="flex items-center p-1 hover:bg-gray-100 hover:text-bl rounded cursor-pointer">
+                                        <i class="fas fa-cog ml-2"></i>
+                                        <p class="text-sm ml-5">Cài đặt</p>
+                                    </div>
+                                </a>
+
+                                <a href="changePassword">
+                                    <div
+                                        class="flex items-center p-1 hover:bg-gray-100 hover:text-bl rounded cursor-pointer">
+                                        <i class="fas fa-key ml-2"></i>
+                                        <p class="text-sm ml-5 ">Đổi mật khẩu</p>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <a href="#logOut">
+                                <div
+                                    class="p-2 border-t font-bold text-center text-bl hover:bg-gray-100 cursor-pointer">
+                                    <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                                </div>
+                            </a>
+                        </div>
+                        <script>
+                            const avaButton = document.getElementById("avaButton");
+                            const avaDropdown = document.getElementById("avaDropdown");
+
+                            avaButton.addEventListener("click", () => {
+                                avaDropdown.classList.toggle("hidden");
+                            });
+
+                            // Ẩn dropdown khi click bên ngoài
+                            document.addEventListener("click", (event) => {
+                                if (!avaButton.contains(event.target) && !avaDropdown.contains(event.target)) {
+                                    avaDropdown.classList.add("hidden");
+                                }
+                            });
+                        </script>
+                    </div>
+                    <a id="nav-login-btn" href="login.html"
+                        class="md:flex hidden py-2 px-2 text-base text-blue-600 font-regular">Đăng nhập</a>
+                    <a id="nav-signup-btn" href="signup.html" class="md:flex hidden">
+                        <button
+                            class="bg-gradient-to-r from-blue-600 to-purple-600 hover:bg-blue-700 duration-300 text-white text-base font-regular py-2 px-4 rounded">
+                            Đăng ký
+                        </button>
+                    </a>
+                    <!-- Mobile menu button -->
+                    <div class="md:hidden flex items-center">
+                        <button class="outline-none mobile-menu-button">
+                            <svg class=" w-6 h-6 text-bl hover:text-bl" x-show="!showMenu" fill="none"
+                                stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="mx-3"></div>
+                </div>
+            </div>
+
+            <!-- mobile menu -->
+            <div class="hidden mobile-menu p-3">
+                <ul class="">
+                    <div class="relative w-full mt-2 mb-2 mx-auto">
+                        <input type="text" placeholder="Bạn muốn nấu món gì?"
+                            class="w-full px-4 py-2 pl-6 pr-10 text-gray-700 bg-white border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-300 focus:border-transparent">
+                        <button class="absolute inset-y-0 right-3 mb-1 flex items-center">
+                            <i class="fas fa-search text-bl"></i>
+                        </button>
+                    </div>
+                    <li class="active" id="nav-login-btn-mobile"><a href="login.html"
+                            class="block text-sm px-2 py-4 hover:bg-gray-100 transition duration-300 text-base font-regular">Đăng
+                            nhập</a></li>
+                    <li id="nav-signup-btn-mobile"><a href="signup.html"
+                            class="block text-sm px-2 py-4 hover:bg-gray-100 transition duration-300 text-base font-regular">Đăng
+                            ký</a></li>
+                    <li><a href="post.html"
+                            class="block text-sm px-2 py-4 hover:bg-gray-100 transition duration-300 text-base font-regular">Tạo
+                            công thức mới</a></li>
+                    <li><a href="example.html"
+                            class="block text-sm px-2 py-4 hover:bg-gray-100 transition duration-300 text-base font-regular">Thực
+                            đơn</a></li>
+                    <li><a href="example.html"
+                            class="block text-sm px-2 py-4 hover:bg-gray-100 transition duration-300 text-base font-regular">Món
+                            ăn</a></li>
+                    <li><a href="ingredient.html"
+                            class="block text-sm px-2 py-4 hover:bg-gray-100 transition duration-300 text-base font-regular">Nguyên
+                            liệu</a></li>
+                    <li><a href="example.html"
+                            class="block text-sm px-2 py-4 hover:bg-gray-100 transition duration-300 text-base font-regular">Mẹo
+                            tư vấn</a></li>
+                </ul>
+            </div>
+            <script>
+                const btn = document.querySelector("button.mobile-menu-button");
+                const menu = document.querySelector(".mobile-menu");
+
+                btn.addEventListener("click", () => {
+                    menu.classList.toggle("hidden");
+                });
+            </script>
+        </nav>
+    </header>
+
+    <div class="mt-20 md:max-w-5xl md:w-7/10 lg:flex w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <!-- Danh sách bộ sưu tập -->
+        <div class="lg:w-1/3 w-full">
+            <div
+                class="w-full h-96 overflow-y-auto scrollbar-hidden hover:scrollbar-show border p-2 rounded-lg bg-gray-50">
+                <div class="text-xl text-blue-600 font-bold mb-4 border-b pb-2">Bộ sưu tập của tôi</div>
+
+                <div id="collectionList" class="">
+                    <div class="flex items-center mx-auto p-2 mb-1 rounded-lg hover:bg-gray-100 cursor-pointer">
+                        <img src="../assets/images/vLOGO.png" class="w-12 h-12 rounded-lg" alt="list-picture">
+                        <div class="ml-3">
+                            <p class="font-semibold">Design</p>
+                            <p class="text-sm text-gray-500">30 bài viết</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="mt-5 flex justify-center">
+                <button id="addCollection"
+                    class="mx-auto bg-gradient-to-r from-blue-600 to-purple-600 text-white py-2 px-3 rounded">Tạo bộ sưu
+                    tập mới</button>
+            </div>
+        </div>
+        <!-- Danh sách bài viết -->
+        <div class="lg:w-3/4 w-full lg:ml-6 lg:pt-0 h-fit p-4">
+            <div class="border-b pb-3 flex items-center">
+                <h1 class="text-2xl font-bold text-blue-600">Tên bộ sưu tập</h1>
+                <div class="ml-auto text-blue-600">
+                    <button id="editNameBtn"><i class="fa fa-edit"></i></button>
+                    <button class="fa fa-trash-alt text-red-500 ml-5" onclick="deleteList()"></button>
+                </div>
+                <script>
+                    function deleteList() {
+                        if (confirm("Bạn có chắc chắn xóa danh sách?")) {
+                        }
+                    }
+                </script>
+            </div>
+            <div class="mt-4">
+                <!-- Recipe 1 -->
+
+                <div class="flex items-center mb-2 p-2">
+                    <input type="checkbox" class="" name="" id="">
+                    <p class="ml-2">Tất cả</p>
+                    <button class="ml-auto"><i class="fa fa-trash-alt text-red-500"></i></button>
+                </div>
+
+                <div class="flex rounded-lg relative cursor-pointer items-start shadow-lg p-3 mb-6 border pb-4">
+                    <input type="checkbox" class="mt-1" name="" id="">
+                    <div class="flex-1 ml-5 lg:w-4/5 w-2/3">
+                        <h2
+                            class="text-xl overflow-ellipsis overflow-hidden whitespace-nowrap font-bold hover:underline text-blue-600">
+                            Chicken Marsala Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum soluta sint
+                            id quasi quaerat rem consequuntur, explicabo harum ea deleniti, omnis ratione, saepe iure
+                            reiciendis tenetur error magni corporis voluptates?</h2>
+                        <p class="text-gray-500 text-sm overflow-ellipsis overflow-hidden whitespace-nowrap"><b>RECIPE |
+                                Courtesy of Tyler Florence Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                Animi eaque enim excepturi doloribus, qui, mollitia distinctio quae hic voluptates minus
+                                at corporis sunt explicabo labore eveniet veritatis commodi, exercitationem quidem!</b>
+                        </p>
+                        <p class="text-gray-600 text-sm mt-2"><b>Total Time:</b> 40 minutes</p>
+                        <div class="flex overflow-ellipsis overflow-hidden whitespace-nowrap items-center mt-2">
+                            <div class="text-blue-500">★★★★★</div>
+                            <span class="text-blue-500 ml-2 ">(1281)</span>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/5 w-1/3 ml-3 h-24 relative md:flex hidden">
+                        <img src="../design/images/butterChicken.jpeg" alt="Chicken Marsala"
+                            class="w-full h-full object-cover rounded">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal thêm bộ sưu tập -->
+    <div id="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+            <div class="flex justify-between items-center mb-4">
+                <div class="text-xl border-b w-full pb-3 font-bold">Tạo bộ sưu tập</div>
+                <button id="closeModal" class="pb-3 text-gray-500">&times;</button>
+            </div>
+            <input id="collectionName" type="text" placeholder="Đặt tên cho bộ sưu tập của bạn..."
+                class="w-full p-2 border rounded-lg mb-4">
+            <div class="flex justify-end space-x-5">
+                <button id="cancel" class="text-blue-500">Hủy</button>
+                <button id="createCollection" class="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg"
+                    disabled>Tạo</button>
+            </div>
+        </div>
+        <script>
+            const addCollectionBtn = document.getElementById('addCollection');
+            const modal = document.getElementById('modal');
+            const closeModalBtn = document.getElementById('closeModal');
+            const cancelBtn = document.getElementById('cancel');
+            const createCollectionBtn = document.getElementById('createCollection');
+            const collectionNameInput = document.getElementById('collectionName');
+            const collectionList = document.getElementById('collectionList');
+
+            addCollectionBtn.addEventListener('click', () => {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    document.getElementById("collectionName").focus();
+                }, 0);
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+
+            cancelBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+
+            collectionNameInput.addEventListener('input', () => {
+                createCollectionBtn.disabled = collectionNameInput.value.trim() === '';
+                createCollectionBtn.classList.toggle('bg-blue-600', collectionNameInput.value.trim() !== '');
+                createCollectionBtn.classList.toggle('text-white', collectionNameInput.value.trim() !== '');
+                createCollectionBtn.classList.toggle('bg-gray-300', collectionNameInput.value.trim() === '');
+                createCollectionBtn.classList.toggle('text-gray-500', collectionNameInput.value.trim() === '');
+            });
+
+            createCollectionBtn.addEventListener('click', () => {
+                const collectionName = collectionNameInput.value.trim();
+                if (collectionName) {
+                    const newCollection = document.createElement('div');
+                    newCollection.classList.add('flex', 'items-center', 'space-x-3', 'p-2', 'hover:bg-gray-100', 'cursor-pointer');
+                    newCollection.innerHTML = `
+                        <img src="../assets/images/vLOGO.png" class="w-12 h-12 object-cover" alt="${collectionName}">
+                        <div>
+                            <p class="font-semibold">${collectionName}</p>
+                            <p class="text-sm text-gray-500">0 bài viết</p>
+                        </div>
+                    `;
+                    collectionList.appendChild(newCollection);
+                    modal.classList.add('hidden');
+                    collectionNameInput.value = '';
+                    createCollectionBtn.disabled = true;
+                }
+            });
+        </script>
+    </div>
+
+    <!-- Modal đổi tên bộ sưu tập -->
+    <div id="modalEditName" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+            <div class="flex justify-between items-center mb-4">
+                <div class="text-xl border-b pb-3 w-full font-bold">Đổi tên bộ sưu tập</div>
+                <button id="closeModalEdit" class="text-gray-500 pb-3">&times;</button>
+            </div>
+            <input id="changeNameInput" type="text" placeholder="Nhập tên mới..."
+                class="w-full p-2 border rounded-lg mb-4">
+            <div class="flex justify-end space-x-5">
+                <button id="cancelEdit" class="text-blue-500">Hủy</button>
+                <button id="editName" class="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg" disabled>Đổi tên</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const editNameBtn = document.getElementById('editNameBtn');
+        const modalEdit = document.getElementById('modalEditName');
+        const closeModalEdit = document.getElementById('closeModalEdit');
+        const cancelBtnEdit = document.getElementById('cancelEdit');
+        const editName = document.getElementById('editName');
+        const changeNameInput = document.getElementById('changeNameInput');
+
+        editNameBtn.addEventListener('click', () => {
+            modalEdit.classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById("changeNameInput").focus();
+            }, 0);
+        });
+
+        closeModalEdit.addEventListener('click', () => {
+            modalEdit.classList.add('hidden');
+        });
+
+        cancelBtnEdit.addEventListener('click', () => {
+            modalEdit.classList.add('hidden');
+        });
+
+        changeNameInput.addEventListener('input', () => {
+            editName.disabled = changeNameInput.value.trim() === '';
+            editName.classList.toggle('bg-gradient-to-r', changeNameInput.value.trim() !== '');
+            editName.classList.toggle('from-blue-600', changeNameInput.value.trim() !== '');
+            editName.classList.toggle('to-purple-600', changeNameInput.value.trim() !== '');
+            editName.classList.toggle('text-white', changeNameInput.value.trim() !== '');
+            editName.classList.toggle('bg-gray-300', changeNameInput.value.trim() === '');
+            editName.classList.toggle('text-gray-500', changeNameInput.value.trim() === '');
+        });
+
+        editName.addEventListener('click', () => {
+            const newName = changeNameInput.value.trim();
+            if (newName) {
+                modalEdit.classList.add('hidden');
+                changeNameInput.value = '';
+                editName.disabled = true;
+            }
+        });
+
+    </script>
+
+    <!-- Foooter -->
+    <section class="bg-gradient-to-r mt-20 from-blue-600 to-purple-600">
+        <div class="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
+            <div class="flex justify-center mt-8 space-x-6">
+                <a href="https://www.facebook.com/annyeongannie/" class="text-gray-50 hover:text-white">
+                    <span class="sr-only">Facebook</span>
+                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd"
+                            d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+                <a href="https://x.com/annyeongannie_" class="text-gray-50 hover:text-white">
+                    <span class="sr-only">Twitter</span>
+                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84">
+                        </path>
+                    </svg>
+                </a>
+                <a href="https://github.com/AnnieYZL" class="text-gray-50 hover:text-white">
+                    <span class="sr-only">GitHub</span>
+                    <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd"
+                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </a>
+
+            </div>
+            <p class="mt-8 text-base leading-6 text-center text-gray-50">
+                © 2025 Cookin'Recipe, Inc. All rights reserved.
+            </p>
+        </div>
+    </section>
+</body>
+
+</html>

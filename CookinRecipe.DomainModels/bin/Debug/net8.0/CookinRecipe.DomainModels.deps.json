@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "CookinRecipe.DomainModels/1.0.0": {
+        "runtime": {
+          "CookinRecipe.DomainModels.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CookinRecipe.DomainModels/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

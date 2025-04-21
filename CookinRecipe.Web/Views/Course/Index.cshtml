@@ -1,0 +1,56 @@
+﻿@model CookinRecipe.Web.Models.PaginationSearchInput
+@{
+    ViewBag.Title = "Danh sách thực đơn";
+}
+<div class="md:max-w-5xl md:w-7/10 w-11/12 mt-20 mx-auto bg-white pb-24 p-6 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-2">@ViewBag.Title</h1>
+    <form id="formSearch" action="~/Course/Search" method="get" data-container="#searchResult">
+        <div class="input-group">
+            <input type="hidden" name="@nameof(Model.Size)" value="@Model.Size" />
+            <div class="relative my-2 px-2 py-4 mx-auto font-sans">
+                <input name="searchValue" type="text" value="@Model.SearchValue" autofocus placeholder="Nhập tên thực đơn cần tìm..."
+                       class="w-full px-4 py-2 text-gray-800 bg-white border border-gray-600 rounded-lg shadow-sm focus:border-transparent">
+                <button class="absolute inset-y-0 right-3 mb-1 mr-2 flex items-center" type="submit">
+                    <i class="fas fa-search text-bl"></i>
+                </button>
+            </div>
+        </div>
+    </form>  
+
+    <div id="searchResult">
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#formSearch").submit(function (e) {
+                e.preventDefault();
+                paginationSearch(this, 1);
+                return;
+            });
+            paginationSearch("#formSearch", @Model.Page);
+        });
+
+        function paginationSearch(formSearch, page) {
+            var action = $(formSearch).prop("action");
+            var method = $(formSearch).prop("method");
+            var container = $(formSearch).data("container");
+
+            var searchData = $(formSearch).serializeArray();
+            searchData.push({ "name": "Page", "value": page });
+
+            $.ajax({
+                url: action,
+                type: method,
+                data: searchData,
+                async: false,
+                error: function () {
+                    alert("Your request is not valid!");
+                },
+                success: function (data) {
+                    $(container).html(data);
+                }
+            });
+        }
+    </script>
+}

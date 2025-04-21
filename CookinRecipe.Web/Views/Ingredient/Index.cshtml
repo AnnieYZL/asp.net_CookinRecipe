@@ -1,0 +1,151 @@
+﻿@using CookinRecipe.BusinessLayers
+@model CookinRecipe.Web.Models.RecipeByIngredientInput
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const ingredientList = document.getElementById("ingredient-list");
+            const selectedIngredients = document.getElementById("selected-ingredients");
+            const searchInput = document.getElementById("ingredient-search");
+            function updateSelectedIngredients() {
+                selectedIngredients.innerHTML = "";
+                document.querySelectorAll(".ingredient-checkbox:checked").forEach(checkbox => {
+                    const span = document.createElement("span");
+                    span.className = "bg-gray-200 px-3 py-1 font-sans rounded-full flex items-center gap-2";
+                span.innerHTML = `${checkbox.id}`;
+                    selectedIngredients.appendChild(span);
+                });
+                addRemoveEvent();
+            }
+
+
+            function addRemoveEvent() {
+                document.querySelectorAll(".remove-btn").forEach(button => {
+                    button.addEventListener("click", function () {
+                        const value = this.getAttribute("data-value");
+                        document.querySelector(`.ingredient-checkbox[value='${value}']`).checked = false;
+                        updateSelectedIngredients();
+                    });
+                });
+            }
+
+            document.querySelectorAll(".ingredient-checkbox").forEach(checkbox => {
+                checkbox.addEventListener("change", updateSelectedIngredients);
+            });
+
+            searchInput.addEventListener("input", function () {
+                let noResultText = document.createElement("p");
+                noResultText.id = "no-result-text";
+                noResultText.className = "text-red-500 mt-2 hidden font-sans";
+                noResultText.textContent = "Không có nguyên liệu phù hợp";
+                ingredientList.appendChild(noResultText);
+                const filter = searchInput.value.toLowerCase();
+                let resultText = false;
+                document.querySelectorAll("#ingredient-list label").forEach(label => {
+                    if (label.textContent.toLowerCase().includes(filter)) {
+                        label.style.display = "block";
+                        resultText = true;
+                    }
+                    else {
+                        label.style.display = "none";
+                    }
+                });
+                if (filter.trim() != "" && resultText == false) {
+                    document.getElementById("no-result-text").classList.remove("hidden");
+                }
+                else {
+                    document.getElementById("no-result-text").classList.add("hidden");
+                }
+            });
+            searchInput.addEventListener("keypress", function (event) {
+                if (event.key === "Enter" && searchInput.value.trim() !== "") {
+                    event.preventDefault();
+                    let inputValue = searchInput.value.trim().toLowerCase();
+                    let foundMatch = false;
+
+                    document.querySelectorAll(".ingredient-checkbox").forEach(checkbox => {
+                        if (checkbox.id.toLowerCase().includes(inputValue)) {
+                            checkbox.checked = true;
+                            foundMatch = true;
+                        }
+                    });
+
+                    if (!foundMatch) {
+                        addSelectedIngredient(searchInput.value.trim());
+                    }
+
+                    updateSelectedIngredients();
+                    searchInput.value = "";
+                }
+            });
+        });
+    </script>
+<div class="md:max-w-5xl md:w-7/10 w-11/12 mt-20 mx-auto bg-white pb-24 p-6 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-2">Nguyên liệu</h1>
+    <p class="text-gray-600 font-sans mb-4">Chọn nguyên liệu để tìm kiếm công thức phù hợp.</p>
+
+    <div class="flex items-center flex-wrap gap-2 mb-4" id="selected-ingredients">
+    </div>
+
+    <div class="md:flex border-t pt-4">
+        <!-- Danh sách nguyên liệu -->
+        <div class="md:w-1/4 w-full h-fit bg-gray-50 p-4 rounded-lg shadow block">
+            <form id="formSearch" action="~/Ingredient/Search" method="get" data-container="#searchResult">
+            <input type="text" id="ingredient-search" placeholder="Tìm nguyên liệu..."
+                   class="w-full p-2 mb-2 border rounded font-sans" autofocus>
+                <input type="hidden" name="@nameof(Model.PageSize)" value="@Model.PageSize" />
+            <h2 class="font-bold mb-2">Chọn nguyên liệu</h2>
+            <div class="space-y-2 border-t pt-2" id="ingredient-list">
+                @foreach(var item in @CommonDataService.ListIngredient()){
+                    <label class="flex items-center font-sans">
+                            <input type="checkbox" id="@item.IngredientName"
+                               class="ingredient-checkbox mr-2" name="ListIngre" value="@item.IngredientID"> @item.IngredientName
+                    </label>
+                }
+            </div>
+            <div class="mt-5 flex justify-center">
+                <button class="font-sans bg-gradient-to-r from-blue-600 to-purple-600 py-2 px-3 text-white rounded" type="submit">
+                    Tìm
+                    món
+                </button>
+            </div>
+            </form>
+        </div>
+
+        <!-- Kết quả món ăn -->
+        <div class="md:w-3/4 w-full md:pl-6 md:pt-0 pt-6" id="searchResult">
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#formSearch").submit(function (e) {
+                e.preventDefault();
+                paginationSearch(this, 1);
+                return;
+            });
+            paginationSearch("#formSearch", @Model.Page);
+        });
+
+        function paginationSearch(formSearch, page) {
+            var action = $(formSearch).prop("action");
+            var method = $(formSearch).prop("method");
+            var container = $(formSearch).data("container");
+
+            var searchData = $(formSearch).serializeArray();
+            searchData.push({ "name": "Page", "value": page });
+
+            $.ajax({
+                url: action,
+                type: method,
+                data: searchData,
+                async: false,
+                error: function () {
+                    
+                },
+                success: function (data) {
+                    $(container).html(data);
+                }
+            });
+        }
+    </script>
+}

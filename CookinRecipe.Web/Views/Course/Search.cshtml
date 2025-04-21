@@ -1,0 +1,55 @@
+﻿@model CourseSearchResult
+@using CookinRecipe.BusinessLayers
+@{
+    Layout = null;
+}
+<p class="text-gray-600 mb-4 font-sans">
+    Khám phá <span class="font-bold">@Model.RowCount</span> thực đơn được đề cử bởi quản trị viên.
+</p>
+<div class="md:flex border-t pt-4">
+    <!-- Kết quả món ăn -->
+    <div class="w-full">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            @foreach(var item in Model.Data){
+                <a href="@Url.Action("Detail", "Course", new { courseId = item.CourseID })">
+                <div class="my-div relative hover-container overflow-hidden shadow-lg h-24">
+                    <img src="~/Themes/images/course/@item.CourseImage" alt="Course Image"
+                         class="hover-image w-full h-full object-cover transition-transform duration-500">
+
+                    <!-- Decorative Lines -->
+                    <div class="decor-line line-horizontal bg-white"></div>
+                    <div class="decor-line line-vertical bg-white"></div>
+
+                    <!-- Product Info -->
+                    <div class="hover-info absolute bottom-10 left-10  p-1 text-white">
+                            <h2 class="text-sm bg-black bg-opacity-50 font-bold text-slide text-left">@item.CourseName.ToUpper()</h2>
+                        <p class="text-lg bg-black bg-opacity-50 font-bold text-slide text-right">
+                              @CommonDataService.CountRecipeByCourse(item) công thức
+                        </p>
+                    </div>
+                </div>
+            </a>
+            }
+        </div>
+        <!--Phân trang-->
+        @if(Model.PageCount>1){
+        <div class="mx-auto flex justify-center mt-24">
+                @for (int p = 1; p <= Model.PageCount; p++)
+                {
+                    if (p == Model.Page)
+                    {
+                        <a href="#">
+                        <button class="px-4 py-2 mx-1 font-sans bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded">
+                            @p
+                        </button>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="javascript:;" onclick="paginationSearch('#formSearch',@p)"><button class="px-4 font-sans py-2 mx-1 bg-gray-300 text-gray-700 rounded">@p</button></a>
+                    }
+                }
+        </div>
+        }
+    </div>
+</div>

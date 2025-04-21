@@ -1,0 +1,16 @@
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\bin\Debug\net8.0\CookinRecipe.DataLayers.deps.json
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\bin\Debug\net8.0\CookinRecipe.DataLayers.dll
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\bin\Debug\net8.0\CookinRecipe.DataLayers.pdb
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\obj\Debug\net8.0\CookinRecipe.DataLayers.csproj.AssemblyReference.cache
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\obj\Debug\net8.0\CookinRecipe.DataLayers.GeneratedMSBuildEditorConfig.editorconfig
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\obj\Debug\net8.0\CookinRecipe.DataLayers.AssemblyInfoInputs.cache
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\obj\Debug\net8.0\CookinRecipe.DataLayers.AssemblyInfo.cs
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\obj\Debug\net8.0\CookinRecipe.DataLayers.csproj.CoreCompileInputs.cache
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\obj\Debug\net8.0\CookinRecipe.DataLayers.dll
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\obj\Debug\net8.0\refint\CookinRecipe.DataLayers.dll
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\obj\Debug\net8.0\CookinRecipe.DataLayers.pdb
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\obj\Debug\net8.0\ref\CookinRecipe.DataLayers.dll
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\bin\Debug\net8.0\CookinRecipe.DomainModels.dll
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\bin\Debug\net8.0\CookinRecipe.DomainModels.pdb
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\obj\Debug\net8.0\CookinRecipe.DataLayers.sourcelink.json
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DataLayers\obj\Debug\net8.0\CookinRe.06BB92D2.Up2Date

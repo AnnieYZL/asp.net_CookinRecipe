@@ -1,0 +1,12 @@
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DomainModels\bin\Debug\net8.0\CookinRecipe.DomainModels.deps.json
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DomainModels\bin\Debug\net8.0\CookinRecipe.DomainModels.dll
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DomainModels\bin\Debug\net8.0\CookinRecipe.DomainModels.pdb
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DomainModels\obj\Debug\net8.0\CookinRecipe.DomainModels.GeneratedMSBuildEditorConfig.editorconfig
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DomainModels\obj\Debug\net8.0\CookinRecipe.DomainModels.AssemblyInfoInputs.cache
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DomainModels\obj\Debug\net8.0\CookinRecipe.DomainModels.AssemblyInfo.cs
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DomainModels\obj\Debug\net8.0\CookinRecipe.DomainModels.csproj.CoreCompileInputs.cache
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DomainModels\obj\Debug\net8.0\CookinRecipe.DomainModels.sourcelink.json
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DomainModels\obj\Debug\net8.0\CookinRecipe.DomainModels.dll
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DomainModels\obj\Debug\net8.0\refint\CookinRecipe.DomainModels.dll
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DomainModels\obj\Debug\net8.0\CookinRecipe.DomainModels.pdb
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.DomainModels\obj\Debug\net8.0\ref\CookinRecipe.DomainModels.dll
