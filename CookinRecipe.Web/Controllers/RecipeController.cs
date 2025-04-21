@@ -7,12 +7,38 @@ namespace CookinRecipe.Web.Controllers
 {
 	public class RecipeController : Controller
 	{
-		[HttpPost]
-		public IActionResult Index(long id = 0)
+        private const int PAGE_SIZE = 20;
+        private const string SEARCH_CONDITION = "recipe_search";
+		public IActionResult Index(int page = 1, string searchValue = "")
 		{
-			return View();
-		}
-		public IActionResult Detail(long id = 0)
+           RecipeSearchInput? input = ApplicationContext.GetSessionData<RecipeSearchInput>(SEARCH_CONDITION);
+            if (input == null)
+            {
+                input = new RecipeSearchInput()
+                {
+                    Page = 1,
+                    PageSize = PAGE_SIZE,
+                    SearchValue = searchValue
+                };
+            }
+            return View(input);
+        }
+        public IActionResult Search(RecipeSearchInput input)
+        {
+            int rowCount = 0;
+            var data = RecipeDataService.List(out rowCount, input.Page, input.PageSize, input.SearchValue ?? "");
+            var model = new RecipeSResult()
+            {
+                Page = input.Page,
+                PageSize = input.PageSize,
+                SearchValue = input.SearchValue ?? "",
+                RowCount = rowCount,
+                Data = data
+            };
+            ApplicationContext.SetSessionData(SEARCH_CONDITION, input);
+            return View(model);
+        }
+        public IActionResult Detail(long id = 0)
 		{
 			var recipe = RecipeDataService.Get(id);
 			if (recipe == null)
@@ -85,13 +111,51 @@ namespace CookinRecipe.Web.Controllers
             };
             return View("Edit", recipe);
 		}
-        public IActionResult Save(Recipe data)
+        [HttpPost]
+        public IActionResult Save(Recipe data, IFormFile? uploadPhoto, IFormFile? uploadVideo)
         {
             ViewBag.Title = data.RecipeID == 0 ? "Tạo công thức mới" : "Cập nhật công thức";
             //Kiểm tra dữ liệu đầu vào có hợp lệ hay không => Ghi Task List
             if (string.IsNullOrWhiteSpace(data.RecipeName))
                 ModelState.AddModelError(nameof(data.RecipeName), "Tên công thức không được để trống");
             data.Description = data.Description ?? "";
+            if(data.PrepTime == 0)
+            {
+                ModelState.AddModelError(nameof(data.PrepTime), "Thời gian nấu không được để trống");
+            }
+            if (string.IsNullOrEmpty(data.Serving))
+            {
+                ModelState.AddModelError(nameof(data.Serving), "Khẩu phần không được để trống");
+            }
+            //Xử lý với ảnh upload (nếu có ảnh upload thì lưu ảnh và gán lại tên file ảnh mới cho employee)
+            if (uploadPhoto != null)
+            {
+                string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}"; //Tên file sẽ lưu
+                string folder = Path.Combine(ApplicationContext.WebRootPath, @"Themes\images\recipe"); //đường dẫn đến thư mục lưu file
+                string filePath = Path.Combine(folder, fileName); //Đường dẫn đến file cần lưu D:\images\products\photo.png
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    uploadPhoto.CopyTo(stream);
+                }
+                data.RecipeImage = fileName;
+            }
+            else
+            {
+                ModelState.AddModelError(nameof(data.RecipeImage), "Phải có 1 hình ảnh của món ăn!");
+            }
+            if (uploadVideo != null)
+            {
+                string fileName = $"{DateTime.Now.Ticks}_{uploadVideo.FileName}"; //Tên file sẽ lưu
+                string folder = Path.Combine(ApplicationContext.WebRootPath, @"Themes\videos"); //đường dẫn đến thư mục lưu file
+                string filePath = Path.Combine(folder, fileName); //Đường dẫn đến file cần lưu D:\images\products\photo.png
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    uploadVideo.CopyTo(stream);
+                }
+                data.RecipeVideo = fileName;
+            }
             //Nếu tồn tại lỗi => Trả về view để người sd nhập lại cho đúng
             if (!ModelState.IsValid)
             {
@@ -112,7 +176,7 @@ namespace CookinRecipe.Web.Controllers
         public IActionResult Delete(long id = 0)
         {
             RecipeDataService.Delete(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "User");
         }
     }
 }

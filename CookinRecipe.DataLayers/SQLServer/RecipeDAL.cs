@@ -306,7 +306,7 @@ namespace CookinRecipe.DataLayers.SQLServer
                 var sql = @"select * from (
 	            select * , row_number() over (order by CreatedAt desc) as RowNumber
 	            from Recipes
-	            where (RecipeName like @searchValue) or (Description like @searchValue
+	            where (RecipeName like @searchValue) or (Description like @searchValue)
             ) as t
             where (@pageSize = 0) or (RowNumber between (@page - 1) * @pageSize+1 and @page * @pageSize)
             order by RowNumber;";

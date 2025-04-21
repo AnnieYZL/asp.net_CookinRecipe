@@ -43,4 +43,8 @@ namespace CookinRecipe.Web.Models
 	{
 		public List<Dish>? Data { get; set; }
 	}
+	public class RecipeSResult : PaginationSearchResult
+	{
+        public List<Recipe>? Data { get; set; }
+    }
 }
