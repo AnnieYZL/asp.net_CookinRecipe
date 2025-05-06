@@ -32,7 +32,7 @@ namespace CookinRecipe.DataLayers
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        int Add(Recipe data);
+        long Add(Recipe data);
 
         /// <summary>
         /// Cập nhật công thức
@@ -49,12 +49,12 @@ namespace CookinRecipe.DataLayers
         bool Delete(long RecipeID);
 
         /// <summary>
-        /// Thêm danh sách Step của 1 công thức
+        /// Thêm 1 Step của 1 công thức
         /// </summary>
         /// <param name="RecipeID"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        int AddSteps(long RecipeID, List<Step> data);
+        int AddSteps(Step data);
 
         /// <summary>
         /// Lấy danh sách bước làm của công thức
@@ -76,7 +76,7 @@ namespace CookinRecipe.DataLayers
         /// <param name="RecipeID"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        int AddNotes(long RecipeID, List<Note> data);
+        int AddNotes(Note data);
 
         /// <summary>
         /// Lấy danh sách ghi chú của công thức
@@ -91,6 +91,20 @@ namespace CookinRecipe.DataLayers
         /// <param name="data"></param>
         /// <returns></returns>
         bool DeleteNotes(long RecipeID);
+
+        /// <summary>
+        /// Xóa danh sách thực đơn chứa công thức trước khi cập nhật
+        /// </summary>
+        /// <param name="RecipeID"></param>
+        /// <returns></returns>
+        bool DeleteRecipeInCourse(long RecipeID);
+        /// <summary>
+        /// Thêm 1 công thức vào thực đơn
+        /// </summary>
+        /// <param name="CourseID"></param>
+        /// <param name="RecipeID"></param>
+        /// <returns></returns>
+        int AddRecipeInCourse(int CourseId, long  RecipeID);
 
         /// <summary>
         /// Đếm số lượng lượt thích của công thức
@@ -125,13 +139,19 @@ namespace CookinRecipe.DataLayers
 		/// <param name="RecipeID"></param>
 		/// <returns></returns>
 		IList<Ingredient> ListMainIngredients(long RecipeID);
-
-		/// <summary>
-		/// Xóa danh sách nguyên liệu của công thức trước khi cập nhật
+        /// <summary>
+		/// Lấy ds nguyên liệu của công thức
 		/// </summary>
-		/// <param name="data"></param>
+		/// <param name="RecipeID"></param>
 		/// <returns></returns>
-		bool DeleteIngredients(long RecipeID);
+		IList<Ingredient> ListTagIngredients(long RecipeID);
+
+        /// <summary>
+        /// Xóa danh sách nguyên liệu của công thức trước khi cập nhật
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        bool DeleteIngredients(long RecipeID);
         /// <summary>
         /// Đếm số lượng bình luận của 1 công thức
         /// </summary>
@@ -184,5 +204,19 @@ namespace CookinRecipe.DataLayers
 		/// </summary>
 		/// <returns></returns>
 		IList<Recipe> ListRecipeOfUser(long id);
+        /// <summary>
+        /// Lấy những thực đơn có chứa ct
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        IList<Course> GetCoursesOf(long id);
+        /// <summary>
+        /// Set chỉ số năng lượng cho công thức
+        /// </summary>
+        /// <param name="listIngredient"></param>
+        /// <param name="listQuantity"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        bool SetEnergy(long id);
 	}
 }

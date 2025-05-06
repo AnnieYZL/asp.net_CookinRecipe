@@ -91,5 +91,10 @@ namespace CookinRecipe.DataLayers.SQLServer
         {
             throw new NotImplementedException();
         }
+
+        public IList<Notification> GetAll()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

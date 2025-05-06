@@ -18,19 +18,13 @@
 				<ul id="searchList"
 					class="hidden absolute font-sans left-1/2 transform -translate-x-1/2 mt-12 bg-white shadow-lg rounded-lg w-40">
 					<li class="cursor-pointer hover:bg-gray-100 p-2 rounded">
-						<a class="text-sm" href="@Url.Action("Index", "Recipe")">Tên món</a>
+						<a class="text-sm" href="@Url.Action("Index", "Recipe")">Từ khóa</a>
 					</li>
 					<li class="cursor-pointer hover:bg-gray-100 p-2 rounded">
 						<a class="text-sm" href="@Url.Action("Index", "Course")">Thực đơn</a>
 					</li>
 					<li class="cursor-pointer hover:bg-gray-100 p-2 rounded">
-						<a class="text-sm" href="@Url.Action("Index", "Dish")">Món ăn</a>
-					</li>
-					<li class="cursor-pointer hover:bg-gray-100 p-2 rounded">
 						<a class="text-sm" href="@Url.Action("Index", "Ingredient")">Nguyên liệu</a>
-					</li>
-					<li class="cursor-pointer hover:bg-gray-100 p-2 rounded">
-						<a class="text-sm" href="#Tips">Mẹo tư vấn</a>
 					</li>
 				</ul>
 				<script>
@@ -74,7 +68,7 @@
 						<div class="relative">
 							<button id="messageButton" data-userid="@long.Parse(@userData.UserId)" class="text-blue-600 hover:text-blue-700">
 								<i class="fas fa-bell text-xl"></i>
-								<span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">99+</span>
+								<!-- <span class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full px-1">99+</span> -->
 							</button>
 							<div id="messageDropdown"
 								 class="scrollbar-hidden hover:scrollbar-show hidden absolute -right-4 mt-2 w-52 md:w-64 bg-white shadow-lg rounded-lg max-h-60 overflow-y-auto">
@@ -247,24 +241,10 @@
 					</a>
 				</li>
 				<li>
-					<a href="~/Dish/Index"
-					   class="block text-sm px-2 py-4 hover:bg-gray-100 transition duration-300 text-base font-regular">
-						Món
-						ăn
-					</a>
-				</li>
-				<li>
 					<a href="~/Ingredient/Index"
 					   class="block text-sm px-2 py-4 hover:bg-gray-100 transition duration-300 text-base font-regular">
 						Nguyên
 						liệu
-					</a>
-				</li>
-				<li>
-					<a href="#Tips"
-					   class="block text-sm px-2 py-4 hover:bg-gray-100 transition duration-300 text-base font-regular">
-						Mẹo
-						tư vấn
 					</a>
 				</li>
 			</ul>

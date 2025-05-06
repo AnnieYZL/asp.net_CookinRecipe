@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CookinRecipe.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+62e94da73fbd59ea5ca5e52e9df86b64003904b1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+673c861f922354f686119d5553e1125e96182d27")]
 [assembly: System.Reflection.AssemblyProductAttribute("CookinRecipe.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CookinRecipe.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

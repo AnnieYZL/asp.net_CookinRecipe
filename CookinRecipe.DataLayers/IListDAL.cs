@@ -9,7 +9,7 @@ namespace CookinRecipe.DataLayers
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        int Add(List data);
+        long Add(List data);
         /// <summary>
         /// Đếm số danh sách của người dùng
         /// </summary>
@@ -46,5 +46,11 @@ namespace CookinRecipe.DataLayers
         /// <param name="ListID"></param>
         /// <returns></returns>
         int GetListQuantity(long ListID);
+        /// <summary>
+        /// Lấy ds ct trong 1 list
+        /// </summary>
+        /// <param name="ListID"></param>
+        /// <returns></returns>
+        IList<Recipe> GetRecipesOf(long ListID);
     }
 }

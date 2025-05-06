@@ -2,6 +2,7 @@
 using Dapper;
 using System.Buffers;
 using System.Reflection;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CookinRecipe.DataLayers.SQLServer
 {
@@ -11,26 +12,28 @@ namespace CookinRecipe.DataLayers.SQLServer
         {
         }
 
-        public float Energy(Recipe data)
+        public bool SetEnergy(long recipeId)
         {
-            float energy = 0;
+            bool result = false;
             using (var connection = OpenConnection())
             {
-                var sql = @"select sum(i.Energy*r.Quantity)
-                            from RecipeIngredients r
+                var sql = @"update Recipes
+							set Energy = (select sum(i.Energy*r.Quantity)
+                                from RecipeIngredients r
 	                            join Ingredients i on r.IngredientID = i.IngredientID
-                            where r.RecipeID = @RecipeID";
-                var parameters = new { RecipeID = data.RecipeID };
-                energy = connection.QueryFirstOrDefault<float>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
+                                where r.RecipeID = @RecipeID)
+							where RecipeID = @RecipeID";
+                var parameters = new { RecipeID = recipeId };
+                result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
                 connection.Close();
             }
-            return energy;
+            return result;
         }
 
-        public int Add(Recipe data)
+        public long Add(Recipe data)
         {
-            int id = 0;
-            float energy = Energy(data);
+            long id = 0;
+            float energy = 0;
             using (var connection = OpenConnection())
             {
                 var sql = @"insert into Recipes(RecipeName, Description, CreatedAt, PrepTime, Serving, Difficulty, RecipeImage, RecipeVideo, Energy, AuthorID, IsVerify, IsRemove) 
@@ -49,7 +52,7 @@ namespace CookinRecipe.DataLayers.SQLServer
                     IsVerify = data.IsVerify,
                     IsRemove = data.IsRemove,
                 };
-                id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
+                id = connection.ExecuteScalar<long>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
             }
             return id;
@@ -77,45 +80,40 @@ namespace CookinRecipe.DataLayers.SQLServer
             return id;
         }
 
-        public int AddNotes(long RecipeID, List<Note> data)
+        public int AddNotes(Note data)
         {
             int id = 0;
             using (var connection = OpenConnection())
             {
                 var sql = @"insert into Notes(RecipeID, NoteNumber, NoteContent) 
                             VALUES(@RecipeID, @NoteNumber, @NoteContent); select @@IDENTITY";
-                foreach (var note in data)
-                {
+               
                     var parameters = new
                     {
-                        RecipeID = RecipeID,
-                        NoteNumber = note.NoteNumber,
-                        NoteContent = note.NoteContent ?? "",
+                        RecipeID = data.RecipeID,
+                        NoteNumber = data.NoteNumber,
+                        NoteContent = data.NoteContent ?? "",
                     };
                     id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
-                }
                 connection.Close();
             }
             return id;
         }
 
-        public int AddSteps(long RecipeID, List<Step> data)
+        public int AddSteps(Step data)
         {
             int id = 0;
             using (var connection = OpenConnection())
             {
-                var sql = @"insert into Notes(RecipeID, StepNumber, Description) 
+                var sql = @"insert into Steps(RecipeID, StepNumber, Description) 
                             VALUES(@RecipeID, @StepNumber, @Description); select @@IDENTITY";
-                foreach (var step in data)
-                {
                     var parameters = new
                     {
-                        RecipeID = RecipeID,
-                        StepNumber = step.StepNumber,
-                        Description = step.Description ?? "",
+                        RecipeID = data.RecipeID,
+                        StepNumber = data.StepNumber,
+                        Description = data.Description ?? "",
                     };
                     id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
-                }
                 connection.Close();
             }
             return id;
@@ -497,5 +495,74 @@ namespace CookinRecipe.DataLayers.SQLServer
 			}
 			return data;
 		}
-	}
+
+        public IList<Ingredient> ListTagIngredients(long RecipeID)
+        {
+            List<Ingredient> data = new List<Ingredient>();
+            using (var connection = OpenConnection())
+            {
+                var sql = @"select i.*
+                            from RecipeIngredients p
+	                            join Ingredients i on p.IngredientID = i.IngredientID
+                            where p.RecipeID = @RecipeID";
+                var parameters = new
+                {
+                    RecipeID = RecipeID
+                };
+                data = connection.Query<Ingredient>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text).ToList();
+            }
+            return data;
+        }
+
+        public IList<Course> GetCoursesOf(long id)
+        {
+            List<Course> data = new List<Course>();
+            using (var connection = OpenConnection())
+            {
+                var sql = @"select c.*
+                            from CourseRecipes cr
+	                            join Courses c on c.CourseID = cr.CourseID
+                            where cr.RecipeID = @RecipeID";
+                var parameters = new
+                {
+                    RecipeID = id
+                };
+                data = connection.Query<Course>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text).ToList();
+            }
+            return data;
+        }
+
+        public bool DeleteRecipeInCourse(long RecipeID)
+        {
+            bool result = false;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"delete from CourseRecipes
+	                        where RecipeID = @RecipeId;";
+                var parameters = new { RecipeId = RecipeID };
+                result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
+                connection.Close();
+            }
+            return result;
+        }
+
+        public int AddRecipeInCourse(int CourseId, long RecipeID)
+        {
+            int id = 0;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"insert into CourseRecipes(RecipeID, CourseID) 
+                            VALUES(@RecipeID, @CourseID); select @@IDENTITY";
+                    var parameters = new
+                    {
+                        RecipeID = RecipeID,
+                        CourseID = CourseId,
+                    };
+                    id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
+                connection.Close();
+            }
+            return id;
+        }
+
+    }
 }

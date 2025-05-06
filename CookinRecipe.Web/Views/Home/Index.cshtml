@@ -62,10 +62,16 @@
 			</div>
 			<div class='px-3 pb-1 flex flex-row'>
 				@foreach(var i in RecipeDataService.GetMainIngredient(item.RecipeID)){
-				<a href="~/Ingredient/Index/@i.IngredientID">
+						<a href="~/Ingredient/Index?ingredientId=@i.IngredientID">
 					<span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">@i.IngredientName</span>
 				</a>
 				}
+					@foreach (var h in RecipeDataService.GetCoursesOf(item.RecipeID))
+					{
+						<a href="~/Course/Detail?courseId=@h.CourseID">
+							<span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">@h.CourseName</span>
+						</a>
+					}
 			</div>
 
 			<div class="px-4 pb-2 flex flex-row">

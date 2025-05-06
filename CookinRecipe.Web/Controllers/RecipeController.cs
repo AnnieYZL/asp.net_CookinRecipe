@@ -2,6 +2,8 @@
 using CookinRecipe.DomainModels;
 using CookinRecipe.Web.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using static Azure.Core.HttpHeader;
 
 namespace CookinRecipe.Web.Controllers
 {
@@ -112,7 +114,7 @@ namespace CookinRecipe.Web.Controllers
             return View("Edit", recipe);
 		}
         [HttpPost]
-        public IActionResult Save(Recipe data, IFormFile? uploadPhoto, IFormFile? uploadVideo)
+        public IActionResult Save(List<string> StepList, List<string> NoteList, List<int> IngredientList, List<int> QuantityList, List<int> CourseList, Recipe data, IFormFile? uploadPhoto, IFormFile? uploadVideo)
         {
             ViewBag.Title = data.RecipeID == 0 ? "Tạo công thức mới" : "Cập nhật công thức";
             //Kiểm tra dữ liệu đầu vào có hợp lệ hay không => Ghi Task List
@@ -140,10 +142,6 @@ namespace CookinRecipe.Web.Controllers
                 }
                 data.RecipeImage = fileName;
             }
-            else
-            {
-                ModelState.AddModelError(nameof(data.RecipeImage), "Phải có 1 hình ảnh của món ăn!");
-            }
             if (uploadVideo != null)
             {
                 string fileName = $"{DateTime.Now.Ticks}_{uploadVideo.FileName}"; //Tên file sẽ lưu
@@ -165,18 +163,273 @@ namespace CookinRecipe.Web.Controllers
             //Gọi chức năng xử lý dưới tầng tác nghiệp nếu quá trình kiểm soát lỗi không phát hiện lỗi đầu vào
             if (data.RecipeID == 0)
             {
-                RecipeDataService.Add(data);
+                long recipeId = RecipeDataService.Add(data);
+                int n = IngredientList.Count;
+                if (n == QuantityList.Count && n > 0)
+                {
+                    List<RecipeIngredient> nl = new List<RecipeIngredient>();
+                    for (int i = 0; i < n; i++)
+                    {
+                        nl.Add(new RecipeIngredient
+                        {
+                            RecipeID = recipeId,
+                            IngredientID = IngredientList[i],
+                            Quantity = QuantityList[i]
+                        });
+                    }
+                    RecipeDataService.AddIngredients(nl);
+                }
+                if (StepList.Count > 0)
+                {
+                    int j = 0;
+                    for (int i = 0; i < StepList.Count; i++)
+                    {
+                        if (StepList[i].Trim() != null || StepList[i].Trim() != "")
+                        {
+                            Step st = new Step
+                            {
+                                RecipeID = recipeId,
+                                StepNumber = j + 1,
+                                Description = StepList[i]
+                            };
+                            RecipeDataService.AddSteps(st);
+                            j++;
+                        }
+                    }
+                    
+                }
+                if(NoteList.Count > 0) { 
+                    int j=0;
+                    for (int i = 0; i < NoteList.Count; i++)
+                    {
+                            if(NoteList[i].Trim() != null || NoteList[i].Trim() != "")
+                        {
+                                Note nt = new Note
+                                {
+                                    RecipeID = recipeId,
+                                    NoteNumber = j + 1,
+                                    NoteContent = NoteList[i]
+                                };
+                                RecipeDataService.AddNotes(nt);
+                                j++;
+                            }
+                    }
+                    
+
+                }
+                if (CourseList.Count > 0)
+                {
+                    for (int i = 0; i < CourseList.Count; i++)
+                    {
+                        RecipeDataService.AddRecipeInCourse(CourseList[i], recipeId);
+                    }
+                }
+                RecipeDataService.SetEnergy(recipeId);
+                return RedirectToAction("Detail", new { id = recipeId });
             }
             else
             {
+                long recipeId = data.RecipeID;
+                RecipeDataService.DeleteSteps(recipeId);
+                RecipeDataService.DeleteIngredients(recipeId);
+                RecipeDataService.DeleteNotes(recipeId);
+                RecipeDataService.DeleteRecipeInCourse(recipeId);
+                int n = IngredientList.Count;
+                if (n == QuantityList.Count && n > 0)
+                {
+                    List<RecipeIngredient> nl = new List<RecipeIngredient>();
+                    for (int i = 0; i < n; i++)
+                    {
+                        nl.Add(new RecipeIngredient
+                        {
+                            RecipeID = recipeId,
+                            IngredientID = IngredientList[i],
+                            Quantity = QuantityList[i]
+                        });
+                    }
+                    RecipeDataService.AddIngredients(nl);
+                }
+                if (StepList.Count > 0)
+                {
+                    int j = 0;
+                    for (int i = 0; i < StepList.Count; i++)
+                    {
+                        if (StepList[i].Trim() != null || StepList[i].Trim() != "")
+                        {
+                            Step st = new Step
+                            {
+                                RecipeID = recipeId,
+                                StepNumber = j + 1,
+                                Description = StepList[i]
+                            };
+                            RecipeDataService.AddSteps(st);
+                            j++;
+                        }                   
+                    }
+
+                }
+                if (NoteList.Count > 0)
+                {
+                    int j = 0;
+                    for (int i = 0; i < NoteList.Count; i++)
+                    {
+                        if (NoteList[i].Trim() != null || NoteList[i].Trim() != "")
+                        {
+                            Note nt = new Note
+                            {
+                                RecipeID = recipeId,
+                                NoteNumber = j + 1,
+                                NoteContent = NoteList[i]
+                            };
+                            RecipeDataService.AddNotes(nt);
+                            j++;
+                        }
+                    }
+
+                }
+                if (CourseList.Count > 0)
+                {
+                    for (int i = 0; i < CourseList.Count; i++)
+                    {
+                        RecipeDataService.AddRecipeInCourse(CourseList[i], recipeId);
+                    }
+                }
                 RecipeDataService.Update(data);
+                RecipeDataService.SetEnergy(recipeId);
+                return RedirectToAction("Detail", new {id = recipeId});
             }
-            return RedirectToAction("Detail");
         }
         public IActionResult Delete(long id = 0)
         {
+            
+            RecipeDataService.DeleteNotes(id);
+            RecipeDataService.DeleteSteps(id);
+            RecipeDataService.DeleteIngredients(id);
+            RecipeDataService.DeleteRecipeInCourse(id);
             RecipeDataService.Delete(id);
             return RedirectToAction("Index", "User");
         }
+        [HttpPost]
+        public JsonResult CreateList(string listName)
+        {
+            try
+            {
+                var user = User.GetUserData();
+                if (user == null || string.IsNullOrWhiteSpace(listName))
+                    return Json(new { success = false, message = "Thiếu thông tin" });
+
+                var userId = long.Parse(user.UserId);
+                long newListId = ListDataService.AddList(new List
+                {
+                    ListName = listName,
+                    UserID = userId,
+                    ListImage = null
+                });
+                return Json(new { success = true, listId = newListId });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+        [HttpPost]
+        public JsonResult SaveToList(long recipeId, List<long> listIds)
+        {
+            try
+            {
+                var user = User.GetUserData();
+                if (user == null)
+                    return Json(new { success = false, message = "Chưa đăng nhập" });
+                foreach (var listId in listIds)
+                {
+                    RecipeDataService.AddToList(recipeId, listId);
+                }
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Công thức đã được lưu trong danh sách này rồi!" });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult RateRecipe(long recipeId, int rating)
+        {
+            var user = User.GetUserData();
+            if (user == null)
+                return Json(new { success = false, message = "Bạn cần đăng nhập để đánh giá." });
+            try
+            {
+                if (RatingDataService.CheckExistRate(long.Parse(user.UserId), recipeId)==true)
+                {
+                    RatingDataService.UpdateRating(new Rating
+                    {
+                        UserID = long.Parse(user.UserId),
+                        RecipeID = recipeId,
+                        Point = rating,
+                        IsCancel = false
+                    });
+                }
+                else
+                {
+                    RatingDataService.AddRating(new Rating
+                    {
+                        UserID = long.Parse(user.UserId),
+                        RecipeID = recipeId,
+                        Point = rating,
+                        IsCancel = false
+                    });
+                }
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        public JsonResult GetUserRating(long recipeId)
+        {
+            var user = User.GetUserData();
+            if (user == null)
+                return Json(new { success = false });
+
+            var rating = RatingDataService.CheckRate(long.Parse(user.UserId), recipeId);
+            return Json(new { success = true, rating = rating });
+        }
+
+        [HttpPost]
+        public JsonResult ToggleLike(long recipeId)
+        {
+            var user = User.GetUserData();
+            if (user == null)
+                return Json(new { success = false, message = "Bạn cần đăng nhập để like." });
+
+            long userId = long.Parse(user.UserId);
+
+            bool hasLiked = FavouriteDataService.CheckFav(userId, recipeId);
+
+            if (hasLiked)
+                FavouriteDataService.Delete(new Favourite
+                {
+                    UserID = userId,
+                    RecipeID = recipeId,
+                    IsCancel = true
+                });
+            else
+                FavouriteDataService.AddFav(new Favourite
+                {
+                    UserID = userId,
+                    RecipeID = recipeId,
+                    IsCancel = false
+                });
+
+            int likeCount = RecipeDataService.CountFav(recipeId);
+            return Json(new { success = true, liked = !hasLiked, likeCount = likeCount });
+        }
+
+
     }
 }

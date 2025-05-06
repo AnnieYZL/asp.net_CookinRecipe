@@ -9,9 +9,9 @@ namespace CookinRecipe.DataLayers.SQLServer
         {
         }
 
-        public int Add(List data)
+        public long Add(List data)
         {
-            int id = 0;
+            long id = 0;
             using (var connection = OpenConnection())
             {
                 var sql = @"insert into Lists(UserID, ListName, ListImage) 
@@ -22,7 +22,7 @@ namespace CookinRecipe.DataLayers.SQLServer
                     ListName = data.ListName ?? "",
                     ListImage = data.ListImage ?? ""
                 };
-                id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
+                id = connection.ExecuteScalar<long>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
             }
             return id;
@@ -122,6 +122,23 @@ namespace CookinRecipe.DataLayers.SQLServer
                 connection.Close();
             }
             return count;
+        }
+
+        public IList<Recipe> GetRecipesOf(long ListID)
+        {
+            List<Recipe> data = new List<Recipe>();
+            using (var connection = OpenConnection())
+            {
+                var sql = @"select r.*
+                            from ListRecipes l join Recipes r on l.RecipeID = r.RecipeID
+                            where l.ListID = @ListId";
+                var parameters = new
+                {
+                    ListId = ListID
+                };
+                data = connection.Query<Recipe>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text).ToList();
+            }
+            return data;
         }
     }
 }

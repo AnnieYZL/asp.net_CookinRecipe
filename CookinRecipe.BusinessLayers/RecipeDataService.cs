@@ -16,7 +16,7 @@ namespace CookinRecipe.BusinessLayers
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static int Add(Recipe data)
+        public static long Add(Recipe data)
         {
             return recipeDB.Add(data);
         }
@@ -93,9 +93,9 @@ namespace CookinRecipe.BusinessLayers
         /// <param name="RecipeID"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static int AddNotes(long RecipeID, List<Note> data)
+        public static int AddNotes(Note data)
         {
-            return recipeDB.AddNotes(RecipeID, data);
+            return recipeDB.AddNotes(data);
         }
         /// <summary>
         /// Xóa ds ghi chú của công thức
@@ -121,9 +121,9 @@ namespace CookinRecipe.BusinessLayers
         /// <param name="RecipeID"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static int AddSteps(long RecipeID, List<Step> data)
+        public static int AddSteps(Step data)
         {
-            return recipeDB.AddSteps(RecipeID, data);
+            return recipeDB.AddSteps(data);
         }
         /// <summary>
         /// Xóa ds bước làm của công thức
@@ -251,6 +251,51 @@ namespace CookinRecipe.BusinessLayers
         {
             return recipeDB.ListRecipeOfUser(id).ToList();
         }
-
-	}
+        /// <summary>
+        /// Lấy taglist nguyên liệu
+        /// </summary>
+        /// <param name="RecipeID"></param>
+        /// <returns></returns>
+        public static IList<Ingredient> ListTagIngredients(long RecipeID)
+        {
+            return recipeDB.ListTagIngredients(RecipeID).ToList();
+        }
+        /// <summary>
+        /// Lấy ds thực đơn có chứa ct
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static IList<Course> GetCoursesOf(long id)
+        {
+            return recipeDB.GetCoursesOf(id).ToList();
+        }
+        /// <summary>
+        /// Xóa ds thực đơn có chứa ct
+        /// </summary>
+        /// <param name="RecipeID"></param>
+        /// <returns></returns>
+        public static bool DeleteRecipeInCourse(long RecipeID)
+        {
+            return recipeDB.DeleteRecipeInCourse(RecipeID);
+        }
+        /// <summary>
+        /// Thêm ct vào ds thực đơn
+        /// </summary>
+        /// <param name="CourseList"></param>
+        /// <param name="RecipeID"></param>
+        /// <returns></returns>
+        public static int AddRecipeInCourse(int CourseId, long RecipeID)
+        {
+            return recipeDB.AddRecipeInCourse(CourseId, RecipeID);
+        }
+        /// <summary>
+        /// Set chỉ số năng lượng cho công thức
+        /// </summary>
+        /// <param name="recipeId"></param>
+        /// <returns></returns>
+        public static bool SetEnergy(long recipeId)
+        {
+            return recipeDB.SetEnergy(recipeId);
+        }
+    }
 }

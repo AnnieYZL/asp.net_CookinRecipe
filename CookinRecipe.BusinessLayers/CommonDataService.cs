@@ -221,6 +221,21 @@ namespace CookinRecipe.BusinessLayers
         {
             return notificationDB.GetList(UserID).ToList();
         }
-
+        /// <summary>
+        /// Lấy ds thực đơn k phân trang
+        /// </summary>
+        /// <returns></returns>
+        public static List<Course> GetAllCourse()
+        {
+            return courseDB.GetAll().ToList();
+        }
+        /// <summary>
+        /// Lấy ds món k phân trang
+        /// </summary>
+        /// <returns></returns>
+        public static List<Dish> GetAllDish()
+        {
+            return dishDB.GetAll().ToList();
+        }
     }
 }

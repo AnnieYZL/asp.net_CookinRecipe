@@ -126,8 +126,8 @@
 									<button type="button" class="ml-auto cursor-pointer">
 										<a href="~/Recipe/Edit/@item.RecipeID"><i class="fa fa-edit text-blue-600"></i></a>
 									</button>
-									<button type="button" class="ml-5 cursor-pointer">
-												<a href="post.html"><i class="fa fa-trash text-red-500"></i></a>
+									<button type="button" class="ml-5 cursor-pointer" onclick="return confirm('Bạn có chắc chắn muốn xóa công thức này?')">
+												<a href="~/Recipe/Delete/@item.RecipeID"><i class="fa fa-trash text-red-500"></i></a>
 									</button>
 								</div>
 							</div>

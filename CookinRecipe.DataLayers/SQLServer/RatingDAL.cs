@@ -72,15 +72,17 @@ namespace CookinRecipe.DataLayers.SQLServer
             int result = 0;
             using (var connection = OpenConnection())
             {
-                var sql = @"if exists(select * from Ratings where UserID = @UserID and RecipeID = @RecipeID and IsCancel = 0)
-                            select Point from Ratings where UserID = @UserID and RecipeID = @RecipeID and IsCancel = 0
-                            else select 0";
+                var sql = @"SELECT COALESCE((
+                                    SELECT r.Point 
+                                    FROM Ratings r 
+                                    WHERE r.UserID = @UserID AND r.RecipeID = @RecipeID AND IsCancel = 0
+                                ), 0)";
                 var parameters = new
                 {
                     UserID = userID,
                     RecipeID = recipeID
                 };
-                result = connection.QueryFirstOrDefault(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
+                result = connection.QueryFirstOrDefault<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
             }
             return result;
@@ -102,7 +104,7 @@ namespace CookinRecipe.DataLayers.SQLServer
                     UserID = userID,
                     RecipeID = recipeID
                 };
-                result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
+                result = connection.QueryFirstOrDefault<bool>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
             }
             return result;

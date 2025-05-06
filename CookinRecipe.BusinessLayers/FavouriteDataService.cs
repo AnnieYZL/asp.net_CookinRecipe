@@ -22,14 +22,14 @@ namespace CookinRecipe.BusinessLayers
         }
 
         /// <summary>
-        /// Hủy thích / Thích lại bài viết
+        /// Hủy thích bài viết
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public static bool Update(Favourite data)
+        public static bool Delete(Favourite data)
         {
-            return favouriteDB.Update(data);
+            return favouriteDB.Delete(data);
         }
         /// <summary>
         /// Kiểm tra xem người dùng có thích bài viết hay không

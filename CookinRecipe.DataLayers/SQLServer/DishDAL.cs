@@ -88,6 +88,21 @@ namespace CookinRecipe.DataLayers.SQLServer
             return data;
         }
 
+        public IList<Dish> GetAll()
+        {
+            List<Dish> data = new List<Dish>();
+            using (var connection = OpenConnection())
+            {
+                var sql = @"select *
+	                        from Dishes";
+                var parameters = new
+                {
+                };
+                data = connection.Query<Dish>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text).ToList();
+            }
+            return data;
+        }
+
         public IList<Dish> GetList(long UserID)
         {
             throw new NotImplementedException();

@@ -7,22 +7,23 @@ namespace CookinRecipe.Web.Controllers
 {
     public class IngredientController : Controller
     {
-        private const int PAGE_SIZE = 20;
-        private const string SEARCH_CONDITION = "category_search"; //Tên biến dùng để lưu trong session
-        public IActionResult Index(int page = 1, string searchValue = "")
+        private const int PAGE_SIZE = 18;
+        private const string SEARCH_CONDITION = "ingredient_search"; //Tên biến dùng để lưu trong session
+        public IActionResult Index(int page = 1, string searchValue = "", int? ingredientId = null)
         {
-            RecipeByIngredientInput? input = ApplicationContext.GetSessionData<RecipeByIngredientInput>(SEARCH_CONDITION);
-            if (input == null)
+            var input = new RecipeByIngredientInput()
             {
-                input = new RecipeByIngredientInput()
-                {
-                    Page = 1,
-                    PageSize = PAGE_SIZE,
-                    SearchValue = "",
-                    ListIngre = []
-                };
+                Page = 1,
+                PageSize = PAGE_SIZE,
+                SearchValue = "",
+                ListIngre = new List<int>()
+            };
+			if (ingredientId.HasValue && ingredientId.Value > 0)
+            {
+                input.ListIngre.Add(ingredientId.Value);
             }
-            return View(input);
+
+			return View(input);
         }
         public IActionResult Search(RecipeByIngredientInput input)
         {

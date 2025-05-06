@@ -55,10 +55,15 @@ namespace CookinRecipe.DataLayers
         /// <returns></returns>
         IList<T> GetList(long UserID);
         /// <summary>
-        /// Lấy danh sách công thức liên quan của trường dữ liệu
+        /// Đếm số công thức liên quan của trường dữ liệu
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         int CountRecipe(int id);
+        /// <summary>
+        /// Lấy ds dữ liệu không phân trang
+        /// </summary>
+        /// <returns></returns>
+        IList<T> GetAll();
     }
 }

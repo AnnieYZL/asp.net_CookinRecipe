@@ -1,4 +1,5 @@
-﻿using CookinRecipe.DomainModels;
+﻿using Azure;
+using CookinRecipe.DomainModels;
 using Dapper;
 using System.Buffers;
 
@@ -85,6 +86,21 @@ namespace CookinRecipe.DataLayers.SQLServer
                 var parameters = new { CourseId = id };
                 data = connection.QueryFirstOrDefault<Course>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
+            }
+            return data;
+        }
+
+        public IList<Course> GetAll()
+        {
+            List<Course> data = new List<Course>();
+            using (var connection = OpenConnection())
+            {
+                var sql = @"select *
+	                        from Courses";
+                var parameters = new
+                {
+                };
+                data = connection.Query<Course>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text).ToList();
             }
             return data;
         }

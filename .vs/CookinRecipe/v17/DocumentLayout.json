@@ -3,52 +3,84 @@
   "WorkspaceRootPath": "D:\\CookinRecipe\\Project\\CookinRecipe\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\controllers\\recipecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\controllers\\recipecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\views\\shared\\_header.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\views\\shared\\_header.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\views\\list\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\views\\list\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\views\\recipe\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\views\\recipe\\detail.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\views\\recipe\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\views\\recipe\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\views\\recipe\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\views\\recipe\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\controllers\\listcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\controllers\\listcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\views\\recipe\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\views\\recipe\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{39ECEEA4-78FE-446C-8AE0-2F711BD952B8}|CookinRecipe.BusinessLayers\\CookinRecipe.BusinessLayers.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.businesslayers\\listdataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39ECEEA4-78FE-446C-8AE0-2F711BD952B8}|CookinRecipe.BusinessLayers\\CookinRecipe.BusinessLayers.csproj|solutionrelative:cookinrecipe.businesslayers\\listdataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\views\\shared\\_header.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\views\\shared\\_header.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\controllers\\recipecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\controllers\\recipecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\views\\course\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\views\\course\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{39ECEEA4-78FE-446C-8AE0-2F711BD952B8}|CookinRecipe.BusinessLayers\\CookinRecipe.BusinessLayers.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.businesslayers\\recipedataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39ECEEA4-78FE-446C-8AE0-2F711BD952B8}|CookinRecipe.BusinessLayers\\CookinRecipe.BusinessLayers.csproj|solutionrelative:cookinrecipe.businesslayers\\recipedataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{39ECEEA4-78FE-446C-8AE0-2F711BD952B8}|CookinRecipe.BusinessLayers\\CookinRecipe.BusinessLayers.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.businesslayers\\favouritedataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39ECEEA4-78FE-446C-8AE0-2F711BD952B8}|CookinRecipe.BusinessLayers\\CookinRecipe.BusinessLayers.csproj|solutionrelative:cookinrecipe.businesslayers\\favouritedataservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30105598-0407-4F67-A778-00BE2C58BF91}|CookinRecipe.DataLayers\\CookinRecipe.DataLayers.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.datalayers\\sqlserver\\favouritedal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30105598-0407-4F67-A778-00BE2C58BF91}|CookinRecipe.DataLayers\\CookinRecipe.DataLayers.csproj|solutionrelative:cookinrecipe.datalayers\\sqlserver\\favouritedal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30105598-0407-4F67-A778-00BE2C58BF91}|CookinRecipe.DataLayers\\CookinRecipe.DataLayers.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.datalayers\\ifavouritedal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30105598-0407-4F67-A778-00BE2C58BF91}|CookinRecipe.DataLayers\\CookinRecipe.DataLayers.csproj|solutionrelative:cookinrecipe.datalayers\\ifavouritedal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\wwwroot\\themes\\styles\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\wwwroot\\themes\\styles\\main.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{30105598-0407-4F67-A778-00BE2C58BF91}|CookinRecipe.DataLayers\\CookinRecipe.DataLayers.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.datalayers\\sqlserver\\recipedal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{30105598-0407-4F67-A778-00BE2C58BF91}|CookinRecipe.DataLayers\\CookinRecipe.DataLayers.csproj|solutionrelative:cookinrecipe.datalayers\\sqlserver\\recipedal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\controllers\\coursecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{30105598-0407-4F67-A778-00BE2C58BF91}|CookinRecipe.DataLayers\\CookinRecipe.DataLayers.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.datalayers\\irecipedal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30105598-0407-4F67-A778-00BE2C58BF91}|CookinRecipe.DataLayers\\CookinRecipe.DataLayers.csproj|solutionrelative:cookinrecipe.datalayers\\irecipedal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\views\\course\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\views\\course\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{4E44BCEA-7C08-479A-878D-4B9C1217C2E2}|CookinRecipe.DomainModels\\CookinRecipe.DomainModels.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.domainmodels\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4E44BCEA-7C08-479A-878D-4B9C1217C2E2}|CookinRecipe.DomainModels\\CookinRecipe.DomainModels.csproj|solutionrelative:cookinrecipe.domainmodels\\course.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{30105598-0407-4F67-A778-00BE2C58BF91}|CookinRecipe.DataLayers\\CookinRecipe.DataLayers.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.datalayers\\sqlserver\\ingredientdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{30105598-0407-4F67-A778-00BE2C58BF91}|CookinRecipe.DataLayers\\CookinRecipe.DataLayers.csproj|solutionrelative:cookinrecipe.datalayers\\sqlserver\\ingredientdal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\views\\ingredient\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\views\\ingredient\\search.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|d:\\cookinrecipe\\project\\cookinrecipe\\cookinrecipe.web\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{584A1CB3-3E7F-424D-80DC-A6A7BB85DAB0}|CookinRecipe.Web\\CookinRecipe.Web.csproj|solutionrelative:cookinrecipe.web\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,95 +90,232 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "CourseController.cs",
-              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Controllers\\CourseController.cs",
-              "RelativeDocumentMoniker": "CookinRecipe.Web\\Controllers\\CourseController.cs",
-              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Controllers\\CourseController.cs",
-              "RelativeToolTip": "CookinRecipe.Web\\Controllers\\CourseController.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAAAQwBQAAAAtAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-18T01:16:41.572Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 7,
               "Title": "RecipeController.cs",
               "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Controllers\\RecipeController.cs",
               "RelativeDocumentMoniker": "CookinRecipe.Web\\Controllers\\RecipeController.cs",
               "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Controllers\\RecipeController.cs",
               "RelativeToolTip": "CookinRecipe.Web\\Controllers\\RecipeController.cs",
-              "ViewState": "AQIAACEAAAAAAAAAAAAowLIAAAA1AAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAKkBAAAkAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-20T11:37:10.46Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Recipe\\Index.cshtml",
-              "RelativeDocumentMoniker": "CookinRecipe.Web\\Views\\Recipe\\Index.cshtml",
-              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Recipe\\Index.cshtml",
-              "RelativeToolTip": "CookinRecipe.Web\\Views\\Recipe\\Index.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAYAAAA",
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Recipe\\Edit.cshtml",
+              "RelativeDocumentMoniker": "CookinRecipe.Web\\Views\\Recipe\\Edit.cshtml",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Recipe\\Edit.cshtml",
+              "RelativeToolTip": "CookinRecipe.Web\\Views\\Recipe\\Edit.cshtml",
+              "ViewState": "AQIAACEAAAAAAAAAAAAAAAMAAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-21T09:08:14.929Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Course\\Index.cshtml",
-              "RelativeDocumentMoniker": "CookinRecipe.Web\\Views\\Course\\Index.cshtml",
-              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Course\\Index.cshtml",
-              "RelativeToolTip": "CookinRecipe.Web\\Views\\Course\\Index.cshtml",
-              "ViewState": "AQIAACoAAAAAAAAAAAAAADcAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-21T09:08:10.518Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-21T09:54:35.263Z",
+              "IsPinned": true
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "Search.cshtml",
-              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Recipe\\Search.cshtml",
-              "RelativeDocumentMoniker": "CookinRecipe.Web\\Views\\Recipe\\Search.cshtml",
-              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Recipe\\Search.cshtml",
-              "RelativeToolTip": "CookinRecipe.Web\\Views\\Recipe\\Search.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAEkAAAASAAAA",
+              "Title": "Detail.cshtml",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Recipe\\Detail.cshtml",
+              "RelativeDocumentMoniker": "CookinRecipe.Web\\Views\\Recipe\\Detail.cshtml",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Recipe\\Detail.cshtml",
+              "RelativeToolTip": "CookinRecipe.Web\\Views\\Recipe\\Detail.cshtml",
+              "ViewState": "AQIAAO0AAAAAAAAAAAAMwPwAAABBAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-21T09:08:44.593Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Search.cshtml",
-              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Course\\Search.cshtml",
-              "RelativeDocumentMoniker": "CookinRecipe.Web\\Views\\Course\\Search.cshtml",
-              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Course\\Search.cshtml",
-              "RelativeToolTip": "CookinRecipe.Web\\Views\\Course\\Search.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAtAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-21T09:08:24.944Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-22T03:38:43.999Z",
+              "IsPinned": true
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\List\\Index.cshtml",
+              "RelativeDocumentMoniker": "CookinRecipe.Web\\Views\\List\\Index.cshtml",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\List\\Index.cshtml",
+              "RelativeToolTip": "CookinRecipe.Web\\Views\\List\\Index.cshtml",
+              "ViewState": "AQIAAGkAAAAAAAAAAAAMwI4AAAA/AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-05-04T03:14:10.621Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ListController.cs",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Controllers\\ListController.cs",
+              "RelativeDocumentMoniker": "CookinRecipe.Web\\Controllers\\ListController.cs",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Controllers\\ListController.cs",
+              "RelativeToolTip": "CookinRecipe.Web\\Controllers\\ListController.cs",
+              "ViewState": "AQIAABoAAAAAAAAAAAAmwCAAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-04T03:11:30.288Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "RecipeDataService.cs",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.BusinessLayers\\RecipeDataService.cs",
+              "RelativeDocumentMoniker": "CookinRecipe.BusinessLayers\\RecipeDataService.cs",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.BusinessLayers\\RecipeDataService.cs",
+              "RelativeToolTip": "CookinRecipe.BusinessLayers\\RecipeDataService.cs",
+              "ViewState": "AQIAAB8BAAAAAAAAAAAiwMQAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T03:44:54.428Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "_Header.cshtml",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Shared\\_Header.cshtml",
+              "RelativeDocumentMoniker": "CookinRecipe.Web\\Views\\Shared\\_Header.cshtml",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Shared\\_Header.cshtml",
+              "RelativeToolTip": "CookinRecipe.Web\\Views\\Shared\\_Header.cshtml",
+              "ViewState": "AQIAAEUAAAAAAAAAAAAMwFAAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-21T09:22:30.841Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Program.cs",
+              "RelativeDocumentMoniker": "CookinRecipe.Web\\Program.cs",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Program.cs",
+              "RelativeToolTip": "CookinRecipe.Web\\Program.cs",
+              "ViewState": "AQIAACoAAAAAAAAAAAAMwDQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T07:07:41.091Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ListDataService.cs",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.BusinessLayers\\ListDataService.cs",
+              "RelativeDocumentMoniker": "CookinRecipe.BusinessLayers\\ListDataService.cs",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.BusinessLayers\\ListDataService.cs",
+              "RelativeToolTip": "CookinRecipe.BusinessLayers\\ListDataService.cs",
+              "ViewState": "AQIAAEIAAAAAAAAAAAAAAEQAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-02T03:13:58.33Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "FavouriteDataService.cs",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.BusinessLayers\\FavouriteDataService.cs",
+              "RelativeDocumentMoniker": "CookinRecipe.BusinessLayers\\FavouriteDataService.cs",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.BusinessLayers\\FavouriteDataService.cs",
+              "RelativeToolTip": "CookinRecipe.BusinessLayers\\FavouriteDataService.cs",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAgwB0AAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-03T03:04:44.773Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "FavouriteDAL.cs",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.DataLayers\\SQLServer\\FavouriteDAL.cs",
+              "RelativeDocumentMoniker": "CookinRecipe.DataLayers\\SQLServer\\FavouriteDAL.cs",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.DataLayers\\SQLServer\\FavouriteDAL.cs",
+              "RelativeToolTip": "CookinRecipe.DataLayers\\SQLServer\\FavouriteDAL.cs",
+              "ViewState": "AQIAACUAAAAAAAAAAAAUwDIAAAAsAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-03T02:52:09.791Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IFavouriteDAL.cs",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.DataLayers\\IFavouriteDAL.cs",
+              "RelativeDocumentMoniker": "CookinRecipe.DataLayers\\IFavouriteDAL.cs",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.DataLayers\\IFavouriteDAL.cs",
+              "RelativeToolTip": "CookinRecipe.DataLayers\\IFavouriteDAL.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAABQAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-03T03:02:19.217Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "main.css",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\styles\\main.css",
+              "RelativeDocumentMoniker": "CookinRecipe.Web\\wwwroot\\Themes\\styles\\main.css",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\styles\\main.css",
+              "RelativeToolTip": "CookinRecipe.Web\\wwwroot\\Themes\\styles\\main.css",
+              "ViewState": "AQIAAGEAAAAAAAAAAAAAABMAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-05-02T03:30:40.904Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "RecipeDAL.cs",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.DataLayers\\SQLServer\\RecipeDAL.cs",
+              "RelativeDocumentMoniker": "CookinRecipe.DataLayers\\SQLServer\\RecipeDAL.cs",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.DataLayers\\SQLServer\\RecipeDAL.cs",
+              "RelativeToolTip": "CookinRecipe.DataLayers\\SQLServer\\RecipeDAL.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAqwB0AAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T09:58:41.076Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "IRecipeDAL.cs",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.DataLayers\\IRecipeDAL.cs",
+              "RelativeDocumentMoniker": "CookinRecipe.DataLayers\\IRecipeDAL.cs",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.DataLayers\\IRecipeDAL.cs",
+              "RelativeToolTip": "CookinRecipe.DataLayers\\IRecipeDAL.cs",
+              "ViewState": "AQIAANEAAAAAAAAAAAAqwNsAAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T03:42:53.57Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Course.cs",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.DomainModels\\Course.cs",
+              "RelativeDocumentMoniker": "CookinRecipe.DomainModels\\Course.cs",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.DomainModels\\Course.cs",
+              "RelativeToolTip": "CookinRecipe.DomainModels\\Course.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-24T15:27:07.958Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "IngredientDAL.cs",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.DataLayers\\SQLServer\\IngredientDAL.cs",
+              "RelativeDocumentMoniker": "CookinRecipe.DataLayers\\SQLServer\\IngredientDAL.cs",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.DataLayers\\SQLServer\\IngredientDAL.cs",
+              "RelativeToolTip": "CookinRecipe.DataLayers\\SQLServer\\IngredientDAL.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-22T07:13:03.02Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Search.cshtml",
+              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Ingredient\\Search.cshtml",
+              "RelativeDocumentMoniker": "CookinRecipe.Web\\Views\\Ingredient\\Search.cshtml",
+              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Ingredient\\Search.cshtml",
+              "RelativeToolTip": "CookinRecipe.Web\\Views\\Ingredient\\Search.cshtml",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAcAAABYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-04-22T02:50:58.419Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
               "Title": "HomeController.cs",
               "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "CookinRecipe.Web\\Controllers\\HomeController.cs",
@@ -154,38 +323,11 @@
               "RelativeToolTip": "CookinRecipe.Web\\Controllers\\HomeController.cs",
               "ViewState": "AQIAAAMAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-21T09:55:19.437Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-21T09:55:19.437Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Recipe\\Edit.cshtml",
-              "RelativeDocumentMoniker": "CookinRecipe.Web\\Views\\Recipe\\Edit.cshtml",
-              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Recipe\\Edit.cshtml",
-              "RelativeToolTip": "CookinRecipe.Web\\Views\\Recipe\\Edit.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-21T09:54:35.263Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "RecipeDAL.cs",
-              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.DataLayers\\SQLServer\\RecipeDAL.cs",
-              "RelativeDocumentMoniker": "CookinRecipe.DataLayers\\SQLServer\\RecipeDAL.cs",
-              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.DataLayers\\SQLServer\\RecipeDAL.cs",
-              "RelativeToolTip": "CookinRecipe.DataLayers\\SQLServer\\RecipeDAL.cs",
-              "ViewState": "AQIAALkAAAAAAAAAAAAewD4BAACBAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-21T09:33:54.202Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 19,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "CookinRecipe.Web\\Views\\Shared\\_Layout.cshtml",
@@ -193,34 +335,7 @@
               "RelativeToolTip": "CookinRecipe.Web\\Views\\Shared\\_Layout.cshtml",
               "ViewState": "AQIAAG8AAAAAAAAAAAAAAH0AAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-21T09:25:33.71Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "_Header.cshtml",
-              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Shared\\_Header.cshtml",
-              "RelativeDocumentMoniker": "CookinRecipe.Web\\Views\\Shared\\_Header.cshtml",
-              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Shared\\_Header.cshtml",
-              "RelativeToolTip": "CookinRecipe.Web\\Views\\Shared\\_Header.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAA7AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-21T09:22:30.841Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "CookinRecipe.Web\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "CookinRecipe.Web\\Views\\Home\\Index.cshtml",
-              "ViewState": "AQIAADAAAAAAAAAAAAAAAF0AAAA4AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-04-21T09:12:18.46Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-21T09:25:33.71Z"
             }
           ]
         }

@@ -77,6 +77,11 @@ namespace CookinRecipe.DataLayers.SQLServer
             return data;
         }
 
+        public IList<Ingredient> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
         public IList<Ingredient> GetList(long UserID)
         {
             throw new NotImplementedException();

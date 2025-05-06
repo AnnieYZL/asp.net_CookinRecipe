@@ -1,12 +1,14 @@
 ﻿@using CookinRecipe.BusinessLayers
 @model Recipe
 @{
-
+    var ingredientsJson = Newtonsoft.Json.JsonConvert.SerializeObject(CommonDataService.ListIngredient());
+    var coursesJson = Newtonsoft.Json.JsonConvert.SerializeObject(CommonDataService.GetAllCourse());
 }
 <div class="mx-auto mt-20 md:max-w-6xl w-full bg-white p-6 rounded-lg shadow">
     <div class="text-3xl font-bold text-blue-600 mb-4">@ViewBag.Title</div>
     <form class="form-horizontal" action="~/Recipe/Save" method="post" enctype="multipart/form-data">
         <input type="hidden" name="@nameof(Model.RecipeID)" value="@Model.RecipeID" />
+        <input type="hidden" name="@nameof(Model.AuthorID)" value="@User.GetUserData().UserId" />
         <label class="block mb-2 text-lg font-sans">Hình ảnh của món ăn</label>
         <div class="form-group">
             <div class="col-sm-10">
@@ -17,12 +19,12 @@
         </div>
         <div class="form-group">
             <div class="col-lg-offset-2 col-sm-10 mb-2">
-                <img id="RecipePhoto" src="~/Themes/images/recipe/@Model.RecipeImage" class="img img-bordered font-sans" style="width:250px" alt="Chưa chọn hình ảnh" />
+                <img id="RecipePhoto" src="~/Themes/images/recipe/@Model.RecipeImage" class="img img-bordered font-sans" style="width:250px" />
             </div>
         </div>
 
         <div class="font-sans mb-4 text-sm text-gray-500" id="user_avatar_help">Hình ảnh thành quả của món ăn.</div>
-        
+        <p class="text-red-500 font-sans">@Html.ValidationMessage(nameof(Model.RecipeImage))</p>
 
         <label class="block font-sans text-lg mb-2">Video hướng dẫn (Không bắt buộc)</label>
         <div class="form-group">
@@ -60,23 +62,21 @@
         </script>
 
         <div class="font-sans mb-4 text-sm text-gray-500" id="user_avatar_help">
-            Video hướng dẫn giúp mọi người thực hiện món
-            ăn dễ dàng hơn.
+            Video hướng dẫn giúp mọi người thực hiện món ăn dễ dàng hơn.
         </div>
 
         <label class="block font-sans text-lg mb-2">Tên món ăn</label>
         <input type="text" name="@nameof(Model.RecipeName)" value="@Model.RecipeName"
                class="w-full font-sans p-2 border bg-blue-50 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-4"
                placeholder="Nhập tên món ăn">
-        @Html.ValidationMessage(nameof(Model.RecipeName))
+        <p class="text-red-500 font-sans">@Html.ValidationMessage(nameof(Model.RecipeName))</p>
 
         <label class="block text-lg font-sans mb-2">Mô tả</label>
         <input type="text" name="@nameof(Model.Description)" value="@Model.Description"
                class="w-full font-sans p-2 border bg-blue-50 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-4"
                placeholder="Nhập mô tả">
-        @Html.ValidationMessage(nameof(Model.Description))
 
-        <label class="block text-lg mb-2">Mức độ</label>
+        <label class="block text-lg font-sans mb-2">Mức độ</label>
         <select name="@nameof(Model.Difficulty)" class="w-full font-sans p-2 border mb-4 border-gray-300 bg-blue-50 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600">
             @if(Model.RecipeID==0)
             {
@@ -108,13 +108,13 @@
         <input type="number" name="@nameof(Model.PrepTime)" value="@Model.PrepTime"
                class="bg-blue-50 font-sans border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 w-full p-2 border mb-4"
                placeholder="Nhập thời gian">
-        @Html.ValidationMessage(nameof(Model.PrepTime))
+        <p class="text-red-500 font-sans">@Html.ValidationMessage(nameof(Model.PrepTime))</p>
 
         <label class="block text-lg font-sans mb-2">Khẩu phần (số người ăn)</label>
         <input type="text" name="@nameof(Model.Serving)" value="@Model.Serving"
                class="bg-blue-50 font-sans w-full p-2 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-4"
                placeholder="Nhập số người ăn">
-        @Html.ValidationMessage(nameof(Model.Serving))
+        <p class="text-red-500 font-sans">@Html.ValidationMessage(nameof(Model.Serving))</p>
 
         <label class="block text-lg font-sans mb-2">Nguyên liệu</label>
         <input type="text" id="ingredient-search"
@@ -123,13 +123,51 @@
         <div id="ingredient-suggestions"
              class="border bg-blue-50 font-sans border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 shadow p-2 hidden">
         </div>
-        <div id="selected-ingredients" class="mb-4 font-sans"></div>
+        <div id="selected-ingredients" class="mb-4 font-sans">
+            @if (RecipeDataService.ListIngredients(Model.RecipeID).Count > 0)
+            {
+                foreach (var item in RecipeDataService.ListIngredients(Model.RecipeID))
+                {
+                    <div class="flex gap-2 mb-2 items-center existing-ingre">
+                    <span class="p-2 border rounded bg-gray-100">@CommonDataService.GetIngredient(item.IngredientID).IngredientName</span>
+                        <input type="hidden" name="IngredientList" value="@item.IngredientID" />
+                        @if (@CommonDataService.GetIngredient(item.IngredientID).Unit!=""){
+                    <input type="number" name="QuantityList" value="@item.Quantity" class="p-2 border border-gray-300 text-gray-900 focus:ring-blue-600 bg-blue-50 focus:border-blue-600 rounded-lg w-1/4" placeholder="Số lượng">
+                            <span class="p-2 border rounded bg-gray-100"> @CommonDataService.GetIngredient(item.IngredientID).Unit </span>
+                        }
+                        else
+                        {
+                            <input type="hidden" name="QuantityList" value="-99" />
+                        }
+                        <button type="button" onclick="removeIngredient('@CommonDataService.GetIngredient(item.IngredientID).IngredientName', this)" class="text-red-500 text-lg font-bold">×</button>
+                       </div>
+                    <script>
+                         selectedIngredients.add("@CommonDataService.GetIngredient(item.IngredientID).IngredientName");
+                    </script>
+                }
+                
+
+            }
+            
+
+        </div>
 
         <label class="block mt-4 text-lg font-sans mb-2">Các bước làm</label>
         <div id="steps" class="font-sans">
-            <input type="text"
-                   class="w-full font-sans bg-blue-50 p-2 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-2"
-                   placeholder="Nhập bước 1">
+            @if (RecipeDataService.ListSteps(Model.RecipeID).Count > 0)
+            {
+                foreach(var item in RecipeDataService.ListSteps(Model.RecipeID))
+                {
+                    <input type="text" name="StepList" value="@item.Description"
+                    class="w-full font-sans bg-blue-50 p-2 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-2">
+                }
+            }
+            else
+            {
+                <input type="text" name="StepList"
+                       class="w-full font-sans bg-blue-50 p-2 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-2"
+                       placeholder="Nhập bước 1">
+            }
         </div>
         <button type="button" onclick="addStep()"
                 class="bg-gradient-to-r font-sans from-blue-600 to-purple-600 text-white px-4 py-2 rounded">
@@ -138,22 +176,28 @@
 
         <label class="block mt-4 text-lg font-sans mb-2">Ghi chú</label>
         <div id="notes" class="">
-            <input type="text"
-                   class="w-full bg-blue-50 font-sans p-2 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-2"
-                   placeholder="Nhập ghi chú 1">
+            @if (RecipeDataService.ListNotes(Model.RecipeID).Count > 0)
+            {
+                foreach (var item in RecipeDataService.ListNotes(Model.RecipeID))
+                {
+                    <input type="text" name="NoteList" value="@item.NoteContent"
+                           class="w-full font-sans bg-blue-50 p-2 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-2">
+                }
+            }
+            else
+            {
+                <input type="text" name="NoteList"
+                       class="w-full bg-blue-50 font-sans p-2 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-2"
+                       placeholder="Nhập ghi chú 1">
+            }
+            
         </div>
         <button type="button" onclick="addNote()"
                 class="bg-gradient-to-r font-sans from-blue-600 to-purple-600 text-white px-4 py-2 mb-4 rounded">
-            + Thêm ghi
-            chú
+            + Thêm ghi chú
         </button>
 
         <label class="block text-lg font-sans mb-2">Thực đơn</label>
-        <div id="tagWrapper"
-             class="hidden border font-sans mb-2 p-2 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 flex flex-wrap gap-2">
-            <!-- Thực đơn sẽ hiển thị ở đây -->
-            <div id="tagContainer" class="flex bg-blue-50 flex-wrap gap-2"></div>
-        </div>
         <input type="text" id="tagInput"
                class="bg-blue-50 font-sans w-full p-2 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600"
                placeholder="Nhập thực đơn cho món ăn..." oninput="showSuggestions()" onkeydown="handleKeyPress(event)">
@@ -161,18 +205,42 @@
         <ul id="suggestions" class="mt-2  font-sansborder bg-blue-50 rounded shadow hidden bg-white">
             <!-- Gợi ý thực đơn sẽ hiển thị ở đây -->
         </ul>
+        <div id="tagWrapper"
+             class="font-sans mt-2 p-2 border-gray-300 border text-gray-900 rounded-lg flex flex-wrap gap-2">
+            <!-- Thực đơn sẽ hiển thị ở đây -->
+            <div id="tagContainer" class="flex flex-wrap gap-2">
+                @if (RecipeDataService.GetCoursesOf(Model.RecipeID).Count > 0)
+                {
+                    <script>
+                        document.getElementById("tagWrapper").classList.remove("hidden");
+                    </script>
+                    foreach (var item in RecipeDataService.GetCoursesOf(Model.RecipeID))
+                    {
+                        <span class="bg-gray-200 px-3 py-1 rounded flex items-center gap-1">
+                            @item.CourseName
+                            <button onclick="removeTag(this)" class="ml-2 text-red-500 cursor-pointer">×</button>
+                            <input type="hidden" name="CourseList" value="@item.CourseID" />
+                        </span>
+                    }
+
+                }
+            </div>
+        </div>
+        
         <button type="submit"
                 class="w-full font-sans bg-gradient-to-r from-blue-600 to-purple-600 text-white p-2 rounded mt-8">
-            Tạo công
-            thức
+            Tạo công thức
         </button>
     </form>
 </div>
 
 <script>
-    let ingredients = ["Hành", "Tỏi", "Gừng", "Thịt bò", "Thịt gà", "Cà chua", "Rau thơm"];
-    let selectedIngredients = new Set();
-
+    let ingredients = @Html.Raw(ingredientsJson);
+    //let selectedIngredients = new Set();
+    let selectedIngredients = new Set(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(
+        RecipeDataService.ListIngredients(Model.RecipeID).Select(x => CommonDataService.GetIngredient(x.IngredientID).IngredientName)
+        )));
+    console.log(selectedIngredients);
     function searchIngredient() {
         let input = document.getElementById('ingredient-search').value.toLowerCase();
         let suggestions = document.getElementById('ingredient-suggestions');
@@ -183,7 +251,8 @@
             return;
         }
 
-        let filtered = ingredients.filter(ing => ing.toLowerCase().includes(input) && !selectedIngredients.has(ing));
+        let filtered = ingredients.filter(ing => ing.IngredientName.toLowerCase().includes(input) && !selectedIngredients.has(ing.IngredientName)
+        );
 
         if (filtered.length === 0) {
             suggestions.classList.add('hidden');
@@ -193,7 +262,7 @@
         filtered.forEach(ing => {
             let div = document.createElement('div');
             div.classList.add('p-2', 'hover:bg-gray-200', 'cursor-pointer');
-            div.innerText = ing;
+            div.innerText = ing.IngredientName;
             div.onclick = () => selectIngredient(ing);
             suggestions.appendChild(div);
         });
@@ -202,22 +271,24 @@
     }
 
     function selectIngredient(ingredient) {
-        selectedIngredients.add(ingredient);
+        selectedIngredients.add(ingredient.IngredientName);
         document.getElementById('ingredient-search').value = '';
         document.getElementById('ingredient-suggestions').classList.add('hidden');
 
         let div = document.createElement('div');
         div.classList.add("flex", "gap-2", "mb-2", "items-center");
         div.innerHTML = `
-                    <span class="p-2 border rounded bg-gray-100">${ingredient}</span>
-                    <input type="text" class="p-2 border border-gray-300 text-gray-900 focus:ring-blue-600 bg-blue-50 focus:border-blue-600 rounded-lg w-1/3" placeholder="Số lượng">
-                    <button type="button" onclick="removeIngredient('${ingredient}', this)" class="text-red-500 text-lg font-bold">×</button>
+                    <span class="p-2 border rounded bg-gray-100">${ingredient.IngredientName}</span>
+                    <input type="hidden" name="IngredientList" value="${ingredient.IngredientID}" />
+                    <input type="text" name="QuantityList" value="0" class="p-2 border border-gray-300 text-gray-900 focus:ring-blue-600 bg-blue-50 focus:border-blue-600 rounded-lg w-1/4" placeholder="Số lượng">
+                    <span class="p-2 border rounded bg-gray-100" > ${ingredient.Unit} </span>
+                    <button type="button" onclick="removeIngredient('${ingredient.IngredientName}', this)" class="text-red-500 text-lg font-bold">×</button>
                 `;
         document.getElementById('selected-ingredients').appendChild(div);
     }
 
-    function removeIngredient(ingredient, button) {
-        selectedIngredients.delete(ingredient);
+    function removeIngredient(ingredientName, button) {
+        selectedIngredients.delete(ingredientName);
         button.parentElement.remove();
     }
     function addStep() {
@@ -225,7 +296,8 @@
         let childCount = stepsList.childElementCount;
         let step = document.createElement('input');
         step.type = 'text';
-        step.classList = 'w-full p-2 bg-blue-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-2';
+        step.name = "StepList";
+        step.classList = 'w-full font-sans p-2 bg-blue-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-2';
         step.placeholder = 'Nhập bước ' + String(childCount + 1);
         document.getElementById('steps').appendChild(step);
     }
@@ -235,24 +307,28 @@
         let childCount = notesList.childElementCount;
         let note = document.createElement('input');
         note.type = 'text';
-        note.classList = 'w-full p-2 bg-blue-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-2';
+        note.name = "NoteList";
+        note.classList = 'w-full font-sans p-2 bg-blue-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-2';
         note.placeholder = 'Nhập ghi chú ' + String(childCount + 1);
         document.getElementById('notes').appendChild(note);
     }
 
-    // Thuc don
-    const availableTags = ["Món chay", "Món mặn", "Tráng miệng", "Kem"];
+    // Course
+    const availableTags = @Html.Raw(coursesJson);
     const tagContainer = document.getElementById("tagContainer");
     const tagWrapper = document.getElementById("tagWrapper");
     const tagInput = document.getElementById("tagInput");
     const suggestions = document.getElementById("suggestions");
-    let selectedTags = new Set();
+    let selectedTags = new Set(@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(
+        RecipeDataService.GetCoursesOf(Model.RecipeID).Select(x => CommonDataService.GetCourse(x.CourseID).CourseName)
+        )));
+    console.log(selectedTags);
 
     function showSuggestions() {
         let input = tagInput.value.toLowerCase();
         suggestions.innerHTML = "";
 
-        let filteredTags = availableTags.filter(tag => tag.toLowerCase().includes(input) && !selectedTags.has(tag));
+        let filteredTags = availableTags.filter(tag => tag.CourseName.toLowerCase().includes(input) && !selectedTags.has(tag.CourseName));
         if (filteredTags.length === 0) {
             suggestions.classList.add("hidden");
             return;
@@ -260,39 +336,58 @@
 
         filteredTags.forEach(tag => {
             let li = document.createElement("li");
-            li.textContent = tag;
-            li.classList.add("p-2", "cursor-pointer", "hover:bg-gray-200");
+            li.textContent = tag.CourseName;
+            li.classList.add("p-2", "cursor-pointer", "hover:bg-gray-200", "font-sans");
             li.onclick = () => addTag(tag);
             suggestions.appendChild(li);
         });
         suggestions.classList.remove("hidden");
     }
 
+    function removeTag(buttonElement) {
+        const span = buttonElement.parentElement;
+        const tagName = span.firstChild.textContent.trim(); // Lấy tên khoá học (CourseName)
+
+        // Xoá thẻ tag
+        span.remove();
+
+        // Xoá khỏi tập selectedTags
+        selectedTags.delete(tagName);
+
+        // Ẩn container nếu không còn tag nào
+        if (tagContainer.children.length === 0) {
+            tagWrapper.classList.add("hidden");
+        }
+    }
+
+
     function addTag(tag) {
-        if (selectedTags.has(tag)) return;
-        selectedTags.add(tag);
+        if (selectedTags.has(tag.CourseName)) return;
+        selectedTags.add(tag.CourseName);
+        
+
 
         let span = document.createElement("span");
-        span.textContent = tag;
+        span.textContent = tag.CourseName;
         span.classList.add("bg-gray-200", "px-3", "py-1", "rounded", "flex", "items-center", "gap-1");
 
         let removeBtn = document.createElement("button");
         removeBtn.textContent = "×";
         removeBtn.classList.add("ml-2", "text-red-500", "cursor-pointer");
-        removeBtn.onclick = () => {
-            span.remove();
-            selectedTags.delete(tag);
-            if (tagContainer.children.length === 0) {
-                tagWrapper.classList.add("hidden");
-            }
-        };
+        removeBtn.setAttribute("onclick", "removeTag(this)");
+
 
         span.appendChild(removeBtn);
         tagContainer.appendChild(span);
-        tagWrapper.classList.remove("hidden");
 
         tagInput.value = "";
         suggestions.classList.add("hidden");
+
+        let hiddenInput = document.createElement("input");
+        hiddenInput.type = "hidden";
+        hiddenInput.name = "CourseList";
+        hiddenInput.value = tag.CourseID;
+        span.appendChild(hiddenInput);
     }
 
     function handleKeyPress(event) {

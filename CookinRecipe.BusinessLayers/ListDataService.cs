@@ -16,7 +16,7 @@ namespace CookinRecipe.BusinessLayers
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static int AddList(List data)
+        public static long AddList(List data)
         {
             return listDB.Add(data);
         }
@@ -52,9 +52,8 @@ namespace CookinRecipe.BusinessLayers
         /// </summary>
         /// <param name="UserID"></param>
         /// <returns></returns>
-        public static List<List> GetList(out int rowCount, long UserID)
+        public static List<List> GetListOf(long UserID)
         {
-            rowCount = listDB.Count(UserID);
             return listDB.List(UserID).ToList();
         }
         /// <summary>
@@ -65,6 +64,15 @@ namespace CookinRecipe.BusinessLayers
         public static int GetListQuantity(long ListID)
         {
             return listDB.GetListQuantity(ListID);
+        }
+        /// <summary>
+        /// Lấy ds ct trong 1 list
+        /// </summary>
+        /// <param name="ListID"></param>
+        /// <returns></returns>
+        public static IList<Recipe> GetRecipesOf(long ListID)
+        {
+            return listDB.GetRecipesOf(ListID);
         }
     }
 }

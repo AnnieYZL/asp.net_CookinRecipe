@@ -38,19 +38,17 @@ namespace CookinRecipe.DataLayers.SQLServer
         /// <param name="data"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public bool Update(Favourite data)
+        public bool Delete(Favourite data)
         {
             bool result = false;
             using (var connection = OpenConnection())
             {
-                var sql = @"update Favourites
-                            set IsCancel = @IsCancel
+                var sql = @"delete Favourites
                             where UserID = @UserID and RecipeID = @RecipeID";
                 var parameters = new
                 {
                     UserID = data.UserID,
-                    RecipeID = data.RecipeID,
-                    IsCancel = data.IsCancel
+                    RecipeID = data.RecipeID
                 };
                 result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
                 connection.Close();
@@ -90,13 +88,13 @@ namespace CookinRecipe.DataLayers.SQLServer
             bool result = false;
             using (var connection = OpenConnection())
             {
-                var sql = @"if exists(select * from Favourites where UserID = @UserID and RecipeID = @RecipeID) select 1 else select 0";
+                var sql = @"if exists(select * from Favourites where UserID = @UserID and RecipeID = @RecipeID and IsCancel = 0) select 1 else select 0";
                 var parameters = new
                 {
                     UserID = userID,
                     RecipeID = recipeID
                 };
-                result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
+                result = connection.QueryFirstOrDefault<bool>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
             }
             return result;
