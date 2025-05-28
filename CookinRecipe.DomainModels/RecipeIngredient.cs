@@ -8,5 +8,6 @@
         public long RecipeID { get; set; }
         public int IngredientID { get; set; }
         public float Quantity { get; set; }
+        public string IngreNote {get; set; } = string.Empty;
     }
 }

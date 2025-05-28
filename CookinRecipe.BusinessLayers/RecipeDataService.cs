@@ -12,6 +12,22 @@ namespace CookinRecipe.BusinessLayers
             recipeDB = new RecipeDAL(Configuration.ConnectionString);
         }
         /// <summary>
+        /// Lấy all
+        /// </summary>
+        /// <returns></returns>
+        public static List<Recipe> GetAllRecipes()
+        {
+            return recipeDB.GetAllRecipes().ToList();
+        }
+        /// <summary>
+        /// Lấy all chưa duyệt
+        /// </summary>
+        /// <returns></returns>
+        public static List<Recipe> GetAllVerifies()
+        {
+            return recipeDB.GetAllVerifies().ToList();
+        }
+        /// <summary>
         /// Bổ sung công thức mới, trả về mã của công thức được bổ sung
         /// </summary>
         /// <param name="data"></param>
@@ -297,5 +313,34 @@ namespace CookinRecipe.BusinessLayers
         {
             return recipeDB.SetEnergy(recipeId);
         }
-    }
+        /// <summary>
+        /// Hoàn tác phê duyệt
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static bool UndoVerify(Recipe data)
+        {
+            return recipeDB.UndoVerify(data);
+        }
+        /// <summary>
+        /// Phê duyệt
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static bool Verify(Recipe data)
+        {
+            return recipeDB.Verify(data);
+        }
+        /// <summary>
+        /// Công thức có trong bst của người dùng hay k
+        /// </summary>
+        /// <param name="recipeId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+		public static bool CheckExistsInList(long recipeId, long userId)
+        {
+            return recipeDB.CheckExistsInList(recipeId, userId);
+        }
+
+	}
 }

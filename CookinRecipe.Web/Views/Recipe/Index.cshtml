@@ -1,4 +1,5 @@
 ﻿@model CookinRecipe.Web.Models.RecipeSearchInput
+@using CookinRecipe.BusinessLayers
 @{
     ViewBag.Title = "Tìm kiếm công thức";
 }
@@ -18,6 +19,41 @@
     </form>
 
     <div id="searchResult">
+    </div>
+</div>
+<!-- Modal Save -->
+<div id="modalSave" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div id="modalSaveContent"
+         class="bg-white p-4 rounded-lg shadow-lg w-96 h-[500px] max-h-[80vh] overflow-hidden transition-all relative">
+        <div class="flex justify-between items-center border-b pb-2 mb-2">
+            <h2 class="text-xl text-blue-600 font-medium">Lưu vào</h2>
+            <button id="closeModalSave" class="text-2xl font-bold text-black cursor-pointer" aria-label="Đóng modal">×</button>
+        </div>
+        @if (User.GetUserData() != null)
+        {
+            <div class="overflow-y-auto max-h-72 min-h-[50px]" tabindex="0">
+                <ul id="listContainer" class="space-y-2">
+                    @foreach (var item in ListDataService.GetListOf(long.Parse(User.GetUserData().UserId)))
+                    {
+                        <li class="p-2 bg-gray-100 rounded flex items-center space-x-3 cursor-pointer hover:bg-gray-200" data-list-id="@item.ListID" role="button" tabindex="0">
+                            <img src="~/Themes/assets/images/vLOGO.png" class="w-12 h-12 rounded-lg" alt="Danh sách 1">
+                            <div>
+                                <span class="font-medium">@item.ListName</span>
+                                <p class="text-sm text-gray-500">@ListDataService.GetListQuantity(item.ListID) công thức</p>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+        <button id="newListBtn"
+                class="mt-4 w-full font-sans flex items-center justify-center gap-2 bg-gray-200 text-black py-2 rounded-lg hover:bg-gray-300 cursor-pointer">
+            + Bộ sưu tập mới
+        </button>
+        <button id="doneBtn"
+                class="mt-4 w-full font-sans bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+            Lưu
+        </button>
     </div>
 </div>
 @section scripts {

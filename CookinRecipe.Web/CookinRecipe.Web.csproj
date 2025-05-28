@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,6 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Account\Signin.cshtml" />
+    <Content Remove="wwwroot\Areas\Cms\Views\Shared\_Layout.cshtml.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Account\Signin.cshtml" />
+    <None Include="wwwroot\Areas\Cms\Views\Shared\_Layout.cshtml.css" />
+    <None Include="wwwroot\lib\DataTables\Buttons-2.0.1\buttons.html5.min.js" />
+    <None Include="wwwroot\lib\DataTables\Buttons-2.0.1\dataTables.buttons.min.js" />
+    <None Include="wwwroot\lib\DataTables\checkboxes.min.js" />
+    <None Include="wwwroot\lib\DataTables\datatables.min.js" />
+    <None Include="wwwroot\lib\DataTables\dataTables.rowGroup.min.js" />
+    <None Include="wwwroot\lib\DataTables\dataTables.rowsGroup.js" />
+    <None Include="wwwroot\lib\DataTables\dataTables.scroller.min.js" />
+    <None Include="wwwroot\lib\DataTables\jquery.dataTables.min.js" />
+    <None Include="wwwroot\lib\DataTables\JSZip-2.5.0\jszip.min.js" />
+    <None Include="wwwroot\lib\DataTables\scroller.bootstrap.min.js" />
+    <None Include="wwwroot\lib\jquery_ui\jquery-ui-1.13.2\external\jquery\jquery.js" />
+    <None Include="wwwroot\lib\jquery_ui\jquery-ui-1.13.2\jquery-ui.js" />
+    <None Include="wwwroot\lib\jquery_ui\jquery-ui-1.13.2\jquery-ui.min.js" />
+    <None Include="wwwroot\lib\notify\bootstrap-notify.min.js" />
     <None Include="wwwroot\Themes\assets\.DS_Store" />
     <None Include="wwwroot\Themes\bucket\.DS_Store" />
     <None Include="wwwroot\Themes\bucket\images\.DS_Store" />
@@ -21,7 +42,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="8.0.5" />
+    <PackageReference Include="Microsoft.Owin.Host.SystemWeb" Version="4.2.2" />
+    <PackageReference Include="Microsoft.Owin.Security.Cookies" Version="4.2.2" />
+    <PackageReference Include="Microsoft.Owin.Security.Google" Version="4.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Areas\Cms\Controllers\" />
+    <Folder Include="wwwroot\js\List\" />
+    <Folder Include="wwwroot\js\Course\" />
+    <Folder Include="wwwroot\js\User\" />
+    <Folder Include="wwwroot\Themes\scripts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Account\Signin.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Account\Signin.cshtml" />
   </ItemGroup>
 
 </Project>

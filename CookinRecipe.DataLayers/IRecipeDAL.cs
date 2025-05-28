@@ -5,6 +5,17 @@ namespace CookinRecipe.DataLayers
     public interface IRecipeDAL
     {
         /// <summary>
+        /// Lấy toàn bộ ds (đã duyệt)
+        /// </summary>
+        /// <returns></returns>
+        IList<Recipe> GetAllRecipes();
+        /// <summary>
+        /// Lấy toàn bộ ds (chưa duyệt)
+        /// </summary>
+        /// <returns></returns>
+        IList<Recipe> GetAllVerifies();
+
+        /// <summary>
         /// Tìm kiếm và lấy danh sách công thức dưới dạng phân trang
         /// </summary>
         /// <param name="page">Trang cần hiển thị</param>
@@ -218,5 +229,24 @@ namespace CookinRecipe.DataLayers
         /// <param name="id"></param>
         /// <returns></returns>
         bool SetEnergy(long id);
-	}
+        /// <summary>
+        /// Phê duyệt công thức
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        bool Verify(Recipe data);
+        /// <summary>
+        /// Hoàn tác phê duyệt
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        bool UndoVerify(Recipe data);
+        /// <summary>
+        /// Xem công thức đã tồn tại trong bộ sưu tập của người dùng hay chưa
+        /// </summary>
+        /// <param name="recipeId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool CheckExistsInList(long recipeId, long userId);
+    }
 }

@@ -2,13 +2,14 @@
 @using CookinRecipe.BusinessLayers
 @{
     ViewBag.Title = "Danh sách công thức của thực đơn";
+    var me = User.GetUserData() != null ? User.GetUserData().UserId : "";
 }
 <div class="md:max-w-6xl w-11/12 mt-20 mx-auto bg-white pb-24 p-6 rounded-lg shadow-md">
     <div class="flex mb-5">
-        <img src="~/Themes/images/course/@Model.Course.CourseImage" class="w-1/3 h-64 object-cover rounded-lg shadow-lg" alt="Course Image">
+        <img src="~/FileUpload/images/course/@Model.Course.CourseImage" class="w-1/3 h-64 object-cover rounded-lg shadow-lg" alt="Course Image">
         <div class="ml-10">
             <h1 class="text-2xl font-bold mb-2">@Model.Course.CourseName</h1>
-            <p class="text-gray-600 mb-4">
+            <p class="text-gray-600 mb-4 font-sans">
                 @Model.Course.Description
             </p>
         </div>
@@ -35,7 +36,7 @@
                     foreach (var item in Model.Data)
                     {
                         <div class="h-auto rounded overflow-hidden shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 ...">
-                            <img src="~/Themes/images/recipe/@item.RecipeImage" class="w-full h-52 object-cover cursor-pointer"
+                            <img src="~/FileUpload/images/recipe/@item.RecipeImage" class="w-full h-52 object-cover cursor-pointer"
                                  alt="@item.RecipeName">
                             <div class='px-4 py-2'>
                                 <div class="mb-2 font-medium text-xl overflow-ellipsis overflow-hidden whitespace-nowrap cursor-pointer"
@@ -64,9 +65,25 @@
                                 <button type="button" class="ml-auto cursor-pointer">
                                     <i class="fa fa-heart text-red-600"></i>
                                 </button>
-                                <button id="saveBtn" type="button" class="ml-5 cursor-pointer">
-                                    <i class="fa fa-bookmark text-gray-500"></i>
-                                </button>
+                                @if (me != "")
+                                {
+                                    <button type="button" class="saveBtn ml-5 cursor-pointer" data-recipe-id="@item.RecipeID">
+                                        @if (RecipeDataService.CheckExistsInList(item.RecipeID, long.Parse(me)))
+                                        {
+                                            <i class="fa fa-bookmark text-blue-600"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa fa-bookmark text-gray-500"></i>
+                                        }
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="ml-5 cursor-pointer">
+                                        <i class="fa fa-bookmark text-gray-500"></i>
+                                    </button>
+                                }
                             </div>
                         </div>
                     }
@@ -79,3 +96,39 @@
     </div>
    
 </div>
+<!-- Modal Save -->
+<div id="modalSave" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div id="modalSaveContent"
+         class="bg-white p-4 rounded-lg shadow-lg w-96 h-[500px] max-h-[80vh] overflow-hidden transition-all relative">
+        <div class="flex justify-between items-center border-b pb-2 mb-2">
+            <h2 class="text-xl text-blue-600 font-medium">Lưu vào</h2>
+            <button id="closeModalSave" class="text-2xl font-bold text-black cursor-pointer" aria-label="Đóng modal">×</button>
+        </div>
+        @if (User.GetUserData() != null)
+        {
+            <div class="overflow-y-auto max-h-72 min-h-[50px]" tabindex="0">
+                <ul id="listContainer" class="space-y-2">
+                    @foreach (var item in ListDataService.GetListOf(long.Parse(User.GetUserData().UserId)))
+                    {
+                        <li class="p-2 bg-gray-100 rounded flex items-center space-x-3 cursor-pointer hover:bg-gray-200" data-list-id="@item.ListID" role="button" tabindex="0">
+                            <img src="~/Themes/assets/images/vLOGO.png" class="w-12 h-12 rounded-lg" alt="Danh sách 1">
+                            <div>
+                                <span class="font-medium">@item.ListName</span>
+                                <p class="text-sm text-gray-500">@ListDataService.GetListQuantity(item.ListID) công thức</p>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+        <button id="newListBtn"
+                class="mt-4 w-full font-sans flex items-center justify-center gap-2 bg-gray-200 text-black py-2 rounded-lg hover:bg-gray-300 cursor-pointer">
+            + Bộ sưu tập mới
+        </button>
+        <button id="doneBtn"
+                class="mt-4 w-full font-sans bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+            Lưu
+        </button>
+    </div>
+</div>
+<script src="/js/saveFavRate.js"></script>

@@ -1,123 +1,163 @@
 ﻿@using CookinRecipe.BusinessLayers
 @model CookinRecipe.Web.Models.RecipeByIngredientInput
-<script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const ingredientList = document.getElementById("ingredient-list");
-            const selectedIngredients = document.getElementById("selected-ingredients");
-            const searchInput = document.getElementById("ingredient-search");
-            function updateSelectedIngredients() {
-                selectedIngredients.innerHTML = "";
-                document.querySelectorAll(".ingredient-checkbox:checked").forEach(checkbox => {
-                    const span = document.createElement("span");
-                    span.className = "bg-gray-200 px-3 py-1 font-sans rounded-full flex items-center gap-2";
-                span.innerHTML = `${checkbox.id}`;
-                    selectedIngredients.appendChild(span);
-                });
-                addRemoveEvent();
-            }
 
-            function addRemoveEvent() {
-                document.querySelectorAll(".remove-btn").forEach(button => {
-                    button.addEventListener("click", function () {
-                        const value = this.getAttribute("data-value");
-                        document.querySelector(`.ingredient-checkbox[value='${value}']`).checked = false;
-                        updateSelectedIngredients();
-                    });
-                });
-            }
-
-            document.querySelectorAll(".ingredient-checkbox").forEach(checkbox => {
-                checkbox.addEventListener("change", updateSelectedIngredients);
-            });
-
-            searchInput.addEventListener("input", function () {
-                let noResultText = document.createElement("p");
-                noResultText.id = "no-result-text";
-                noResultText.className = "text-red-500 mt-2 hidden font-sans";
-                noResultText.textContent = "Không có nguyên liệu phù hợp";
-                ingredientList.appendChild(noResultText);
-                const filter = searchInput.value.toLowerCase();
-                let resultText = false;
-                document.querySelectorAll("#ingredient-list label").forEach(label => {
-                    if (label.textContent.toLowerCase().includes(filter)) {
-                        label.style.display = "block";
-                        resultText = true;
-                    }
-                    else {
-                        label.style.display = "none";
-                    }
-                });
-                if (filter.trim() != "" && resultText == false) {
-                    document.getElementById("no-result-text").classList.remove("hidden");
-                }
-                else {
-                    document.getElementById("no-result-text").classList.add("hidden");
-                }
-            });
-            searchInput.addEventListener("keypress", function (event) {
-                if (event.key === "Enter" && searchInput.value.trim() !== "") {
-                    event.preventDefault();
-                    let inputValue = searchInput.value.trim().toLowerCase();
-                    let foundMatch = false;
-
-                    document.querySelectorAll(".ingredient-checkbox").forEach(checkbox => {
-                        if (checkbox.id.toLowerCase().includes(inputValue)) {
-                            checkbox.checked = true;
-                            foundMatch = true;
-                        }
-                    });
-
-                    if (!foundMatch) {
-                        addSelectedIngredient(searchInput.value.trim());
-                    }
-
-                    updateSelectedIngredients();
-                    searchInput.value = "";
-                }
-            });
-        updateSelectedIngredients();
-        });
-    
-    </script>
 <div class="md:max-w-6xl w-11/12 mt-20 mx-auto bg-white pb-24 p-6 rounded-lg shadow-md">
     <h1 class="text-2xl font-bold mb-2">Nguyên liệu</h1>
-    <p class="text-gray-600 font-sans mb-4">Chọn nguyên liệu để tìm kiếm công thức phù hợp.</p>
+    <p class="text-gray-600 font-sans mb-4">Chọn nguyên liệu cần sử dụng để tìm những công thức phù hợp</p>
 
-    <div class="flex items-center flex-wrap gap-2 mb-4" id="selected-ingredients">
-    </div>
+    <!-- Hiển thị nguyên liệu đã chọn -->
+    <div class="flex items-center flex-wrap gap-2 mb-4" id="selected-ingredients"></div>
 
     <div class="md:flex border-t pt-4">
         <!-- Danh sách nguyên liệu -->
         <div class="md:w-1/4 w-full h-fit bg-gray-50 p-4 rounded-lg shadow block">
             <form id="formSearch" action="~/Ingredient/Search" method="get" data-container="#searchResult">
-            <input type="text" id="ingredient-search" placeholder="Tìm nguyên liệu..."
-                   class="w-full p-2 mb-2 border rounded font-sans" autofocus>
+                <input type="text" id="ingredient-search" placeholder="Tìm nguyên liệu..."
+                       class="w-full p-2 mb-2 border rounded font-sans" autofocus />
                 <input type="hidden" name="@nameof(Model.PageSize)" value="@Model.PageSize" />
-            <h2 class="font-bold mb-2">Chọn nguyên liệu</h2>
-            <div class="space-y-2 border-t pt-2" id="ingredient-list">
-                @foreach(var item in @CommonDataService.ListIngredient()){
-                    <label class="flex items-center font-sans">
+
+                <h2 class="font-bold mb-2">Chọn nguyên liệu</h2>
+                <div class="space-y-2 border-t pt-2" id="ingredient-list">
+                    @foreach (var item in CommonDataService.ListIngredient())
+                    {
+                        <label class="flex items-center font-sans">
                             <input type="checkbox" id="@item.IngredientName"
-                               class="ingredient-checkbox mr-2" name="ListIngre" value="@item.IngredientID" @(Model.ListIngre.Contains(item.IngredientID) ? "checked" : "")> @item.IngredientName
-                    </label>
-                }
-            </div>
-            <div class="mt-5 flex justify-center">
-                <button class="font-sans bg-gradient-to-r from-blue-600 to-purple-600 py-2 px-3 text-white rounded" type="submit">
-                    Tìm
-                    món
-                </button>
-            </div>
+                                   class="ingredient-checkbox mr-2"
+                                   name="ListIngre"
+                                   value="@item.IngredientID"
+                            @(Model.ListIngre.Contains(item.IngredientID) ? "checked" : "") />
+                            @item.IngredientName
+                        </label>
+                    }
+                </div>
+
+                <div class="mt-5 flex justify-center">
+                    <button class="font-sans bg-gradient-to-r from-blue-600 to-purple-600 py-2 px-3 text-white rounded" type="submit">
+                        Tìm món
+                    </button>
+                </div>
             </form>
         </div>
 
         <!-- Kết quả món ăn -->
-        <div class="md:w-3/4 w-full md:pl-6 md:pt-0 pt-6" id="searchResult">
+        <div class="md:w-3/4 w-full md:pl-6 md:pt-0 pt-6" id="searchResult"></div>
+    </div>
+</div>
+<!-- Modal Save -->
+<div id="modalSave" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div id="modalSaveContent"
+         class="bg-white p-4 rounded-lg shadow-lg w-96 h-[500px] max-h-[80vh] overflow-hidden transition-all relative">
+        <div class="flex justify-between items-center border-b pb-2 mb-2">
+            <h2 class="text-xl text-blue-600 font-medium">Lưu vào</h2>
+            <button id="closeModalSave" class="text-2xl font-bold text-black cursor-pointer" aria-label="Đóng modal">×</button>
         </div>
+        @if (User.GetUserData() != null)
+        {
+            <div class="overflow-y-auto max-h-72 min-h-[50px]" tabindex="0">
+                <ul id="listContainer" class="space-y-2">
+                    @foreach (var item in ListDataService.GetListOf(long.Parse(User.GetUserData().UserId)))
+                    {
+                        <li class="p-2 bg-gray-100 rounded flex items-center space-x-3 cursor-pointer hover:bg-gray-200" data-list-id="@item.ListID" role="button" tabindex="0">
+                            <img src="~/Themes/assets/images/vLOGO.png" class="w-12 h-12 rounded-lg" alt="Danh sách 1">
+                            <div>
+                                <span class="font-medium">@item.ListName</span>
+                                <p class="text-sm text-gray-500">@ListDataService.GetListQuantity(item.ListID) công thức</p>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+        <button id="newListBtn"
+                class="mt-4 w-full font-sans flex items-center justify-center gap-2 bg-gray-200 text-black py-2 rounded-lg hover:bg-gray-300 cursor-pointer">
+            + Bộ sưu tập mới
+        </button>
+        <button id="doneBtn"
+                class="mt-4 w-full font-sans bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+            Lưu
+        </button>
     </div>
 </div>
 @section scripts {
     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const ingredientList = document.getElementById("ingredient-list");
+            const selectedIngredients = document.getElementById("selected-ingredients");
+            const searchInput = document.getElementById("ingredient-search");
+
+            function updateSelectedIngredients() {
+                selectedIngredients.innerHTML = "";
+                document.querySelectorAll(".ingredient-checkbox:checked").forEach(checkbox => {
+                    const span = document.createElement("span");
+                    span.className = "bg-gray-100 text-gray-800 px-3 py-1 rounded-full flex items-center gap-2 text-sm";
+
+                    const text = document.createElement("span");
+                    text.textContent = checkbox.id;
+
+                    const removeBtn = document.createElement("button");
+                    removeBtn.textContent = "×";
+                    removeBtn.className = "text-red-500 hover:bg-red-200 rounded-full w-5 h-5 leading-4 text-center";
+                    removeBtn.setAttribute("data-value", checkbox.value);
+                    removeBtn.type = "button";
+
+                    removeBtn.addEventListener("click", () => {
+                        document.querySelector(`.ingredient-checkbox[value='${checkbox.value}']`).checked = false;
+                        updateSelectedIngredients();
+                    });
+
+                    span.appendChild(text);
+                    span.appendChild(removeBtn);
+                    selectedIngredients.appendChild(span);
+                });
+            }
+
+            searchInput.addEventListener("input", function () {
+                const filter = this.value.toLowerCase();
+                let found = false;
+
+                document.querySelectorAll("#ingredient-list label").forEach(label => {
+                    const visible = label.textContent.toLowerCase().includes(filter);
+                    label.style.display = visible ? "block" : "none";
+                    if (visible) found = true;
+                });
+
+                let noResult = document.getElementById("no-result-text");
+                if (!noResult && !found && filter.trim() !== "") {
+                    noResult = document.createElement("p");
+                    noResult.id = "no-result-text";
+                    noResult.className = "text-red-500 mt-2 font-sans";
+                    noResult.textContent = "Không có nguyên liệu phù hợp";
+                    ingredientList.appendChild(noResult);
+                } else if (noResult) {
+                    noResult.style.display = found || filter === "" ? "none" : "block";
+                }
+            });
+
+            // Gõ Enter để chọn nguyên liệu
+            searchInput.addEventListener("keypress", function (event) {
+                if (event.key === "Enter" && this.value.trim() !== "") {
+                    event.preventDefault();
+                    const inputVal = this.value.trim().toLowerCase();
+                    let found = false;
+
+                    document.querySelectorAll(".ingredient-checkbox").forEach(checkbox => {
+                        if (checkbox.id.toLowerCase().includes(inputVal)) {
+                            checkbox.checked = true;
+                            found = true;
+                        }
+                    });
+
+                    updateSelectedIngredients();
+                    this.value = "";
+                }
+            });
+
+            document.querySelectorAll(".ingredient-checkbox").forEach(cb => {
+                cb.addEventListener("change", updateSelectedIngredients);
+            });
+
+            updateSelectedIngredients();
+        });
         $(document).ready(function () {
             $("#formSearch").submit(function (e) {
                 e.preventDefault();
@@ -131,11 +171,11 @@
         });
 
         function paginationSearch(formSearch, page) {
-            var action = $(formSearch).prop("action");
-            var method = $(formSearch).prop("method");
-            var container = $(formSearch).data("container");
+            const action = $(formSearch).prop("action");
+            const method = $(formSearch).prop("method");
+            const container = $(formSearch).data("container");
 
-            var searchData = $(formSearch).serializeArray();
+            const searchData = $(formSearch).serializeArray();
             searchData.push({ "name": "Page", "value": page });
 
             $.ajax({
@@ -144,7 +184,6 @@
                 data: searchData,
                 async: false,
                 error: function () {
-                    
                 },
                 success: function (data) {
                     $(container).html(data);

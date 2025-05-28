@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Course>
+
+<div class="bg-white p-6 rounded-xl shadow-md font-sans">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-4">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2 md:mb-0">Quản lý thực đơn</h2>
+        <a href="~/Admin/CreateMenu" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+            + Tạo mới
+        </a>
+    </div>
+
+    <div class="mb-4">
+        <input type="text" id="courseSearch" placeholder="Tìm thực đơn..."
+               class="w-full md:w-1/3 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 font-sans" />
+    </div>
+
+    <div class="">
+        <table id="courseTable" class="w-full bg-white rounded-lg text-sm text-gray-800">
+            <thead class="bg-blue-600 text-white text-sm font-semibold">
+                <tr>
+                    <th class="px-4 py-2 text-center w-16">STT</th>
+                    <th class="px-4 py-2 text-center w-40">Ảnh</th>
+                    <th class="px-4 py-2 text-left">Tên thực đơn</th>
+                    <th class="px-4 py-2 text-center w-48">Giới thiệu</th>
+                    <th class="px-4 py-2 text-center w-32">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    int index = 1;
+                    foreach (var m in Model)
+                    {
+                        <tr class="hover:bg-gray-50 border-b">
+                            <td class="px-4 py-2 text-center w-16">@index</td>
+                            <td class="px-4 py-2 text-center w-40">
+                                <img src="~/FileUpload/images/course/@m.CourseImage" class="w-16 h-16 object-cover rounded mx-auto" />
+                            </td>
+                            <td class="px-4 py-2 text-left text-blue-600">@m.CourseName</td>
+                            <td class="px-4 py-2 text-center w-48">@m.Description</td>
+                            <td class="px-4 py-2 text-center space-x-2 w-32">
+                                <a href="~/Admin/EditMenu/@m.CourseID" class="text-blue-600" title="Chỉnh sửa thực đơn"><i class="fa fa-edit"></i></a>
+                                <button class="text-red-600" onclick="deleteMenu('@m.CourseID')" title="Xóa thực đơn"><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        index++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

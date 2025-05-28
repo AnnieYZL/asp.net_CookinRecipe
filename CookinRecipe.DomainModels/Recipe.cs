@@ -21,6 +21,8 @@
         public long AuthorID { get; set; }
         public bool IsVerify {  get; set; }
         public bool IsRemove { get; set; }
+        public DateTime VerifyTime { get; set; }
+        public long AdminID { get; set; }
 
     }
 }

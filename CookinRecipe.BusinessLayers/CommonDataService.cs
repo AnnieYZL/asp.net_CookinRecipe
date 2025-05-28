@@ -237,5 +237,13 @@ namespace CookinRecipe.BusinessLayers
         {
             return dishDB.GetAll().ToList();
         }
+        /// <summary>
+        /// Lấy ds nguyên liệu k phân trang
+        /// </summary>
+        /// <returns></returns>
+        public static List<Ingredient> GetAllIngredient()
+        {
+            return ingredientDB.GetAll().ToList();
+        }
     }
 }

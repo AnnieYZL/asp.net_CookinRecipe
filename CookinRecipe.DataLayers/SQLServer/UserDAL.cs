@@ -45,5 +45,15 @@ namespace CookinRecipe.DataLayers.SQLServer
             }
             return result;
         }
+        public IList<User> GetAllUsers()
+        {
+            List<User> data = new List<User>();
+            using (var connection = OpenConnection())
+            {
+                var sql = @"select * from Users";
+                data = connection.Query<User>(sql: sql, commandType: System.Data.CommandType.Text).ToList();
+            }
+            return data;
+        }
     }
 }

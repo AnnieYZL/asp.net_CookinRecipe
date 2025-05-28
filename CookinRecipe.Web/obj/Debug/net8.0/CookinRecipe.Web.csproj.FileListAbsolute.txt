@@ -84,3 +84,12 @@ D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.Web\bin\Debug\net8.0\CookinRec
 D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.Web\obj\Debug\net8.0\CookinRecipe.Web.csproj.AssemblyReference.cache
 D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.Web\obj\Debug\net8.0\CookinRecipe.Web.sourcelink.json
 D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.Web\obj\Debug\net8.0\CookinRe.9F3BB2AF.Up2Date
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.Web\obj\Debug\net8.0\scopedcss\wwwroot\Areas\Cms\Views\Shared\_Layout.cshtml.rz.scp.css
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.Web\bin\Debug\net8.0\BCrypt.Net-Next.dll
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.Web\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.Google.dll
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.Web\bin\Debug\net8.0\Microsoft.Owin.dll
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.Web\bin\Debug\net8.0\Microsoft.Owin.Host.SystemWeb.dll
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.Web\bin\Debug\net8.0\Microsoft.Owin.Security.dll
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.Web\bin\Debug\net8.0\Microsoft.Owin.Security.Cookies.dll
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.Web\bin\Debug\net8.0\Microsoft.Owin.Security.Google.dll
+D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.Web\bin\Debug\net8.0\Owin.dll

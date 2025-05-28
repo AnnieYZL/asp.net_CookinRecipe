@@ -22,7 +22,14 @@ namespace CookinRecipe.BusinessLayers
         {
             return userAccountDB.ChangePassword(userName, oldPassword, newPassword);
         }
-
+        public static long CreateAccount(UserAccount account)
+        {
+            return userAccountDB.CreateAccount(account);
+        }
+        public static UserAccount? AuthorizeByEmail(string email)
+        {
+            return userAccountDB.AuthorizeByEmail(email);
+        }
     }
 }
 

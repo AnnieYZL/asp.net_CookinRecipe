@@ -9,16 +9,18 @@ using System.Reflection;
 
 namespace CookinRecipe.Web.Controllers
 {
-	[Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
+	
 	public class UserController : Controller
     {
-        public IActionResult Index()
+		[Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
+		public IActionResult Index()
         {
             long id = long.Parse(User.GetUserData().UserId);
             User user = UserDataService.GetUser(id);
             return View(user);
         }
-        public IActionResult Edit(User data)
+		[Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
+		public IActionResult Edit(User data)
         {
             long id = long.Parse(User.GetUserData().UserId);
             ViewBag.Title = "Chỉnh sửa thông tin";
@@ -31,8 +33,14 @@ namespace CookinRecipe.Web.Controllers
 
             return View(model);
         }
+		public IActionResult UserInfo(long id)
+		{
+			User user = UserDataService.GetUser(id);
+			return View(user);
+		}
 
-        public IActionResult Save(User data, IFormFile? uploadPhoto)
+		[Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
+		public IActionResult Save(User data, IFormFile? uploadPhoto)
         {
             ViewBag.Title = "Chỉnh sửa thông tin";
 

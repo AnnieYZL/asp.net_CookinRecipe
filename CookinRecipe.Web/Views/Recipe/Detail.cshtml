@@ -10,73 +10,73 @@
     @{
         if (Model.Recipe.RecipeVideo != "")
         {
-                    <script>
-                        function playVideo() {
-                            const videoContainer = document.getElementById('video-container');
-                            const video = document.getElementById('recipe-video');
-                            const playButton = document.getElementById('play-button');
+                <script>
+                    function playVideo() {
+                        const videoContainer = document.getElementById('video-container');
+                        const video = document.getElementById('recipe-video');
+                        const playButton = document.getElementById('play-button');
 
-                            playButton.style.display = 'none';
-                            video.style.display = 'block';
-                            video.controls = true;
-                            video.play();
-                        }
-                    </script>
-                    <div id="video-container" class="relative flex items-center justify-center">
-                        <video id="recipe-video" class="w-full rounded-lg">
-                            <source src="~/Themes/videos/@Model.Recipe.RecipeVideo" type="video/mp4">
-                            Trình duyệt của bạn không hỗ trợ dạng video này.
-                        </video>
-                        <button id="play-button" class="absolute" onclick="playVideo()">
-                            <div class="bg-black bg-opacity-60 text-white text-lg font-semibold px-4 py-2 rounded-full flex items-center">
-                                <span class="mr-2">XEM</span>
-                                <img src="~/Themes/assets/images/play-icon.png" alt="Play" class="w-6 h-6">
-                            </div>
-                        </button>
-                    </div>
+                        playButton.style.display = 'none';
+                        video.style.display = 'block';
+                        video.controls = true;
+                        video.play();
+                    }
+                </script>
+                <div id="video-container" class="relative flex items-center justify-center">
+                    <video id="recipe-video" class="w-full rounded-lg">
+                        <source src="~/FileUpload/videos/@Model.Recipe.RecipeVideo" type="video/mp4">
+                        Trình duyệt của bạn không hỗ trợ dạng video này.
+                    </video>
+                    <button id="play-button" class="absolute" onclick="playVideo()">
+                        <div class="bg-black bg-opacity-60 text-white text-lg font-semibold px-4 py-2 rounded-full flex items-center">
+                            <span class="mr-2">XEM</span>
+                            <img src="~/Themes/assets/images/play-icon.png" alt="Play" class="w-6 h-6">
+                        </div>
+                    </button>
+                </div>
         }
         else
         {
-                    <div id="video-container" class="flex items-center justify-center">
-                        <img src="~/Themes/images/recipe/@Model.Recipe.RecipeImage" class="w-full rounded-lg" alt="Hình ảnh món ăn">
-                    </div>
+                <div id="video-container" class="flex items-center justify-center">
+                    <img src="~/FileUpload/images/recipe/@Model.Recipe.RecipeImage" class="w-full rounded-lg" alt="Hình ảnh món ăn">
+                </div>
         }
     }
 
 
     <!-- Recipe Info -->
     <div class="text-center mt-4 font-sans">
-        <p class="text-xl text-gray-500">Tác giả:  <a class="text-blue-600 text-xl" href="~/User/Index/@Model.Recipe.AuthorID">@UserDataService.GetUser(Model.Recipe.AuthorID).FullName</a> </p>
+        <p class="text-xl text-gray-500">Tác giả:  <a class="text-blue-600 text-xl" href="~/User/UserInfo/@Model.Recipe.AuthorID">@UserDataService.GetUser(Model.Recipe.AuthorID).FullName</a> </p>
         <h1 class="text-3xl font-bold">@Model.Recipe.RecipeName</h1>
         <p class="text-lg font-sans font-italic px-4 text-gray-600 italic">@Model.Recipe.Description</p>
         <a href="#rating">
             @{
                 if (@RecipeDataService.GetRate(Model.Recipe.RecipeID) < 1)
                 {
-                            <p class="text-blue-600 text-lg">☆☆☆☆☆ <b>@RecipeDataService.GetRate(Model.Recipe.RecipeID)</b> (@RecipeDataService.CountRate(Model.Recipe.RecipeID))</p>
+                        <p class="text-blue-600 text-lg">☆☆☆☆☆ <b>@RecipeDataService.GetRate(Model.Recipe.RecipeID)</b> (@RecipeDataService.CountRate(Model.Recipe.RecipeID))</p>
                 }
                 else if (@RecipeDataService.GetRate(Model.Recipe.RecipeID) < 2)
                 {
-                            <p class="text-blue-600 text-lg">★☆☆☆☆ <b>@RecipeDataService.GetRate(Model.Recipe.RecipeID)</b> (@RecipeDataService.CountRate(Model.Recipe.RecipeID))</p>
+                        <p class="text-blue-600 text-lg">★☆☆☆☆ <b>@RecipeDataService.GetRate(Model.Recipe.RecipeID)</b> (@RecipeDataService.CountRate(Model.Recipe.RecipeID))</p>
                 }
                 else if (@RecipeDataService.GetRate(Model.Recipe.RecipeID) < 3)
                 {
-                            <p class="text-blue-600 text-lg">★★☆☆☆ <b>@RecipeDataService.GetRate(Model.Recipe.RecipeID)</b> (@RecipeDataService.CountRate(Model.Recipe.RecipeID))</p>
+                        <p class="text-blue-600 text-lg">★★☆☆☆ <b>@RecipeDataService.GetRate(Model.Recipe.RecipeID)</b> (@RecipeDataService.CountRate(Model.Recipe.RecipeID))</p>
                 }
                 else if (@RecipeDataService.GetRate(Model.Recipe.RecipeID) < 4)
                 {
-                            <p class="text-blue-600 text-lg">★★★☆☆ <b>@RecipeDataService.GetRate(Model.Recipe.RecipeID)</b> (@RecipeDataService.CountRate(Model.Recipe.RecipeID))</p>
+                        <p class="text-blue-600 text-lg">★★★☆☆ <b>@RecipeDataService.GetRate(Model.Recipe.RecipeID)</b> (@RecipeDataService.CountRate(Model.Recipe.RecipeID))</p>
                 }
                 else if (@RecipeDataService.GetRate(Model.Recipe.RecipeID) < 5)
                 {
-                            <p class="text-blue-600 text-lg">★★★★☆ <b>@RecipeDataService.GetRate(Model.Recipe.RecipeID)</b> (@RecipeDataService.CountRate(Model.Recipe.RecipeID))</p>
+                        <p class="text-blue-600 text-lg">★★★★☆ <b>@RecipeDataService.GetRate(Model.Recipe.RecipeID)</b> (@RecipeDataService.CountRate(Model.Recipe.RecipeID))</p>
                 }
                 else
                 {
-                            <p class="text-blue-600 text-lg">★★★★★ <b>@RecipeDataService.GetRate(Model.Recipe.RecipeID)</b> (@RecipeDataService.CountRate(Model.Recipe.RecipeID))</p>
+                        <p class="text-blue-600 text-lg">★★★★★ <b>@RecipeDataService.GetRate(Model.Recipe.RecipeID)</b> (@RecipeDataService.CountRate(Model.Recipe.RecipeID))</p>
                 }
             }
-            
+
 
         </a>
     </div>
@@ -86,18 +86,18 @@
         @{
             if (Model.Recipe.Difficulty == 0)
             {
-                        <div><strong>Mức độ:</strong> Dễ</div>
+                    <div><strong>Mức độ:</strong> Dễ</div>
             }
             else if (Model.Recipe.Difficulty == 1)
             {
-                        <div><strong>Mức độ:</strong> Trung bình</div>
+                    <div><strong>Mức độ:</strong> Trung bình</div>
             }
             else
             {
-                        <div><strong>Mức độ:</strong> Khó</div>
+                    <div><strong>Mức độ:</strong> Khó</div>
             }
         }
-        
+
         <div><strong>Thời gian:</strong> @Model.Recipe.PrepTime phút</div>
         <div><a href="#comment"><strong>Bình luận:</strong> @RecipeDataService.CountCmt(Model.Recipe.RecipeID)</a></div>
         <div><strong>Phục vụ:</strong> @Model.Recipe.Serving người ăn</div>
@@ -128,44 +128,52 @@
             <h2 class="text-xl font-semibold border-b pb-2">Nguyên liệu:</h2>
             <ul class="mt-2 text-xl">
                 @{
-                    foreach(var item in Model.Ingredients)
+                    foreach (var item in Model.Ingredients)
                     {
                         if (item.Quantity > 0)
                         {
-                                    <li class="flex">
-                                        <input type="checkbox" onclick="toggleIngredient(this)">
-                                        <span class="cursor-pointer ml-3" onclick="this.previousElementSibling.click()">@CommonDataService.GetIngredient(item.IngredientID).IngredientName: @item.Quantity @CommonDataService.GetIngredient(item.IngredientID).Unit </span>
-                                    </li>
+                                <li class="flex">
+                                    <input type="checkbox" onclick="toggleIngredient(this)">
+                                    <span class="cursor-pointer ml-3" onclick="this.previousElementSibling.click()">
+                                        @CommonDataService.GetIngredient(item.IngredientID).IngredientName:
+                                        @item.Quantity
+                                        @CommonDataService.GetIngredient(item.IngredientID).Unit
+                                        @(string.IsNullOrEmpty(item.IngreNote) ? "" : $" ({item.IngreNote})")
+                                    </span>
+                                </li>
                         }
                         else
                         {
-                                    <li class="flex">
-                                        <input type="checkbox" onclick="toggleIngredient(this)">
-                                        <span class="cursor-pointer ml-3" onclick="this.previousElementSibling.click()">@CommonDataService.GetIngredient(item.IngredientID).IngredientName</span>
-                                    </li>
+                                <li class="flex">
+                                    <input type="checkbox" onclick="toggleIngredient(this)">
+                                    <span class="cursor-pointer ml-3" onclick="this.previousElementSibling.click()">
+                                        @CommonDataService.GetIngredient(item.IngredientID).IngredientName
+                                        @(string.IsNullOrEmpty(item.IngreNote) ? "" : $" ({item.IngreNote})")
+                                    </span>
+                                </li>
                         }
                     }
                 }
             </ul>
-            
+
         </div>
 
         <!-- Directions and Note Sections -->
         <div class="w-full md:w-2/3 font-sans">
             <h2 class="text-xl font-sans font-semibold">Các bước làm:</h2>
-            
-                @foreach(var item in Model.Steps)
-                {
+
+            @foreach (var item in Model.Steps)
+            {
                 <div class="mt-2 border-t pt-2 flex">
                     <p class="font-bold text-2xl">@item.StepNumber</p>
                     <p class="ml-4 text-xl">@item.Description</p>
                 </div>
-                }
-                
+            }
 
-           
+
+
             <div class="mt-2 border-t pt-2 flex">
-                <img src="~/Themes/images/recipe/@Model.Recipe.RecipeImage" class="w-full mx-auto md:w-1/2 mt-4"
+                <img src="~/FileUpload/images/recipe/@Model.Recipe.RecipeImage" class="w-full mx-auto md:w-1/2 mt-4"
                      alt="dishPicture">
             </div>
             @if (Model.Notes != null)
@@ -189,7 +197,7 @@
                     </ul>
                 </div>
             }
-            
+
         </div>
     </div>
 
@@ -197,7 +205,8 @@
     <div class="mt-6 border-t pt-3">
         <h2 class="text-xl font-sans font-semibold">Tags:</h2>
         <div class="flex flex-wrap gap-2 mt-2">
-            @foreach (var item in RecipeDataService.ListTagIngredients(Model.Recipe.RecipeID)){
+            @foreach (var item in RecipeDataService.ListTagIngredients(Model.Recipe.RecipeID))
+            {
                 <a href="~/Ingredient/Index?ingredientId=@item.IngredientID">
                     <span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">@item.IngredientName</span>
                 </a>
@@ -240,42 +249,43 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 mt-3">
         @foreach (var ct in RecipeDataService.ListRecipeOfUser(Model.Recipe.AuthorID))
         {
-            if(ct.RecipeID!=Model.Recipe.RecipeID){
-            <div class="h-auto rounded overflow-hidden shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 ...">
-                <img src="~/Themes/images/recipe/@ct.RecipeImage" class="w-full h-52 object-cover cursor-pointer"
-                     alt="Hình ảnh món ăn">
-                <div class='px-4 py-2'>
-                    <div class="mb-2 font-medium text-xl overflow-ellipsis overflow-hidden whitespace-nowrap cursor-pointer"
-                         id="01">
-                        <a href="~/Recipe/Detail/@ct.RecipeID">@ct.RecipeName</a>
+            if (ct.RecipeID != Model.Recipe.RecipeID)
+            {
+                <div class="h-auto rounded overflow-hidden shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 ...">
+                    <img src="~/FileUpload/images/recipe/@ct.RecipeImage" class="w-full h-52 object-cover cursor-pointer"
+                         alt="Hình ảnh món ăn">
+                    <div class='px-4 py-2'>
+                        <div class="mb-2 font-medium text-xl overflow-ellipsis overflow-hidden whitespace-nowrap cursor-pointer"
+                             id="01">
+                            <a href="~/Recipe/Detail/@ct.RecipeID">@ct.RecipeName</a>
+                        </div>
+
+                        <p class='font-regular text-gray-600 text-base leading-normal h-12 overflow-ellipsis overflow-hidden w-full'>
+                            @ct.Description
+                        </p>
+                    </div>
+                    <div class='px-3 pb-1 flex flex-row'>
+                        @foreach (var i in RecipeDataService.GetMainIngredient(ct.RecipeID))
+                        {
+                            <a href="~/Ingredient/Index?ingredientId=@i.IngredientID">
+                                <span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">@i.IngredientName</span>
+                            </a>
+                        }
                     </div>
 
-                    <p class='font-regular text-gray-600 text-base leading-normal h-12 overflow-ellipsis overflow-hidden w-full'>
-                        @ct.Description
-                    </p>
-                </div>
-                <div class='px-3 pb-1 flex flex-row'>
-                    @foreach (var i in RecipeDataService.GetMainIngredient(ct.RecipeID))
-                    {
-                        <a href="~/Ingredient/Index?ingredientId=@i.IngredientID">
-                            <span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">@i.IngredientName</span>
-                        </a>
-                    }
+                    <div class="px-4 pb-2 flex flex-row">
+                        <p class='overflow-ellipsis overflow-hidden whitespace-nowrap font-regular text-gray-600 text-base leading-normal'>
+                            <i class="fas fa-clock text-bl"></i> @ct.PrepTime phút
+                        </p>
+                        <button type="button" class="ml-auto cursor-pointer">
+                            <i class="fa fa-heart text-red-600"></i>
+                        </button>
+                        <button type="button" class="saveBtn ml-5 cursor-pointer" data-recipe-id="@ct.RecipeID">
+                            <i class="fa fa-bookmark text-gray-500"></i>
+                        </button>
+                    </div>
                 </div>
 
-                <div class="px-4 pb-2 flex flex-row">
-                    <p class='overflow-ellipsis overflow-hidden whitespace-nowrap font-regular text-gray-600 text-base leading-normal'>
-                        <i class="fas fa-clock text-bl"></i> @ct.PrepTime phút
-                    </p>
-                    <button type="button" class="ml-auto cursor-pointer">
-                        <i class="fa fa-heart text-red-600"></i>
-                    </button>
-                    <button type="button" class="saveBtn ml-5 cursor-pointer" data-recipe-id="@ct.RecipeID">
-                        <i class="fa fa-bookmark text-gray-500"></i>
-                    </button>
-                </div>
-            </div>
-        
             }
         }
 
@@ -287,7 +297,7 @@
 <!--Comments-->
 <div class="py-5 flex justify-center" id="comment">
     <div class="w-11/12 md:max-w-6xl w-full md:mx-8 md:flex md:max-w-5xl shadow-lg rounded-lg">
-        <form class="w-full bg-white rounded-lg px-4 pt-2" action="~/Recipe/CreateComment#comment" id="formComment" method="get" data-container="#dataCmt">
+        <form class="w-full bg-white rounded-lg px-4 pt-2" action="~/Recipe/CreateComment#comment" id="formComment" method="post" data-container="#dataCmt">
             <input type="hidden" name="recipeId" value="@Model.Recipe.RecipeID" />
             <div class="flex flex-wrap -mx-3 mb-6">
                 <h2 class="px-4 pt-3 pb-2 text-gray-800 text-2xl font-semibold font-sans">Bình luận</h2>
@@ -316,8 +326,7 @@
         @if (Model.Comments.Count == 0)
         {
             <p id="dish-no-comments" class="mx-auto text-center text-sm font-medium text-gray-400 mt-4">
-                Chưa có bình luận
-                nào!
+                Chưa có bình luận nào!
             </p>
         }
         else
@@ -325,126 +334,64 @@
             <div class="w-full px-4 pt-2 pb-2 mt-4">
                 @foreach (var cmt in Model.Comments)
                 {
+                    var user = UserDataService.GetUser(cmt.UserID);
                     <div class="flex flex-row w-full p-2 border-t pt-4">
-                        <img class="w-20 h-20 mr-2 object-cover rounded-full cursor-pointer"
-                             src="~/Themes/images/user/@UserDataService.GetUser(cmt.UserID).UserImage" />
+                        <a href="/User/UserInfo/@cmt.UserID">
+                            <img class="w-20 h-20 mr-2 object-cover rounded-full cursor-pointer"
+                                 src="~/FileUpload/images/user/@user.UserImage" alt="@user.FullName" />
+                        </a>
                         <div class="ml-2 w-full">
-                            <div class="flex">
-                                <div class="commentBox">
-                                    <h2 class="text-gray-800 text-lg font-medium mb-2 cursor-pointer">@UserDataService.GetUser(cmt.UserID).FullName</h2>
-                                    <p id="commentText" class="font-regular text-gray-600">@cmt.CommentContent</p>
+                            <div class="flex w-full">
+                                <div class="commentBox w-full" data-comment-id="@cmt.CommentID">
+                                    <h2 class="text-gray-800 text-lg font-medium mb-2 cursor-pointer">@user.FullName</h2>
+                                    <p class="commentText font-regular text-gray-600">@cmt.CommentContent</p>
 
-                                    <textarea id="editInput" class="w-full hidden p-2 border rounded" rows="5"></textarea>
-                                    <div class="flex justify-end mt-2 hidden" id="editActions">
-                                        <button onclick="cancelEdit()"
-                                                class="px-3 py-1 bg-gray-300 text-white rounded" type="button">
-                                            Hủy
-                                        </button>
-                                        <button onclick="saveCmt()" type="button"
-                                                class="ml-3 px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded mr-2">
-                                            Lưu
-                                        </button>
+                                    <textarea class="editInput w-full hidden p-2 border rounded mt-2" rows="5"></textarea>
+                                    <div class="editActions flex justify-end mt-2 hidden">
+                                        <button onclick="cancelEdit(this)" class="px-3 py-1 bg-gray-300 text-black rounded" type="button">Hủy</button>
+                                        <button onclick="saveCmt(this)" type="button" class="ml-3 px-3 py-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded">Lưu</button>
                                     </div>
-
                                 </div>
-                                @{
-                                    if (User.GetUserData() != null)
-                                    {
-                                        if (@UserDataService.GetUser(cmt.UserID).UserID == long.Parse(User.GetUserData().UserId))
-                                        {
-                                                <div class="relative ml-auto">
-                                                    <!-- Nút mở menu (icon 3 chấm dọc) -->
-                                                    <button onclick="toggleOption(event)" class="p-2" type="button">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                                             viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                  d="M12 6v.01M12 12v.01M12 18v.01" />
-                                                        </svg>
-                                                    </button>
-                                                    <!-- Menu tùy chọn -->
-                                                    <div id="optionbarComment"
-                                                         class="absolute font-sans right-0 mt-2 w-36 bg-white border rounded shadow-lg overflow-hidden hidden">
-                                                        <button class="w-full px-1 py-2 text-center hover:bg-blue-50"
-                                                                onclick="editCmt()" type="button">
-                                                            Chỉnh sửa
-                                                        </button>
-                                                        <button class="w-full px-1 py-2 text-center hover:bg-blue-50 text-red-500"
-                                                                onclick="deleteCmt()" type="button">
-                                                            Xóa bình luận
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                        }
-                                    }
+
+                                @if (User.GetUserData() != null && user.UserID == long.Parse(User.GetUserData().UserId))
+                                {
+                                    <div class="relative ml-auto">
+                                        <!-- Nút mở menu (icon 3 chấm dọc) -->
+                                        <button onclick="toggleOption(this,event)" class="p-2" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Tùy chọn bình luận">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v.01M12 12v.01M12 18v.01" />
+                                            </svg>
+                                        </button>
+                                        <!-- Menu tùy chọn -->
+                                        <div class="optionbarComment absolute font-sans right-0 mt-2 w-36 bg-white border rounded shadow-lg overflow-hidden hidden z-10">
+                                            <button class="w-full px-1 py-2 text-center hover:bg-blue-50" onclick="editCmt(this,event)" type="button">Chỉnh sửa</button>
+                                            <button class="w-full px-1 py-2 text-center hover:bg-blue-50 text-red-500" onclick="deleteCmt(this)" type="button">Xóa bình luận</button>
+                                        </div>
+                                    </div>
                                 }
-
-                                <script>
-                                    function toggleOption(event) {
-                                        event.stopPropagation();
-                                        document.getElementById("optionbarComment").classList.toggle("hidden");
-                                    }
-
-                                    function closeOption(event) {
-                                        if (!document.getElementById("optionbarComment").contains(event.target) && event.target.id !== "optionbar-button") {
-                                            document.getElementById("optionbarComment").classList.add("hidden");
-                                        }
-                                    }
-
-                                    function editCmt() {
-                                        document.getElementById("optionbarComment").classList.add("hidden");
-                                        document.getElementById("commentText").classList.add("hidden");
-                                        document.getElementById("editInput").classList.remove("hidden");
-                                        document.getElementById("editActions").classList.remove("hidden");
-                                        document.getElementById("editInput").value = document.getElementById("commentText").innerText;
-                                    }
-
-                                    function saveCmt() {
-                                        document.getElementById("commentText").innerText = document.getElementById("editInput").value;
-                                        cancelEdit();
-                                    }
-
-                                    function cancelEdit() {
-                                        document.getElementById("commentText").classList.remove("hidden");
-                                        document.getElementById("editInput").classList.add("hidden");
-                                        document.getElementById("editActions").classList.add("hidden");
-                                    }
-
-                                    function deleteCmt() {
-                                        if (confirm("Bạn có chắc chắn muốn xóa bình luận này?")) {
-                                            alert("Đã xóa bình luận!");
-                                        }
-                                    }
-                                </script>
                             </div>
                         </div>
                     </div>
                 }
-
             </div>
         }
-
-        <!--Previously added comments-->
-        
     </div>
 </div>
-    </div>
-
-
 <!-- Modal Save -->
-<div id="modalSave" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
+<div id="modalSave" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden z-50">
     <div id="modalSaveContent"
-         class="bg-white p-4 rounded-lg shadow-lg w-96 h-[500px] max-h-[80vh] overflow-hidden transition-all">
+         class="bg-white p-4 rounded-lg shadow-lg w-96 h-[500px] max-h-[80vh] overflow-hidden transition-all relative">
         <div class="flex justify-between items-center border-b pb-2 mb-2">
             <h2 class="text-xl text-blue-600 font-medium">Lưu vào</h2>
-            <button id="closeModalSave" class="text-2xl font-bold text-black">×</button>
+            <button id="closeModalSave" class="text-2xl font-bold text-black cursor-pointer" aria-label="Đóng modal">×</button>
         </div>
         @if (User.GetUserData() != null)
         {
-            <div class="overflow-y-auto max-h-72 min-h-[50px]">
+            <div class="overflow-y-auto max-h-72 min-h-[50px]" tabindex="0">
                 <ul id="listContainer" class="space-y-2">
                     @foreach (var item in ListDataService.GetListOf(long.Parse(User.GetUserData().UserId)))
                     {
-                        <li class="p-2 bg-gray-100 rounded flex items-center space-x-3 cursor-pointer hover:bg-gray-200" data-list-id="@item.ListID">
+                        <li class="p-2 bg-gray-100 rounded flex items-center space-x-3 cursor-pointer hover:bg-gray-200" data-list-id="@item.ListID" role="button" tabindex="0">
                             <img src="~/Themes/assets/images/vLOGO.png" class="w-12 h-12 rounded-lg" alt="Danh sách 1">
                             <div>
                                 <span class="font-medium">@item.ListName</span>
@@ -452,240 +399,91 @@
                             </div>
                         </li>
                     }
-
                 </ul>
             </div>
         }
-        
         <button id="newListBtn"
-                class="mt-4 w-full font-sans flex items-center justify-center gap-2 bg-gray-200 text-black py-2 rounded-lg hover:bg-gray-300">
+                class="mt-4 w-full font-sans flex items-center justify-center gap-2 bg-gray-200 text-black py-2 rounded-lg hover:bg-gray-300 cursor-pointer">
             + Bộ sưu tập mới
         </button>
         <button id="doneBtn"
-                class="mt-4 w-full font-sans bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                class="mt-4 w-full font-sans bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 cursor-pointer">
             Lưu
         </button>
     </div>
+</div>
+</div>
+
+@section scripts {
+    <script src="/js/saveFavRate.js"></script>
     <script>
-        let currentRecipeId = null;
-        document.querySelectorAll('.saveBtn').forEach(btn => {
-            btn.addEventListener('click', function () {
-                currentRecipeId = this.getAttribute('data-recipe-id');
-                document.getElementById('modalSave').classList.remove('hidden');
-                selectedListIds.clear();
-                document.querySelectorAll('#listContainer li').forEach(li => li.classList.remove('bg-blue-100'));
-            });
-        });
+        const stars = document.querySelectorAll('.star');
+        let selectedRating = 0;
 
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                selectedRating = this.getAttribute('data-value');
+                highlightStars(selectedRating);
 
-
-        document.getElementById('closeModalSave').addEventListener('click', function () {
-            document.getElementById('modalSave').classList.add('hidden');
-        });
-
-        document.getElementById('doneBtn').addEventListener('click', function () {
-            document.getElementById('modalSave').classList.add('hidden');
-        });
-
-        document.getElementById('newListBtn').addEventListener('click', function () {
-            if (document.getElementById('listContainer').querySelector('input')) {
-                return;
-            }
-
-            const listContainer = document.getElementById('listContainer');
-            const newItem = document.createElement('li');
-            newItem.className = "p-2 bg-gray-100 rounded flex items-center space-x-3 cursor-pointer hover:bg-gray-200";
-
-            const img = document.createElement('img');
-            img.src = "/Themes/assets/images/vLOGO.png";
-            img.className = "w-12 h-12 rounded-lg";
-            img.alt = "New List";
-
-            const input = document.createElement('input');
-            input.type = "text";
-            input.className = "bg-transparent border-b border-gray-500 focus:outline-none font-sans";
-            input.placeholder = "Nhập tên danh sách";
-
-            const saveBtn = document.createElement('button');
-            saveBtn.textContent = "✓";
-            saveBtn.className = "ml-2 text-green-500 text-xl font-bold cursor-pointer";
-
-            const cancelBtn = document.createElement('button');
-            cancelBtn.textContent = "×";
-            cancelBtn.className = "ml-2 text-red-500 text-xl font-bold cursor-pointer";
-            saveBtn.addEventListener('click', function () {
-                const listName = input.value.trim();
-                if (listName === "") return;
                 $.ajax({
-                    type: "POST",
-                    url: "/Recipe/CreateList", // <- đúng controller của trang hiện tại
-                    data: { listName: listName },
-                    success: function (response) {
-                        if (response.success) {
-                            newItem.innerHTML = '';
-                            newItem.setAttribute('data-list-id', response.listId);
-                            newItem.className = "p-2 bg-gray-100 rounded flex items-center space-x-3 cursor-pointer hover:bg-gray-200";
-
-                            newItem.appendChild(img);
-
-                            const textDiv = document.createElement('div');
-                            textDiv.innerHTML = `<span class='font-medium'>${listName}</span><p class='text-sm text-gray-500'>0 công thức</p>`;
-                            newItem.appendChild(textDiv);
-                        }
-                        else {
-                            alert("Lỗi: " + response.message);
+                    url: '/Recipe/RateRecipe',
+                    type: 'POST',
+                    data: {
+                        recipeId: @Model.Recipe.RecipeID,
+                        rating: selectedRating
+                    },
+                    success: function (res) {
+                        if (res.success) {
+                            ThongBao("Đã lưu đánh giá của bạn", "success");
+                        } else {
+                            ThongBao("Có lỗi xảy ra khi lưu đánh giá", "warning");
                         }
                     },
                     error: function () {
-                        alert("Đã xảy ra lỗi khi gọi server.");
+                        ThongBao("Có lỗi xảy ra khi gửi đánh giá.", "danger");
                     }
                 });
             });
-
-            cancelBtn.addEventListener('click', function () {
-                listContainer.removeChild(newItem);
-            });
-
-            newItem.appendChild(img);
-            newItem.appendChild(input);
-            newItem.appendChild(saveBtn);
-            newItem.appendChild(cancelBtn);
-            listContainer.appendChild(newItem);
-        });
-        let selectedListItem = null;
-        let selectedListIds = new Set();
-
-        document.getElementById('listContainer').addEventListener('click', function (e) {
-            const li = e.target.closest('li[data-list-id]');
-            if (!li) return;
-
-            const currentId = li.getAttribute('data-list-id');
-            if (selectedListIds.has(currentId)) {
-                selectedListIds.delete(currentId);
-                li.classList.remove('bg-blue-100');
-            } else {
-                selectedListIds.add(currentId);
-                li.classList.add('bg-blue-100');
-            }
         });
 
-
-
-        document.getElementById('doneBtn').addEventListener('click', function () {
-            if (selectedListIds.size === 0) {
-                alert("Vui lòng chọn ít nhất một bộ sưu tập!");
-                return;
-            }
-
-            if (!currentRecipeId) {
-                alert("Không xác định được công thức cần lưu!");
-                return;
-            }
-
-            const listIdArray = Array.from(selectedListIds);
-
-            $.ajax({
-                type: "POST",
-                url: "/Recipe/SaveToList",
-                traditional: true,
-                data: {
-                    recipeId: currentRecipeId,
-                    listIds: listIdArray
-                },
-                success: function (response) {
-                    if (response.success) {
-                        alert("Đã lưu công thức vào danh sách!");
-                        document.getElementById('modalSave').classList.add('hidden');
-                    } else {
-                        alert(response.message);
-                    }
-                },
-                error: function () {
-                    alert("Lỗi khi gọi server.");
-                }
-            });
-        });
-
-
-    </script>
-</div>
-<script type="text/javascript" src='../scripts/dishPageHandler.js'></script>
-
-<!-- Script Rating -->
-<script>
-    const stars = document.querySelectorAll('.star');
-    let selectedRating = 0;
-
-    stars.forEach(star => {
-        star.addEventListener('click', function () {
-            selectedRating = this.getAttribute('data-value');
-            highlightStars(selectedRating);
-
-            $.ajax({
-                url: '/Recipe/RateRecipe',
-                type: 'POST',
-                data: {
-                    recipeId: @Model.Recipe.RecipeID,
-                    rating: selectedRating
-                },
-                success: function (res) {
-                    if (res.success) {
-                    } else {
-                        alert("Lỗi: " + res.message);
-                    }
-                },
-                error: function () {
-                    alert("Có lỗi xảy ra khi gửi đánh giá.");
-                }
-            });
-        });
-    });
-
-    function highlightStars(rating) {
-        stars.forEach(star => {
-            if (parseInt(star.getAttribute('data-value')) <= rating) {
-                star.classList.add('text-yellow-400');
-            } else {
-                star.classList.remove('text-yellow-400');
-            }
-        });
-    }
-
-    // Gọi để load lại đánh giá người dùng (nếu có)
-    $(document).ready(function () {
-        $.get('/Recipe/GetUserRating', { recipeId: @Model.Recipe.RecipeID }, function (res) {
-            if (res.success && res.rating) {
-                selectedRating = res.rating;
-                highlightStars(selectedRating);
-            }
-        });
-    });
-    
-</script>
-
-<!-- Script Fav -->
-<script>
-    function toggleLikeButton(el) {
-        const svg = el.tagName === 'svg' ? el : el.closest('svg');
-        const recipeId = @Model.Recipe.RecipeID;
-
-        fetch('/Recipe/ToggleLike', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ recipeId: @Model.Recipe.RecipeID })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    svg.setAttribute('fill', data.liked ? 'red' : '#FFFFFF');
-                    document.getElementById('dish-page-num-likes').textContent = data.likeCount;
+        function highlightStars(rating) {
+            stars.forEach(star => {
+                if (parseInt(star.getAttribute('data-value')) <= rating) {
+                    star.classList.add('text-yellow-400');
                 } else {
-                    alert(data.message || 'Đã xảy ra lỗi!');
+                    star.classList.remove('text-yellow-400');
                 }
             });
-    }
+        }
 
+        $(document).ready(function () {
+            $.get('/Recipe/GetUserRating', { recipeId: @Model.Recipe.RecipeID }, function (res) {
+                if (res.success && res.rating) {
+                    selectedRating = res.rating;
+                    highlightStars(selectedRating);
+                }
+            });
+        });
 
-</script>
+        function toggleLikeButton(el) {
+            const svg = el.tagName === 'svg' ? el : el.closest('svg');
+
+            fetch('/Recipe/ToggleLike', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ recipeId: @Model.Recipe.RecipeID })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        svg.setAttribute('fill', data.liked ? 'red' : '#FFFFFF');
+                        document.getElementById('dish-page-num-likes').textContent = data.likeCount;
+                    } else {
+                        ThongBao("Đã xảy ra lỗi khi thích công thức", "warning");
+                    }
+                });
+        }
+    </script>
+}

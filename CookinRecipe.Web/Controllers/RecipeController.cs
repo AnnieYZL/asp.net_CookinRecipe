@@ -1,6 +1,7 @@
 ﻿using CookinRecipe.BusinessLayers;
 using CookinRecipe.DomainModels;
 using CookinRecipe.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using static Azure.Core.HttpHeader;
@@ -64,7 +65,8 @@ namespace CookinRecipe.Web.Controllers
 			};
 			return View(model);
 		}
-		public IActionResult CreateComment(string newComment = "", long recipeId = 0)
+        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
+        public IActionResult CreateComment(string newComment = "", long recipeId = 0)
 		{
 			var userData = User.GetUserData();
 			Comment cmt = new Comment()
@@ -96,7 +98,8 @@ namespace CookinRecipe.Web.Controllers
             };
             return View("Detail", model);
 		}
-		public IActionResult Edit(long id = 0)
+        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
+        public IActionResult Edit(long id = 0)
 		{
             ViewBag.Title = "Cập nhật công thức";
             Recipe? recipe = RecipeDataService.Get(id);
@@ -104,7 +107,8 @@ namespace CookinRecipe.Web.Controllers
                 return RedirectToAction("Index", "Home");
             return View(recipe); 
 		}
-		public IActionResult Create()
+        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
+        public IActionResult Create()
 		{
             ViewBag.Title = "Tạo công thức mới";
             Recipe recipe = new Recipe()
@@ -114,7 +118,8 @@ namespace CookinRecipe.Web.Controllers
             return View("Edit", recipe);
 		}
         [HttpPost]
-        public IActionResult Save(List<string> StepList, List<string> NoteList, List<int> IngredientList, List<int> QuantityList, List<int> CourseList, Recipe data, IFormFile? uploadPhoto, IFormFile? uploadVideo)
+        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
+        public IActionResult Save(List<string> StepList, List<string> NoteList, List<int> IngredientList, List<int> QuantityList, List<int> CourseList, List<string> IngreNoteList, Recipe data, IFormFile? uploadPhoto, IFormFile? uploadVideo)
         {
             ViewBag.Title = data.RecipeID == 0 ? "Tạo công thức mới" : "Cập nhật công thức";
             //Kiểm tra dữ liệu đầu vào có hợp lệ hay không => Ghi Task List
@@ -133,7 +138,7 @@ namespace CookinRecipe.Web.Controllers
             if (uploadPhoto != null)
             {
                 string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}"; //Tên file sẽ lưu
-                string folder = Path.Combine(ApplicationContext.WebRootPath, @"Themes\images\recipe"); //đường dẫn đến thư mục lưu file
+                string folder = Path.Combine(ApplicationContext.WebRootPath, @"FileUpload\images\recipe"); //đường dẫn đến thư mục lưu file
                 string filePath = Path.Combine(folder, fileName); //Đường dẫn đến file cần lưu D:\images\products\photo.png
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
@@ -145,7 +150,7 @@ namespace CookinRecipe.Web.Controllers
             if (uploadVideo != null)
             {
                 string fileName = $"{DateTime.Now.Ticks}_{uploadVideo.FileName}"; //Tên file sẽ lưu
-                string folder = Path.Combine(ApplicationContext.WebRootPath, @"Themes\videos"); //đường dẫn đến thư mục lưu file
+                string folder = Path.Combine(ApplicationContext.WebRootPath, @"FileUpload\videos"); //đường dẫn đến thư mục lưu file
                 string filePath = Path.Combine(folder, fileName); //Đường dẫn đến file cần lưu D:\images\products\photo.png
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
@@ -174,7 +179,8 @@ namespace CookinRecipe.Web.Controllers
                         {
                             RecipeID = recipeId,
                             IngredientID = IngredientList[i],
-                            Quantity = QuantityList[i]
+                            Quantity = QuantityList[i],
+                            IngreNote = IngreNoteList[i],
                         });
                     }
                     RecipeDataService.AddIngredients(nl);
@@ -244,7 +250,8 @@ namespace CookinRecipe.Web.Controllers
                         {
                             RecipeID = recipeId,
                             IngredientID = IngredientList[i],
-                            Quantity = QuantityList[i]
+                            Quantity = QuantityList[i],
+                            IngreNote = IngreNoteList[i],
                         });
                     }
                     RecipeDataService.AddIngredients(nl);
@@ -299,6 +306,7 @@ namespace CookinRecipe.Web.Controllers
                 return RedirectToAction("Detail", new {id = recipeId});
             }
         }
+        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
         public IActionResult Delete(long id = 0)
         {
             
@@ -310,6 +318,7 @@ namespace CookinRecipe.Web.Controllers
             return RedirectToAction("Index", "User");
         }
         [HttpPost]
+        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
         public JsonResult CreateList(string listName)
         {
             try
@@ -334,6 +343,7 @@ namespace CookinRecipe.Web.Controllers
             }
         }
         [HttpPost]
+        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
         public JsonResult SaveToList(long recipeId, List<long> listIds)
         {
             try
@@ -354,6 +364,7 @@ namespace CookinRecipe.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
         public JsonResult RateRecipe(long recipeId, int rating)
         {
             var user = User.GetUserData();
@@ -390,6 +401,7 @@ namespace CookinRecipe.Web.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
         public JsonResult GetUserRating(long recipeId)
         {
             var user = User.GetUserData();
@@ -401,6 +413,7 @@ namespace CookinRecipe.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
         public JsonResult ToggleLike(long recipeId)
         {
             var user = User.GetUserData();

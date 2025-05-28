@@ -13,7 +13,7 @@
             @foreach(var item in Model.Data){
                 <a href="@Url.Action("Detail", "Course", new { courseId = item.CourseID })">
                 <div class="my-div relative hover-container overflow-hidden shadow-lg h-24">
-                    <img src="~/Themes/images/course/@item.CourseImage" alt="Course Image"
+                    <img src="~/FileUpload/images/course/@item.CourseImage" alt="Course Image"
                          class="hover-image w-full h-full object-cover transition-transform duration-500">
 
                     <!-- Decorative Lines -->

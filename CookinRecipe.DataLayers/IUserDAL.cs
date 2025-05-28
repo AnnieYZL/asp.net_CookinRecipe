@@ -25,5 +25,10 @@ namespace CookinRecipe.DataLayers
         /// <param name="data"></param>
         /// <returns></returns>
         bool Update(User data);
+        /// <summary>
+        /// Lấy tất cả người dùng
+        /// </summary>
+        /// <returns></returns>
+        IList<User> GetAllUsers();
     }
 }

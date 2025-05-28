@@ -7,15 +7,139 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://unpkg.com/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
-    <link href="~/Themes/styles/main.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="~/Themes/styles/color.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Cookin Recipe - Đăng nhập</title>
+
+    <!-- Favicon -->
     <link rel="shortcut icon" href="~/Themes/assets/images/vLOGO.png" type="image/x-icon" />
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet" />
+    <link href="~/Themes/styles/main.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="~/lib/DataTables/Buttons-2.0.1/buttons.dataTables.min.css">
+
+    <!-- jQuery & Plugins -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery_ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <!-- Notify -->
+    <script src="/lib/notify/bootstrap-notify.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="~/lib/DataTables/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/lib/DataTables/checkboxes.min.js" asp-append-version="true"></script>
+    <script src="~/lib/datatables/datatables.rowgroup.min.js"></script>
+    <script src="~/lib/datatables/datatables.rowsgroup.js"></script>
+    <script src="~/lib/DataTables/Buttons-2.0.1/dataTables.buttons.min.js"></script>
+    <script src="~/lib/DataTables/JSZip-2.5.0/jszip.min.js"></script>
+    <script src="~/lib/DataTables/Buttons-2.0.1/buttons.html5.min.js"></script>
+    <style>
+        .scrollbar-hidden::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 255px;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+            background-color: white;
+        }
+
+        .title {
+            color: grey;
+            font-size: 18px;
+        }
+
+        button#searchBtn {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-image: linear-gradient(to right, #2a60eb, #763cec);
+            text-align: center;
+            cursor: pointer;
+            /* width: 100%; */
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 22px;
+            color: black;
+        }
+
+        .hover-container:hover .hover-image {
+            transform: scale(1.2);
+        }
+
+        .hover-container:hover .hover-info {
+            opacity: 1;
+        }
+
+        .decor-line {
+            position: absolute;
+            background-color: #c28b36;
+            transition: width 0.5s ease-in-out, height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            opacity: 0;
+        }
+
+        .hover-container:hover .line-horizontal {
+            width: 55%;
+            opacity: 1;
+        }
+
+        .hover-container:hover .line-vertical {
+            height: 55%;
+            opacity: 1;
+        }
+
+        .line-horizontal {
+            width: 3px;
+            height: 3px;
+            bottom: 40px;
+            left: 30px;
+        }
+
+        .line-vertical {
+            width: 3px;
+            height: 20px;
+            bottom: 30px;
+            left: 40px;
+        }
+
+        .text-slide {
+            position: relative;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        .hover-container:hover .text-left {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .hover-container:hover .text-right {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .text-left {
+            transform: translateX(-50px);
+        }
+
+        .text-right {
+            transform: translateX(50px);
+        }
+    </style>
 </head>
 
 <body class="bg-blue-50">
@@ -34,11 +158,9 @@
                 <!-- Secondary Navbar items -->
                 <div class="ml-auto flex items-center space-x-3 ">
 
-                    <a id="nav-login-btn" href="~/Account/Login"
-                        class="md:flex hidden py-2 px-2 text-base text-blue-600 font-regular">Đăng nhập</a>
+                    <a href="~/Account/Login" class="text-blue-600 hover:text-blue-800 font-medium">Đăng nhập</a>
                     <a id="nav-signup-btn" href="~/Account/SignUp" class="md:flex hidden">
-                        <button
-                            class="bg-gradient-to-r from-blue-600 to-purple-600 hover:bg-blue-700 duration-300 text-white text-base font-regular py-2 px-4 rounded">
+                        <button class="bg-gradient-to-r from-blue-600 to-purple-600 hover:bg-blue-700 duration-300 text-white text-base font-regular py-2 px-4 rounded">
                             Đăng ký
                         </button>
                     </a>
@@ -84,7 +206,7 @@
         <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
             <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
                 <h1 class="mb-8 text-3xl text-center font-medium text-blue-600">Đăng nhập</h1>
-                <form action="~/Account/Login" method="post">
+                <form id="login-form" method="post">
                     @Html.AntiForgeryToken()
                 <input type="text" class="block border border-grey-light w-full p-3 rounded mb-4 font-light"
                           name="email" value="@ViewBag.Email" placeholder="Email" />
@@ -92,7 +214,6 @@
                 <input type="password" class="block border border-grey-light w-full p-3 rounded mb-4 font-light"
                    name="password" placeholder="Mật khẩu" />
                 <div class="w-full text-red-500 px-2 font-light">
-                    @Html.ValidationMessage("Error", new { @style = "color:#f00" })
                 </div>
                     
                 <button type="submit" onClick="loginInputHandler()"
@@ -109,6 +230,39 @@
             </div>
         </div>
     </div>
+    <script>
+        function loginInputHandler() {
+            event.preventDefault(); // Ngăn submit mặc định
+
+            const form = $('#login-form');
+            const email = form.find('input[name="email"]').val();
+            const password = form.find('input[name="password"]').val();
+            const token = form.find('input[name="__RequestVerificationToken"]').val();
+
+            $.ajax({
+                url: '/Account/Login',
+                method: 'POST',
+                data: {
+                    __RequestVerificationToken: token,
+                    email: email,
+                    password: password
+                },
+                success: function (res) {
+                    if (res.success) {
+                        ThongBao(res.message, "success");
+                        setTimeout(() => {
+                            window.location.href = '/Home/Index'; 
+                        }, 1000);
+                    } else {
+                        ThongBao(res.message, "warning");
+                    }
+                },
+                error: function () {
+                    ThongBao("Có lỗi xảy ra khi gửi yêu cầu đăng nhập.", "danger");
+                }
+            });
+        }
+    </script>
 
 </body>
 

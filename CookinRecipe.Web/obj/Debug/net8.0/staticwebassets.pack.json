@@ -5,6 +5,182 @@
       "PackagePath": "staticwebassets\\CookinRecipe.Web.bundle.scp.css"
     },
     {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\course\\banh-chung-1_710694221.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\course\\banh-chung-1_710694221.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\course\\photo-1467003909585-2f8a72700288.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\course\\photo-1467003909585-2f8a72700288.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\course\\photo-1482049016688-2d3e1b311543.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\course\\photo-1482049016688-2d3e1b311543.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\course\\photo-1500217052183-bc01eee1a74e.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\course\\photo-1500217052183-bc01eee1a74e.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\course\\photo-1508737804141-4c3b688e2546.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\course\\photo-1508737804141-4c3b688e2546.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\course\\photo-1551538827-9c037cb4f32a.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\course\\photo-1551538827-9c037cb4f32a.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\course\\photo-1556679343-c7306c1976bc.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\course\\photo-1556679343-c7306c1976bc.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\course\\photo-1563805042-7684c019e1cb.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\course\\photo-1563805042-7684c019e1cb.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\course\\photo-1594834749740-74b3f6764be4.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\course\\photo-1594834749740-74b3f6764be4.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\course\\photo-1623341214825-9f4f963727da.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\course\\photo-1623341214825-9f4f963727da.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\course\\photo-1623852990556-2d1f29021fd2.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\course\\photo-1623852990556-2d1f29021fd2.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\course\\photo-1645177628172-a94c1f96e6db.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\course\\photo-1645177628172-a94c1f96e6db.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\course\\photo-1676664778856-b48a7d87d831.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\course\\photo-1676664778856-b48a7d87d831.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\course\\premium_photo-1694708455249-992010f9db32.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\course\\premium_photo-1694708455249-992010f9db32.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\course\\sebastian-coman-photography-CRoAeTh5S_I-unsplash.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\course\\sebastian-coman-photography-CRoAeTh5S_I-unsplash.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\home\\chef.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\home\\chef.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\home\\course.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\home\\course.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\home\\food.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\home\\food.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\home\\ingredient.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\home\\ingredient.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\home\\istockphoto-1090831256-1024x1024.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\home\\istockphoto-1090831256-1024x1024.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\home\\istockphoto-1155681995-612x612.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\home\\istockphoto-1155681995-612x612.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\home\\plate.png",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\home\\plate.png"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\home\\tips.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\home\\tips.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\recipe\\638811378383119440_finished-cake-vert-scaled.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\recipe\\638811378383119440_finished-cake-vert-scaled.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\recipe\\638811381361345020_finished-cake-vert-scaled.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\recipe\\638811381361345020_finished-cake-vert-scaled.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\recipe\\638811384694930812_finished-cake-vert-scaled.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\recipe\\638811384694930812_finished-cake-vert-scaled.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\recipe\\638811398916121953_finished-cake-vert-scaled.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\recipe\\638811398916121953_finished-cake-vert-scaled.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\recipe\\638811400324089974_finished-cake-vert-scaled.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\recipe\\638811400324089974_finished-cake-vert-scaled.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\recipe\\638811401466363066_finished-cake-vert-scaled.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\recipe\\638811401466363066_finished-cake-vert-scaled.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\recipe\\638811402662470226_finished-cake-vert-scaled.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\recipe\\638811402662470226_finished-cake-vert-scaled.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\recipe\\638814489183811565_finished-cake-vert-scaled.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\recipe\\638814489183811565_finished-cake-vert-scaled.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\recipe\\638814602298500664_finished-cake-vert-scaled.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\recipe\\638814602298500664_finished-cake-vert-scaled.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\recipe\\638819771656637501_finished-cake-vert-scaled.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\recipe\\638819771656637501_finished-cake-vert-scaled.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\recipe\\638837911974577236_sddefault.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\recipe\\638837911974577236_sddefault.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\recipe\\gachienbotoi.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\recipe\\gachienbotoi.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\recipe\\ganamhuong.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\recipe\\ganamhuong.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\recipe\\pannacotta.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\recipe\\pannacotta.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\user\\638808218316301654_454721299_508749158301275_774913553837790506_n.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\user\\638808218316301654_454721299_508749158301275_774913553837790506_n.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\user\\annie.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\user\\annie.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\user\\nophoto.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\user\\nophoto.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\user\\user5.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\user\\user5.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\images\\user\\user6.jpg",
+      "PackagePath": "staticwebassets\\FileUpload\\images\\user\\user6.jpg"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\videos\\638819771656837502_delta aquarids shooting star - Tìm trên Google.mp4",
+      "PackagePath": "staticwebassets\\FileUpload\\videos\\638819771656837502_delta aquarids shooting star - Tìm trên Google.mp4"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\FileUpload\\videos\\suonchuangot.mp4",
+      "PackagePath": "staticwebassets\\FileUpload\\videos\\suonchuangot.mp4"
+    },
+    {
       "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\assets\\fonts\\ProductSans-Black.woff",
       "PackagePath": "staticwebassets\\Themes\\assets\\fonts\\ProductSans-Black.woff"
     },
@@ -113,214 +289,6 @@
       "PackagePath": "staticwebassets\\Themes\\design\\diagrams\\scalabilityArch.png"
     },
     {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\design\\images\\FL_CONCEPT_1.png",
-      "PackagePath": "staticwebassets\\Themes\\design\\images\\FL_CONCEPT_1.png"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\design\\images\\Food Lovers Logo.png",
-      "PackagePath": "staticwebassets\\Themes\\design\\images\\Food Lovers Logo.png"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\design\\images\\butterChicken.jpeg",
-      "PackagePath": "staticwebassets\\Themes\\design\\images\\butterChicken.jpeg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\design\\images\\butterChicken2.jpeg",
-      "PackagePath": "staticwebassets\\Themes\\design\\images\\butterChicken2.jpeg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\design\\images\\butterChicken3.jpeg",
-      "PackagePath": "staticwebassets\\Themes\\design\\images\\butterChicken3.jpeg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\design\\images\\choleBhature.jpeg",
-      "PackagePath": "staticwebassets\\Themes\\design\\images\\choleBhature.jpeg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\design\\images\\lasagna.jpeg",
-      "PackagePath": "staticwebassets\\Themes\\design\\images\\lasagna.jpeg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\course\\banh-chung-1_710694221.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\course\\banh-chung-1_710694221.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\course\\photo-1467003909585-2f8a72700288.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\course\\photo-1467003909585-2f8a72700288.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\course\\photo-1482049016688-2d3e1b311543.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\course\\photo-1482049016688-2d3e1b311543.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\course\\photo-1500217052183-bc01eee1a74e.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\course\\photo-1500217052183-bc01eee1a74e.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\course\\photo-1508737804141-4c3b688e2546.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\course\\photo-1508737804141-4c3b688e2546.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\course\\photo-1551538827-9c037cb4f32a.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\course\\photo-1551538827-9c037cb4f32a.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\course\\photo-1556679343-c7306c1976bc.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\course\\photo-1556679343-c7306c1976bc.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\course\\photo-1563805042-7684c019e1cb.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\course\\photo-1563805042-7684c019e1cb.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\course\\photo-1594834749740-74b3f6764be4.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\course\\photo-1594834749740-74b3f6764be4.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\course\\photo-1623341214825-9f4f963727da.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\course\\photo-1623341214825-9f4f963727da.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\course\\photo-1623852990556-2d1f29021fd2.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\course\\photo-1623852990556-2d1f29021fd2.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\course\\photo-1645177628172-a94c1f96e6db.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\course\\photo-1645177628172-a94c1f96e6db.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\course\\photo-1676664778856-b48a7d87d831.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\course\\photo-1676664778856-b48a7d87d831.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\course\\premium_photo-1694708455249-992010f9db32.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\course\\premium_photo-1694708455249-992010f9db32.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\course\\sebastian-coman-photography-CRoAeTh5S_I-unsplash.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\course\\sebastian-coman-photography-CRoAeTh5S_I-unsplash.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\home\\chef.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\home\\chef.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\home\\course.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\home\\course.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\home\\food.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\home\\food.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\home\\ingredient.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\home\\ingredient.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\home\\istockphoto-1090831256-1024x1024.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\home\\istockphoto-1090831256-1024x1024.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\home\\istockphoto-1155681995-612x612.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\home\\istockphoto-1155681995-612x612.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\home\\plate.png",
-      "PackagePath": "staticwebassets\\Themes\\images\\home\\plate.png"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\home\\tips.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\home\\tips.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\recipe\\638811378383119440_finished-cake-vert-scaled.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\recipe\\638811378383119440_finished-cake-vert-scaled.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\recipe\\638811381361345020_finished-cake-vert-scaled.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\recipe\\638811381361345020_finished-cake-vert-scaled.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\recipe\\638811384694930812_finished-cake-vert-scaled.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\recipe\\638811384694930812_finished-cake-vert-scaled.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\recipe\\638811398916121953_finished-cake-vert-scaled.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\recipe\\638811398916121953_finished-cake-vert-scaled.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\recipe\\638811400324089974_finished-cake-vert-scaled.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\recipe\\638811400324089974_finished-cake-vert-scaled.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\recipe\\638811401466363066_finished-cake-vert-scaled.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\recipe\\638811401466363066_finished-cake-vert-scaled.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\recipe\\638811402662470226_finished-cake-vert-scaled.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\recipe\\638811402662470226_finished-cake-vert-scaled.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\recipe\\638814489183811565_finished-cake-vert-scaled.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\recipe\\638814489183811565_finished-cake-vert-scaled.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\recipe\\638814602298500664_finished-cake-vert-scaled.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\recipe\\638814602298500664_finished-cake-vert-scaled.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\recipe\\gachienbotoi.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\recipe\\gachienbotoi.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\recipe\\ganamhuong.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\recipe\\ganamhuong.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\recipe\\pannacotta.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\recipe\\pannacotta.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\user\\638808218316301654_454721299_508749158301275_774913553837790506_n.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\user\\638808218316301654_454721299_508749158301275_774913553837790506_n.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\user\\annie.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\user\\annie.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\user\\nophoto.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\user\\nophoto.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\user\\user5.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\user\\user5.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\images\\user\\user6.jpg",
-      "PackagePath": "staticwebassets\\Themes\\images\\user\\user6.jpg"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\scripts\\dishPageHandler.js",
-      "PackagePath": "staticwebassets\\Themes\\scripts\\dishPageHandler.js"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\scripts\\homeDishesHandler.js",
-      "PackagePath": "staticwebassets\\Themes\\scripts\\homeDishesHandler.js"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\scripts\\otherProfileHandler.js",
-      "PackagePath": "staticwebassets\\Themes\\scripts\\otherProfileHandler.js"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\scripts\\profileHandler.js",
-      "PackagePath": "staticwebassets\\Themes\\scripts\\profileHandler.js"
-    },
-    {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\scripts\\signupHandler.js",
-      "PackagePath": "staticwebassets\\Themes\\scripts\\signupHandler.js"
-    },
-    {
       "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\styles\\font.css",
       "PackagePath": "staticwebassets\\Themes\\styles\\font.css"
     },
@@ -389,8 +357,8 @@
       "PackagePath": "staticwebassets\\Themes\\templates\\signup.html"
     },
     {
-      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\Themes\\videos\\suonchuangot.mp4",
-      "PackagePath": "staticwebassets\\Themes\\videos\\suonchuangot.mp4"
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\css\\animate.css",
+      "PackagePath": "staticwebassets\\css\\animate.css"
     },
     {
       "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\css\\site.css",
@@ -401,8 +369,84 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\js\\Recipe\\Edit.js",
+      "PackagePath": "staticwebassets\\js\\Recipe\\Edit.js"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\js\\saveFavRate.js",
+      "PackagePath": "staticwebassets\\js\\saveFavRate.js"
+    },
+    {
       "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\Buttons-2.0.1\\buttons.dataTables.css",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\Buttons-2.0.1\\buttons.dataTables.css"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\Buttons-2.0.1\\buttons.dataTables.min.css",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\Buttons-2.0.1\\buttons.dataTables.min.css"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\Buttons-2.0.1\\buttons.html5.min.js",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\Buttons-2.0.1\\buttons.html5.min.js"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\Buttons-2.0.1\\dataTables.buttons.min.js",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\Buttons-2.0.1\\dataTables.buttons.min.js"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\JSZip-2.5.0\\jszip.min.js",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\JSZip-2.5.0\\jszip.min.js"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\checkboxes.css",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\checkboxes.css"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\checkboxes.min.js",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\checkboxes.min.js"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\dataTables.rowGroup.min.js",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\dataTables.rowGroup.min.js"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\dataTables.rowsGroup.js",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\dataTables.rowsGroup.js"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\dataTables.scroller.min.js",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\dataTables.scroller.min.js"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\datatables.min.css",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\datatables.min.css"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\datatables.min.js",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\datatables.min.js"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\jquery.dataTables.min.css",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\jquery.dataTables.min.css"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\jquery.dataTables.min.js",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\jquery.dataTables.min.js"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\scroller.bootstrap.min.css",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\scroller.bootstrap.min.css"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\scroller.bootstrap.min.js",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\scroller.bootstrap.min.js"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\DataTables\\scroller.dataTables.min.css",
+      "PackagePath": "staticwebassets\\lib\\DataTables\\scroller.dataTables.min.css"
     },
     {
       "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\bootstrap\\LICENSE",
@@ -631,6 +675,86 @@
     {
       "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\AUTHORS.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\AUTHORS.txt"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\LICENSE.txt",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\LICENSE.txt"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\external\\jquery\\jquery.js",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\external\\jquery\\jquery.js"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\images\\ui-icons_444444_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\images\\ui-icons_444444_256x240.png"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\images\\ui-icons_555555_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\images\\ui-icons_555555_256x240.png"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\images\\ui-icons_777620_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\images\\ui-icons_777620_256x240.png"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\images\\ui-icons_777777_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\images\\ui-icons_777777_256x240.png"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\images\\ui-icons_cc0000_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\images\\ui-icons_cc0000_256x240.png"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\images\\ui-icons_ffffff_256x240.png",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\images\\ui-icons_ffffff_256x240.png"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\index.html",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\index.html"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.css",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.css"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.js",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.js"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.min.css",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.min.css"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.min.js",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.min.js"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.structure.css",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.structure.css"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.structure.min.css",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.structure.min.css"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.theme.css",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.theme.css"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.theme.min.css",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\jquery-ui.theme.min.css"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\jquery_ui\\jquery-ui-1.13.2\\package.json",
+      "PackagePath": "staticwebassets\\lib\\jquery_ui\\jquery-ui-1.13.2\\package.json"
+    },
+    {
+      "Id": "D:\\CookinRecipe\\Project\\CookinRecipe\\CookinRecipe.Web\\wwwroot\\lib\\notify\\bootstrap-notify.min.js",
+      "PackagePath": "staticwebassets\\lib\\notify\\bootstrap-notify.min.js"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.CookinRecipe.Web.Microsoft.AspNetCore.StaticWebAssets.props",

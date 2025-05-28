@@ -11,6 +11,16 @@ namespace CookinRecipe.DataLayers.SQLServer
         public RecipeDAL(string connectionString) : base(connectionString)
         {
         }
+        public IList<Recipe> GetAllRecipes()
+        {
+            List<Recipe> data = new List<Recipe>();
+            using (var connection = OpenConnection())
+            {
+                var sql = @"select * from Recipes where IsVerify = 1";
+                data = connection.Query<Recipe>(sql: sql, commandType: System.Data.CommandType.Text).ToList();
+            }
+            return data;
+        }
 
         public bool SetEnergy(long recipeId)
         {
@@ -63,8 +73,8 @@ namespace CookinRecipe.DataLayers.SQLServer
             int id = 0;
             using (var connection = OpenConnection())
             {
-                var sql = @"insert into RecipeIngredients(RecipeID, IngredientID, Quantity) 
-                            VALUES(@RecipeID, @IngredientID, @Quantity); select @@IDENTITY";
+                var sql = @"insert into RecipeIngredients(RecipeID, IngredientID, Quantity, IngreNote) 
+                            VALUES(@RecipeID, @IngredientID, @Quantity, @IngreNote); select @@IDENTITY";
                 foreach (var s in data)
                 {
                     var parameters = new
@@ -72,6 +82,7 @@ namespace CookinRecipe.DataLayers.SQLServer
                         RecipeID = s.RecipeID,
                         IngredientID = s.IngredientID,
                         Quantity = s.Quantity,
+                        IngreNote = s.IngreNote
                     };
                     id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 }
@@ -304,7 +315,7 @@ namespace CookinRecipe.DataLayers.SQLServer
                 var sql = @"select * from (
 	            select * , row_number() over (order by CreatedAt desc) as RowNumber
 	            from Recipes
-	            where (RecipeName like @searchValue) or (Description like @searchValue)
+	            where (RecipeName like @searchValue) or (Description like @searchValue) and IsVerify = 1
             ) as t
             where (@pageSize = 0) or (RowNumber between (@page - 1) * @pageSize+1 and @page * @pageSize)
             order by RowNumber;";
@@ -370,7 +381,7 @@ namespace CookinRecipe.DataLayers.SQLServer
             using (var connection = OpenConnection())
             {
                 var sql = @"update Recipes
-                            set RecipeName = @RecipeName, Description = @Description, PrepTime = @PrepTime, Serving = @Serving, Difficulty = @Difficulty, RecipeImage = @RecipeImage, RecipeVideo = @RecipeVideo, Energy = @Energy 
+                            set RecipeName = @RecipeName, Description = @Description, PrepTime = @PrepTime, Serving = @Serving, Difficulty = @Difficulty, RecipeImage = @RecipeImage, RecipeVideo = @RecipeVideo, Energy = @Energy, IsVerify = @IsVerify 
                             where RecipeID = @RecipeID";
                 var parameters = new
                 {
@@ -382,7 +393,8 @@ namespace CookinRecipe.DataLayers.SQLServer
                     Difficulty = data.Difficulty,
                     RecipeImage = data.RecipeImage ?? "",
                     RecipeVideo = data.RecipeVideo ?? "",
-                    Energy = data.Energy
+                    Energy = data.Energy,
+                    IsVerify = data.IsVerify,
                 };
                 result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
                 connection.Close();
@@ -398,7 +410,7 @@ namespace CookinRecipe.DataLayers.SQLServer
                 var sql = @"select r.*
                             from CourseRecipes cr
                             join Recipes r on cr.RecipeID = r.RecipeID
-                            where cr.CourseID = @CourseId";
+                            where cr.CourseID = @CourseId and r.IsVerify = 1";
                 var parameters = new
                 {
                     CourseId = id
@@ -417,7 +429,7 @@ namespace CookinRecipe.DataLayers.SQLServer
                             from DishRecipes dr
                             join Recipes r on dr.RecipeID = r.RecipeID
                             join Dish d on d.DishID = dr.DishID
-                            where d.DishID = @DishId";
+                            where d.DishID = @DishId and r.IsVerify = 1";
                 var parameters = new
                 {
                     DishId = id
@@ -434,7 +446,8 @@ namespace CookinRecipe.DataLayers.SQLServer
             {
                 var sql = @"select top(8) *
                             from Recipes
-                            order by CreatedAt";
+                            where IsVerify = 1
+                            order by VerifyTime";
                 var parameters = new
                 {
                 };
@@ -469,7 +482,7 @@ namespace CookinRecipe.DataLayers.SQLServer
                 var sql = @"select distinct r.*
                             from Recipes r
                             join RecipeIngredients i on r.RecipeID = i.RecipeID
-                            where i.IngredientID in @IngredientId";
+                            where i.IngredientID in @IngredientId and r.IsVerify = 1";
                 var parameters = new
                 {
                     IngredientId = ListIng
@@ -564,5 +577,78 @@ namespace CookinRecipe.DataLayers.SQLServer
             return id;
         }
 
-    }
+        public IList<Recipe> GetAllVerifies()
+        {
+            List<Recipe> data = new List<Recipe>();
+            using (var connection = OpenConnection())
+            {
+                var sql = @"select * from Recipes where IsVerify = 0";
+                data = connection.Query<Recipe>(sql: sql, commandType: System.Data.CommandType.Text).ToList();
+            }
+            return data;
+        }
+
+        public bool Verify(Recipe data)
+        {
+            bool result = false;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"update Recipes
+                            set IsVerify = 1, AdminID = @AdminID, VerifyTime = GETDATE()
+                            where RecipeID = @RecipeID";
+                var parameters = new
+                {
+                    RecipeID = data.RecipeID,
+                    AdminID = data.AdminID,
+                };
+                result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
+                connection.Close();
+            }
+            return result;
+        }
+
+        public bool UndoVerify(Recipe data)
+        {
+            bool result = false;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"update Recipes
+                            set IsVerify = 0, AdminID = @AdminID, VerifyTime = GETDATE()
+                            where RecipeID = @RecipeID";
+                var parameters = new
+                {
+                    RecipeID = data.RecipeID,
+                    AdminID = data.AdminID,
+                };
+                result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
+                connection.Close();
+            }
+            return result;
+        }
+
+		public bool CheckExistsInList(long recipeId, long userId)
+		{
+			bool result = false;
+			using (var connection = OpenConnection())
+			{
+				var sql = @"SELECT CASE 
+                             WHEN EXISTS (
+                                SELECT 1
+                                FROM ListRecipes lr
+                                JOIN Lists l ON lr.ListID = l.ListID
+                                WHERE lr.RecipeID = @RecipeID AND l.UserID = @UserID
+                             ) THEN 1
+                             ELSE 0
+		                     END";
+				var parameters = new
+				{
+					RecipeID = recipeId,
+					UserID = userId,
+				};
+				result = connection.QuerySingle<bool>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
+				connection.Close();
+			}
+			return result;
+		}
+	}
 }

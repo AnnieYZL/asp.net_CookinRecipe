@@ -1,0 +1,430 @@
+﻿@{
+    ViewBag.Title = "Quản lý";
+    var adminId = User.GetUserData().UserId;
+}
+<div class="flex min-h-screen mt-20">
+    <!-- Sidebar -->
+    <div id="sidebar" class="w-64 bg-blue-600 text-white py-4 transition-all duration-300 ease-in-out">
+        <!-- Toggle Button -->
+        <button class="text-white sidebar-item block font-sans text-lg px-4 py-3 rounded flex items-center space-x-3" id="toggleSidebar">
+            <i class="fas fa-bars"></i><span class="sidebar-text">Quản trị hệ thống</span>
+        </button>
+
+        <ul id="sidebarMenu">
+            <li>
+                <a href="javascript:;" onclick="loadAdminPage('Users')" class="text-white sidebar-item block font-sans hover:bg-blue-700 px-4 py-3 rounded flex items-center space-x-3">
+                    <i class="fas fa-user"></i><span class="sidebar-text">Tài khoản người dùng</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="loadAdminPage('Recipes')" class="sidebar-item text-white block font-sans hover:bg-blue-700 px-4 py-3 rounded flex items-center space-x-3">
+                    <i class="fas fa-utensils"></i><span class="sidebar-text">Công thức đã duyệt</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="loadAdminPage('Ingredients')" class="sidebar-item text-white block font-sans hover:bg-blue-700 px-4 py-3 rounded flex items-center space-x-3">
+                    <i class="fas fa-carrot"></i><span class="sidebar-text">Nguyên liệu</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="loadAdminPage('Courses')" class="sidebar-item text-white block font-sans hover:bg-blue-700 px-4 py-3 rounded flex items-center space-x-3">
+                    <i class="fas fa-list-alt"></i><span class="sidebar-text">Thực đơn</span>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="loadAdminPage('Verifies')" class="sidebar-item text-white block font-sans hover:bg-blue-700 px-4 py-3 rounded flex items-center space-x-3">
+                    <i class="fas fa-check-circle"></i><span class="sidebar-text">Công thức chưa phê duyệt</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-6 bg-gray-100">
+        <div id="adminContent">
+            <p class="text-gray-600 font-sans">Chọn mục quản lý bên trái để hiển thị nội dung.</p>
+        </div>
+    </div>
+</div>
+<!-- Modal tạo mới nguyên liệu -->
+<div id="createIngredientModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-lg relative">
+        <h3 class="text-xl font-semibold mb-4">Tạo mới nguyên liệu</h3>
+        <form id="createIngredientForm">
+            <div class="mb-4">
+                <label for="IngredientName" class="block mb-1 font-semibold">Tên nguyên liệu</label>
+                <input type="text" id="IngredientName" name="IngredientName" required class="w-full border border-gray-300 rounded px-3 py-2" />
+            </div>
+            <div class="mb-4">
+                <label for="Unit" class="block mb-1 font-semibold">Đơn vị</label>
+                <input type="text" id="Unit" name="Unit" required class="w-full border border-gray-300 rounded px-3 py-2" />
+            </div>
+            <div class="mb-4">
+                <label for="Energy" class="block mb-1 font-semibold">Năng lượng</label>
+                <input type="number" id="Energy" name="Energy" min="0" required class="w-full border border-gray-300 rounded px-3 py-2" />
+            </div>
+            <div class="mb-4 flex items-center space-x-2">
+                <input type="checkbox" id="IsMain" name="IsMain" />
+                <label for="IsMain" class="font-semibold">Nguyên liệu chính</label>
+            </div>
+            <div class="flex justify-end space-x-3">
+                <button type="button" id="btnCancelCreate" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400">Hủy</button>
+                <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Lưu</button>
+            </div>
+        </form>
+    </div>
+</div>
+@section scripts {
+    <script>
+        document.getElementById("toggleSidebar").addEventListener("click", function () {
+            const sidebar = document.getElementById("sidebar");
+            const texts = document.querySelectorAll(".sidebar-text");
+            const title = document.getElementById("sidebarTitle");
+
+            sidebar.classList.toggle("w-64");
+            sidebar.classList.toggle("w-20");
+
+            title.classList.toggle("hidden");
+            texts.forEach(t => t.classList.toggle("hidden"));
+        });
+    </script>
+
+    <style>
+        .sidebar-item.active {
+            background-color: #1e40af;
+            font-weight: bold;
+        }
+
+        div.dataTables_filter {
+            display: none;
+        }
+
+        div.dataTables_wrapper .dataTables_paginate {
+            margin-top: 1.25rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            background-color: #f3f4f6;
+            color: #374151;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+                background-color: #e5e7eb;
+            }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+                background-color: #2563eb;
+                color: white !important;
+                border-color: #2563eb;
+            }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+                opacity: 0.4;
+                cursor: not-allowed;
+            }
+        /* Khi sidebar thu gọn, căn giữa nút fa-bars */
+        #wrapper #sidebar.w-20 #sidebarHeader {
+            justify-content: center;
+            padding-right: 0;
+        }
+
+        /* Khi sidebar mở, nút nằm bên phải như thường */
+        #wrapper #sidebar.w-64 #sidebarHeader {
+            justify-content: flex-end;
+            padding-right: 1rem; /* pr-4 */
+        }
+        /* Ẩn text khi thu gọn menu */
+        #sidebar.w-20 .sidebar-text {
+            display: none;
+        }
+
+        #sidebar .sidebar-text {
+            transition: opacity 0.3s ease;
+        }
+
+        #sidebar.w-20 .sidebar-text {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+    </style>
+    <script>
+        function getMenuText(pageName) {
+            switch (pageName) {
+                case "Users": return "Tài khoản người dùng";
+                case "Verifies": return "Công thức chưa phê duyệt";
+                case "Recipes": return "Công thức đã duyệt";
+                case "Ingredients": return "Nguyên liệu";
+                case "Courses": return "Thực đơn";
+                default: return "";
+            }
+        }
+
+        function loadAdminPage(pageName) {
+            $(".sidebar-item").removeClass("active");
+            $(`.sidebar-item:contains("${getMenuText(pageName)}")`).addClass("active");
+            sessionStorage.setItem('adminSelectedPage', pageName);
+            $.get("/Management/" + pageName, function (data) {
+                $("#adminContent").html(data);
+
+                if (pageName === "Ingredients") {
+                    initIngredientTable();
+                }
+                else if (pageName === "Courses") {
+                    initCourseTable();
+                }
+                else if (pageName === "Users") {
+                    initUserTable();
+                }
+                else if (pageName === "Recipes") {
+                    initRecipeTable();
+                }
+                else if (pageName === "Verifies") {
+                    initVerifyTable();
+                }
+            });
+        }
+        function initIngredientTable() {
+            const tableIngre = $('#ingredientTable').DataTable({
+                "autoWidth": false,
+                "ordering": false,
+                "bInfo": false,
+                "bLengthChange": false,
+                "filter": true,
+                "serverSide": false,
+                "language": {
+                    "sProcessing": "Đang xử lý...",
+                    "sLengthMenu": "Hiện: _MENU_",
+                    "sZeroRecords": "Không có dữ liệu",
+                    "sEmptyTable": "Bảng trống",
+                    "sInfo": "Hiện dòng _START_ đến _END_ trong tổng _TOTAL_ dòng",
+                    "sInfoEmpty": "Hiện dòng 0 đến 0 trong tổng 0 dòng",
+                    "sSearch": "Tìm kiếm",
+                    "sLoadingRecords": "Đang tải...",
+                    searchPlaceholder: "Tên nguyên liệu",
+                    "paginate": {
+                        next: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                           </svg>`,
+                        previous: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                               </svg>`
+                    }
+                },
+            });
+
+            $('#ingredientSearch').on('keyup', function () {
+                tableIngre.search(this.value).draw();
+            });
+        }
+
+        function initCourseTable() {
+            const tableCourse = $('#courseTable').DataTable({
+                "autoWidth": false,
+                "ordering": false,
+                "bInfo": false,
+                "bLengthChange": false,
+                "filter": true,
+                "serverSide": false,
+                "language": {
+                    "sProcessing": "Đang xử lý...",
+                    "sLengthMenu": "Hiện: _MENU_",
+                    "sZeroRecords": "Không có dữ liệu",
+                    "sEmptyTable": "Bảng trống",
+                    "sInfo": "Hiện dòng _START_ đến _END_ trong tổng _TOTAL_ dòng",
+                    "sInfoEmpty": "Hiện dòng 0 đến 0 trong tổng 0 dòng",
+                    "sSearch": "Tìm kiếm",
+                    "sLoadingRecords": "Đang tải...",
+                    searchPlaceholder: "Tên thực đơn",
+                    "paginate": {
+                        next: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                   </svg>`,
+                        previous: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                       </svg>`
+                    }
+                },
+            });
+
+            $('#courseSearch').on('keyup', function () {
+                tableCourse.search(this.value).draw();
+            });
+        }
+
+        function initUserTable() {
+            const tableUser = $('#userTable').DataTable({
+                "autoWidth": false,
+                "ordering": false,
+                "bInfo": false,
+                "bLengthChange": false,
+                "filter": true,
+                "serverSide": false,
+                "language": {
+                    "sProcessing": "Đang xử lý...",
+                    "sLengthMenu": "Hiện: _MENU_",
+                    "sZeroRecords": "Không có dữ liệu",
+                    "sEmptyTable": "Bảng trống",
+                    "sInfo": "Hiện dòng _START_ đến _END_ trong tổng _TOTAL_ dòng",
+                    "sInfoEmpty": "Hiện dòng 0 đến 0 trong tổng 0 dòng",
+                    "sSearch": "Tìm kiếm",
+                    "sLoadingRecords": "Đang tải...",
+                    searchPlaceholder: "Tên người dùng",
+                    "paginate": {
+                        next: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                           </svg>`,
+                        previous: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                               </svg>`
+                    }
+                },
+            });
+
+            $('#userSearch').on('keyup', function () {
+                tableUser.search(this.value).draw();
+            });
+        }
+        function initRecipeTable() {
+            const tableRecipe = $('#recipeTable').DataTable({
+                "autoWidth": false,
+                "ordering": false,
+                "bInfo": false,
+                "bLengthChange": false,
+                "filter": true,
+                "serverSide": false,
+                "language": {
+                    "sProcessing": "Đang xử lý...",
+                    "sLengthMenu": "Hiện: _MENU_",
+                    "sZeroRecords": "Không có dữ liệu",
+                    "sEmptyTable": "Bảng trống",
+                    "sInfo": "Hiện dòng _START_ đến _END_ trong tổng _TOTAL_ dòng",
+                    "sInfoEmpty": "Hiện dòng 0 đến 0 trong tổng 0 dòng",
+                    "sSearch": "Tìm kiếm",
+                    "sLoadingRecords": "Đang tải...",
+                    searchPlaceholder: "Tên công thức",
+                    "paginate": {
+                        next: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                                   </svg>`,
+                        previous: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                                       </svg>`
+                    }
+                },
+            });
+
+            $('#recipeSearch').on('keyup', function () {
+                tableRecipe.search(this.value).draw();
+            });
+        }
+        function initVerifyTable() {
+            const tableVerify = $('#verifyTable').DataTable({
+                "autoWidth": false,
+                "ordering": false,
+                "bInfo": false,
+                "bLengthChange": false,
+                "filter": true,
+                "serverSide": false,
+                "language": {
+                    "sProcessing": "Đang xử lý...",
+                    "sLengthMenu": "Hiện: _MENU_",
+                    "sZeroRecords": "Không có dữ liệu",
+                    "sEmptyTable": "Bảng trống",
+                    "sInfo": "Hiện dòng _START_ đến _END_ trong tổng _TOTAL_ dòng",
+                    "sInfoEmpty": "Hiện dòng 0 đến 0 trong tổng 0 dòng",
+                    "sSearch": "Tìm kiếm",
+                    "sLoadingRecords": "Đang tải...",
+                    searchPlaceholder: "Tên công thức",
+                    "paginate": {
+                        next: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                                           </svg>`,
+                        previous: `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                                                               </svg>`
+                    }
+                },
+            });
+
+            $('#verifySearch').on('keyup', function () {
+                tableVerify.search(this.value).draw();
+            });
+        }
+        const admin = @adminId;
+        $(document).on('click', '.btn-verify', function (e) {
+            e.preventDefault();
+            const recipeId = $(this).data('id');
+            const $btn = $(this);
+            if (!confirm("Bạn có chắc muốn phê duyệt công thức này?")) return;
+
+            $.ajax({
+                url: '/Management/VerifyRecipe',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    recipeId: recipeId,
+                    adminId: admin
+                }),
+                success: function (res) {
+                    ThongBao("Phê duyệt công thức thành công.", "success");
+                    var table = $('#verifyTable').DataTable();
+
+                    var row = $btn.closest('tr');
+
+                    table.row(row).remove().draw(false);
+                },
+                error: function () {
+                    ThongBao("Có lỗi xảy ra khi phê duyệt công thức.", "danger");
+                }
+            });
+        });
+        $(document).on('click', '.btn-undo', function (e) {
+            e.preventDefault();
+            const recipeId = $(this).data('id');
+            const $btn = $(this);
+            if (!confirm("Bạn có chắc muốn hủy phê duyệt công thức này?")) return;
+
+            $.ajax({
+                url: '/Management/UndoVerifyRecipe',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    recipeId: recipeId,
+                    adminId: admin
+                }),
+                success: function (res) {
+                    ThongBao("Đã hủy phê duyệt công thức.", "success");
+                    var table = $('#recipeTable').DataTable();
+
+                    // Tìm row chứa nút vừa click
+                    var row = $btn.closest('tr');
+
+                    // Xóa row khỏi DataTable
+                    table.row(row).remove().draw(false);
+                },
+                error: function () {
+                    ThongBao("Có lỗi xảy ra khi hủy phê duyệt công thức.", "danger");
+                }
+            });
+        });
+        $(document).ready(function () {
+            var selectedPage = sessionStorage.getItem('adminSelectedPage');
+
+            if (selectedPage) {
+                loadAdminPage(selectedPage);
+            }
+            
+        });
+
+    </script>
+}

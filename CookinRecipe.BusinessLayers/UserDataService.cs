@@ -34,5 +34,13 @@ namespace CookinRecipe.BusinessLayers
         {
             return userDB.Update(data);
         }
+        /// <summary>
+        /// Lấy danh sách người dùng
+        /// </summary>
+        /// <returns></returns>
+        public static List<User> GetAllUsers()
+        {
+            return userDB.GetAllUsers().ToList();
+        }
     }
 }

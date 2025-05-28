@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CookinRecipe.BusinessLayers")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+673c861f922354f686119d5553e1125e96182d27")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0a4f23aa8c848eb7849a71f1b46222d8c4ca37a1")]
 [assembly: System.Reflection.AssemblyProductAttribute("CookinRecipe.BusinessLayers")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CookinRecipe.BusinessLayers")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

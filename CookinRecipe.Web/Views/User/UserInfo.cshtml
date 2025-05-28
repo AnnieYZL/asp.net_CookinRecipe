@@ -1,0 +1,189 @@
+﻿@model User
+@using CookinRecipe.BusinessLayers
+@{
+	var me = User.GetUserData();
+}
+<div class="bg-blue-50">
+	<div class="container mx-auto my-5 py-16 bg-blue-50">
+
+		<div class="md:flex mt-3 md:mt-2 no-wrap md:-mx-2">
+			<!-- Left Side -->
+			<div class="w-full md:w-3/12">
+				<!-- Profile Card -->
+				<div class="bg-white p-3 border-t-4 border-blue-600">
+					<div class="image overflow-hidden">
+						<img id="self-profile-image" class="h-auto w-full mx-auto"
+							 src="~/FileUpload/images/user/@Model.UserImage" alt="">
+					</div>
+					<div class="flex ">
+						<h1 id="self-name" class="text-gray-900 font-medium text-xl leading-8 my-1">@Model.FullName</h1>
+					</div>
+					<p id="self-caption" class="text-sm text-gray-500 hover:text-gray-600 leading-6 font-regular">
+						@Model.Caption
+					</p>
+					<ul class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
+						<li class="flex items-center py-3 font-regular">
+							<span>Họ Tên</span>
+							<span id="self-created-at" class="ml-auto">@Model.FullName</span>
+						</li>
+						<li class="flex items-center py-3 font-regular">
+							<span>Giới Tính</span>
+							@if (@Model.Gender == false)
+							{
+								<span id="self-created-at" class="ml-auto">Nam</span>
+							}
+							else
+							{
+								<span id="self-created-at" class="ml-auto">Nữ</span>
+							}
+
+						</li>
+						<li class="flex items-center py-3 font-regular">
+							<span>Địa Chỉ</span>
+							<span id="self-created-at" class="ml-auto">@Model.Address</span>
+						</li>
+						<li class="flex items-center py-3 font-regular">
+							<span>Email</span>
+							<span id="self-created-at"
+								  class="ml-auto overflow-ellipsis overflow-hidden whitespace-nowrap">@Model.Email</span>
+						</li>
+						<li class="flex items-center py-3 font-regular">
+							<span>Cấp độ</span>
+							<span class="ml-auto">
+								<span id="self-badge"
+									  class="py-1 px-2 rounded text-white bg-blue-600 text-sm">Bạn Mới</span>
+						</li>
+						<li class="flex items-center py-3 font-regular">
+							<span>Ngày tạo tài khoản</span>
+							<span id="self-created-at" class="ml-auto">@Model.CreatedAt.ToShortDateString()</span>
+						</li>
+					</ul>
+				</div>
+				<!-- End of profile card -->
+			</div>
+			<div class="my-4"></div>
+			<!-- Right Side -->
+			<div class="w-full md:w-9/12 md:ml-4 h-auto">
+
+				<!-- Post menu -->
+				<div class="bg-white p-3 shadow-sm rounded-sm">
+
+					<div class="grid grid-cols-1">
+						<div>
+							<div class="flex items-center font-semibold text-gray-900 leading-8 mb-3">
+								<span clas="text-green-500">
+									<svg class="h-5 stroke-current text-blue-600" xmlns="http://www.w3.org/2000/svg"
+										 fill="none" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+											  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+									</svg>
+								</span>
+								<span class="tracking-wide text-blue-600 ml-2 font-bold">Công Thức</span>
+							</div>
+
+							<div id="self-no-posts" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
+								<!-- My Posted Dishes -->
+								@foreach (var item in RecipeDataService.ListRecipeOfUser(Model.UserID))
+								{
+									<div class="h-auto rounded overflow-hidden shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 ...">
+										<img src="~/FileUpload/images/recipe/@item.RecipeImage"
+											 class="w-full h-52 object-cover cursor-pointer" alt="Buttor Chicken">
+										<div class='px-4 py-2'>
+											<div class="mb-2 font-medium text-xl overflow-ellipsis overflow-hidden whitespace-nowrap cursor-pointer"
+												 id="01">
+												<a href="~/Recipe/Detail/@item.RecipeID">@item.RecipeName</a>
+											</div>
+
+											<p class='font-regular text-gray-600 text-base leading-normal h-12 overflow-ellipsis overflow-hidden w-full'>
+												@item.Description
+											</p>
+										</div>
+										<div class='px-3 pb-1 flex flex-row'>
+											@foreach (var i in RecipeDataService.GetMainIngredient(item.RecipeID))
+											{
+												<a href="~/Ingredient/Index/@i.IngredientID">
+													<span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">@i.IngredientName</span>
+												</a>
+											}
+
+										</div>
+
+										<div class="px-4 pb-2 flex flex-row">
+											<p class='overflow-ellipsis overflow-hidden whitespace-nowrap font-regular text-gray-600 text-base leading-normal'>
+												<i class="fas fa-clock text-bl"></i> @item.PrepTime phút
+											</p>
+											<button type="button" class="ml-auto cursor-pointer">
+												<i class="fa fa-heart text-red-600"></i>
+											</button>
+											@if (me != null)
+											{
+												<button type="button" class="saveBtn ml-5 cursor-pointer" data-recipe-id="@item.RecipeID">
+													@if (RecipeDataService.CheckExistsInList(item.RecipeID, long.Parse(me.UserId)))
+													{
+														<i class="fa fa-bookmark text-blue-600"></i>
+													}
+													else
+													{
+														<i class="fa fa-bookmark text-gray-500"></i>
+													}
+												</button>
+											}
+											else
+											{
+												<button type="button" class="ml-5 cursor-pointer">
+													<i class="fa fa-bookmark text-gray-500"></i>
+												</button>
+											}
+										</div>
+									</div>
+								}
+							</div>
+						</div>
+					</div>
+					<!-- End of Experience and education grid -->
+				</div>
+				<!-- End of Post menu -->
+				
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal Save -->
+<div id="modalSave" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div id="modalSaveContent"
+         class="bg-white p-4 rounded-lg shadow-lg w-96 h-[500px] max-h-[80vh] overflow-hidden transition-all relative">
+        <div class="flex justify-between items-center border-b pb-2 mb-2">
+            <h2 class="text-xl text-blue-600 font-medium">Lưu vào</h2>
+            <button id="closeModalSave" class="text-2xl font-bold text-black cursor-pointer" aria-label="Đóng modal">×</button>
+        </div>
+        @if (User.GetUserData() != null)
+        {
+            <div class="overflow-y-auto max-h-72 min-h-[50px]" tabindex="0">
+                <ul id="listContainer" class="space-y-2">
+                    @foreach (var item in ListDataService.GetListOf(long.Parse(User.GetUserData().UserId)))
+                    {
+                        <li class="p-2 bg-gray-100 rounded flex items-center space-x-3 cursor-pointer hover:bg-gray-200" data-list-id="@item.ListID" role="button" tabindex="0">
+                            <img src="~/Themes/assets/images/vLOGO.png" class="w-12 h-12 rounded-lg" alt="Danh sách 1">
+                            <div>
+                                <span class="font-medium">@item.ListName</span>
+                                <p class="text-sm text-gray-500">@ListDataService.GetListQuantity(item.ListID) công thức</p>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+        <button id="newListBtn"
+                class="mt-4 w-full font-sans flex items-center justify-center gap-2 bg-gray-200 text-black py-2 rounded-lg hover:bg-gray-300 cursor-pointer">
+            + Bộ sưu tập mới
+        </button>
+        <button id="doneBtn"
+                class="mt-4 w-full font-sans bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+            Lưu
+        </button>
+    </div>
+</div>
+
+@section scripts {
+	<script src="/js/saveFavRate.js"></script>
+}

@@ -12,7 +12,7 @@ namespace CookinRecipe.DataLayers
         /// Hàm trả về thông tin tài khoản nếu xác thực thành công,
         /// ngược lại hàm trả về null
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
         UserAccount? Authorize(string email, string password);
@@ -24,5 +24,19 @@ namespace CookinRecipe.DataLayers
         /// <param name="newPassword"></param>
         /// <returns></returns>
         bool ChangePassword(string email, string oldPassword, string newPassword);
+        /// <summary>
+        /// Tạo tài khoản mới
+        /// </summary>
+        /// <param name="account"></param>
+        /// <returns></returns>
+        long CreateAccount(UserAccount account);
+        /// <summary>
+        /// Xác thực tài khoản đăng nhập của người dùng.
+        /// Hàm trả về thông tin tài khoản nếu xác thực thành công,
+        /// ngược lại hàm trả về null
+        /// </summary>
+        /// <param name="email"></param>ư
+        /// <returns></returns>
+        UserAccount? AuthorizeByEmail(string email);
     }
 }

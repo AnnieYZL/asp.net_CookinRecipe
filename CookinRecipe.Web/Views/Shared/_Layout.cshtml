@@ -1,137 +1,265 @@
 ﻿<!doctype html>
 <html>
-
 <head>
-	<!-- ... -->
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Cookin Recipe - @ViewBag.title </title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-	<link href="https://unpkg.com/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
-	<link rel="shortcut icon" href="~/Themes/assets/images/vLOGO.png" type="image/x-icon" />
-	<link href="~/Themes/styles/main.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-	<style>
-		.scrollbar-hidden::-webkit-scrollbar {
-			width: 0;
-			height: 0;
-		}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookin Recipe - @ViewBag.title</title>
 
-		.card {
-			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-			max-width: 255px;
-			margin: auto;
-			text-align: center;
-			font-family: arial;
-			background-color: white;
-		}
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/Themes/assets/images/vLOGO.png" type="image/x-icon" />
 
-		.title {
-			color: grey;
-			font-size: 18px;
-		}
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 
-		button#searchBtn {
-			border: none;
-			outline: 0;
-			display: inline-block;
-			padding: 8px;
-			color: white;
-			background-image: linear-gradient(to right, #2a60eb, #763cec);
-			text-align: center;
-			cursor: pointer;
-			/* width: 100%; */
-			font-size: 18px;
-		}
+    <!-- CSS Libraries -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet" />
+    <link href="~/Themes/styles/main.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="~/lib/DataTables/Buttons-2.0.1/buttons.dataTables.min.css">
 
-		a {
-			text-decoration: none;
-			font-size: 22px;
-			color: black;
-		}
+    <!-- jQuery & Plugins -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery_ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 
-		.hover-container:hover .hover-image {
-			transform: scale(1.2);
-		}
+    <!-- Notify -->
+    <script src="/lib/notify/bootstrap-notify.min.js"></script>
 
-		.hover-container:hover .hover-info {
-			opacity: 1;
-		}
+    <!-- DataTables -->
+    <script src="~/lib/DataTables/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/lib/DataTables/checkboxes.min.js" asp-append-version="true"></script>
+    <script src="~/lib/datatables/datatables.rowgroup.min.js"></script>
+    <script src="~/lib/datatables/datatables.rowsgroup.js"></script>
+    <script src="~/lib/DataTables/Buttons-2.0.1/dataTables.buttons.min.js"></script>
+    <script src="~/lib/DataTables/JSZip-2.5.0/jszip.min.js"></script>
+    <script src="~/lib/DataTables/Buttons-2.0.1/buttons.html5.min.js"></script>
 
-		.decor-line {
-			position: absolute;
-			background-color: #c28b36;
-			transition: width 0.5s ease-in-out, height 0.5s ease-in-out, opacity 0.5s ease-in-out;
-			opacity: 0;
-		}
+    <!-- Custom CSS -->
+    <style>
+        .scrollbar-hidden::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
 
-		.hover-container:hover .line-horizontal {
-			width: 55%;
-			opacity: 1;
-		}
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 255px;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+            background-color: white;
+        }
 
-		.hover-container:hover .line-vertical {
-			height: 55%;
-			opacity: 1;
-		}
+        .title {
+            color: grey;
+            font-size: 18px;
+        }
 
-		.line-horizontal {
-			width: 3px;
-			height: 3px;
-			bottom: 40px;
-			left: 30px;
-		}
+        button#searchBtn {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-image: linear-gradient(to right, #2a60eb, #763cec);
+            text-align: center;
+            cursor: pointer;
+            /* width: 100%; */
+            font-size: 18px;
+        }
 
-		.line-vertical {
-			width: 3px;
-			height: 20px;
-			bottom: 30px;
-			left: 40px;
-		}
+        a {
+            text-decoration: none;
+            font-size: 22px;
+            color: black;
+        }
 
-		.text-slide {
-			position: relative;
-			opacity: 0;
-			transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-		}
+        .hover-container:hover .hover-image {
+            transform: scale(1.2);
+        }
 
-		.hover-container:hover .text-left {
-			opacity: 1;
-			transform: translateX(0);
-		}
+        .hover-container:hover .hover-info {
+            opacity: 1;
+        }
 
-		.hover-container:hover .text-right {
-			opacity: 1;
-			transform: translateX(0);
-		}
+        .decor-line {
+            position: absolute;
+            background-color: #c28b36;
+            transition: width 0.5s ease-in-out, height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            opacity: 0;
+        }
 
-		.text-left {
-			transform: translateX(-50px);
-		}
+        .hover-container:hover .line-horizontal {
+            width: 55%;
+            opacity: 1;
+        }
 
-		.text-right {
-			transform: translateX(50px);
-		}
-	</style>
-	@RenderSection("style", false)
+        .hover-container:hover .line-vertical {
+            height: 55%;
+            opacity: 1;
+        }
+
+        .line-horizontal {
+            width: 3px;
+            height: 3px;
+            bottom: 40px;
+            left: 30px;
+        }
+
+        .line-vertical {
+            width: 3px;
+            height: 20px;
+            bottom: 30px;
+            left: 40px;
+        }
+
+        .text-slide {
+            position: relative;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        .hover-container:hover .text-left {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .hover-container:hover .text-right {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .text-left {
+            transform: translateX(-50px);
+        }
+
+        .text-right {
+            transform: translateX(50px);
+        }
+    </style>
+
+    @RenderSection("style", false)
 </head>
-
 <body class="bg-white">
 
-	<!-- Header Navigation Section -->
-	@{
-		await Html.RenderPartialAsync("_Header");
-	}
-	<section>
-	@RenderBody()
-	</section>
-	<!-- Foooter -->
-	@{
-		await Html.RenderPartialAsync("_Footer");
-	}
-	@RenderSection("scripts", false)
+    <!-- Header Navigation Section -->
+    @{
+        await Html.RenderPartialAsync("_Header");
+    }
+    <section>
+        @RenderBody()
+    </section>
+    <!-- Foooter -->
+    @{
+        await Html.RenderPartialAsync("_Footer");
+    }
+    @RenderSection("scripts", false)
+    <!-- 💬 AI Chatbox -->
+    <div id="ai-chatbox" style="position: fixed; bottom: 20px; right: 20px; width: 320px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; z-index: 9999; box-shadow: 0 4px 8px rgb(0 0 0 / 0.1); border-radius: 10px; overflow: hidden;">
+        <div id="chat-toggle" style="
+		background: linear-gradient(90deg, #2563EB, #7C3AED); /* blue-600 to purple-600 */
+		color: white;
+		padding: 12px 15px;
+		font-weight: 600;
+		font-size: 16px;
+		border-radius: 10px 10px 0 0;
+		cursor: pointer;
+		user-select: none;
+		text-align: center;
+		box-shadow: 0 2px 6px rgb(0 0 0 / 0.2);
+    ">
+            💬 Hỏi AI nè!
+        </div>
+        <div id="chat-body" style="
+		display: none;
+		background: #fff;
+		border: 1px solid #ddd;
+		border-top: none;
+		max-height: 400px;
+		overflow-y: auto;
+		padding: 12px 15px;
+		font-size: 14px;
+		color: #111;
+    ">
+            <div id="chat-messages" style="margin-bottom: 10px;"></div>
+            <input type="text" id="chat-input" placeholder="Nhập câu hỏi..." style="
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 8px;
+			font-size: 14px;
+			box-sizing: border-box;
+        " />
+        </div>
+    </div>
+    @{
+        var userName = User.GetUserData()?.FullName ?? "Bạn";
+    }
+    <script>
+        const username = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(userName));
+
+        $('#chat-toggle').click(function () {
+            $('#chat-body').toggle();
+        });
+
+        $('#chat-input').keypress(function (e) {
+            if (e.which === 13) {
+                const message = $(this).val().trim();
+                if (!message) return;
+
+                $('#chat-messages').append(`<div><b>${username}:</b> ${escapeHtml(message)}</div>`);
+                $(this).val('');
+
+                fetch('/AI/Chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        $('#chat-messages').append(`<div style="margin-top:5px;"><b>CookinRecipe AI:</b> ${escapeHtml(data.reply)}</div>`);
+                        $('#chat-body').scrollTop($('#chat-body')[0].scrollHeight);
+                    })
+                    .catch(() => {
+                        $('#chat-messages').append(`<div style="margin-top:5px; font-style: italic; color: #888;">AI không phản hồi được rồi 😢</div>`);
+                    });
+            }
+        });
+
+        function escapeHtml(text) {
+            return text.replace(/[&<>"']/g, function (m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+            });
+        }
+    </script>
+
+    <style>
+        #chat-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #chat-body::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 3px;
+        }
+
+        #chat-body::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #2563EB, #7C3AED);
+            border-radius: 3px;
+        }
+
+            #chat-body::-webkit-scrollbar-thumb:hover {
+                background: linear-gradient(180deg, #1e40af, #5b21b6);
+            }
+
+        /* Firefox scrollbar */
+        #chat-body {
+            scrollbar-width: thin;
+            scrollbar-color: #2563EB #f0f0f0;
+        }
+    </style>
+
+
 </body>
 </html>

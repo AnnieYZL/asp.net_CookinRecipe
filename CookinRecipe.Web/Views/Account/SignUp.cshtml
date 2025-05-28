@@ -1,0 +1,291 @@
+﻿@{
+    Layout = null;
+}
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cookin Recipe - Đăng ký tài khoản</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/Themes/assets/images/vLOGO.png" type="image/x-icon" />
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+
+    <!-- CSS Libraries -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/tailwindcss@2.0.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet" />
+    <link href="~/Themes/styles/main.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="~/lib/DataTables/Buttons-2.0.1/buttons.dataTables.min.css">
+
+    <!-- jQuery & Plugins -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery_ui/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+    <!-- Notify -->
+    <script src="/lib/notify/bootstrap-notify.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="~/lib/DataTables/jquery.dataTables.min.js" asp-append-version="true"></script>
+    <script src="~/lib/DataTables/checkboxes.min.js" asp-append-version="true"></script>
+    <script src="~/lib/datatables/datatables.rowgroup.min.js"></script>
+    <script src="~/lib/datatables/datatables.rowsgroup.js"></script>
+    <script src="~/lib/DataTables/Buttons-2.0.1/dataTables.buttons.min.js"></script>
+    <script src="~/lib/DataTables/JSZip-2.5.0/jszip.min.js"></script>
+    <script src="~/lib/DataTables/Buttons-2.0.1/buttons.html5.min.js"></script>
+    <!-- Custom CSS -->
+    <style>
+        .scrollbar-hidden::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 255px;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+            background-color: white;
+        }
+
+        .title {
+            color: grey;
+            font-size: 18px;
+        }
+
+        button#searchBtn {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-image: linear-gradient(to right, #2a60eb, #763cec);
+            text-align: center;
+            cursor: pointer;
+            /* width: 100%; */
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 22px;
+            color: black;
+        }
+
+        .hover-container:hover .hover-image {
+            transform: scale(1.2);
+        }
+
+        .hover-container:hover .hover-info {
+            opacity: 1;
+        }
+
+        .decor-line {
+            position: absolute;
+            background-color: #c28b36;
+            transition: width 0.5s ease-in-out, height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            opacity: 0;
+        }
+
+        .hover-container:hover .line-horizontal {
+            width: 55%;
+            opacity: 1;
+        }
+
+        .hover-container:hover .line-vertical {
+            height: 55%;
+            opacity: 1;
+        }
+
+        .line-horizontal {
+            width: 3px;
+            height: 3px;
+            bottom: 40px;
+            left: 30px;
+        }
+
+        .line-vertical {
+            width: 3px;
+            height: 20px;
+            bottom: 30px;
+            left: 40px;
+        }
+
+        .text-slide {
+            position: relative;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+
+        .hover-container:hover .text-left {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .hover-container:hover .text-right {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .text-left {
+            transform: translateX(-50px);
+        }
+
+        .text-right {
+            transform: translateX(50px);
+        }
+    </style>
+</head>
+
+<body class="bg-blue-50">
+
+    <!-- Header Navigation Section -->
+    <header class="fixed top-0 w-full z-50">
+        <nav class="rounded-lg mx-auto shadow-lg bg-white shadow-lg fadeInTop">
+            <div class="flex justify-between">
+
+                <!-- Logo -->
+                <a href="~/Home" class="flex items-center py-4 px-2 ml-2 mr-5">
+                    <h2 class="text-blue-600 font-bold text-2xl">
+                        CookinRecipe
+                    </h2>
+                </a>
+
+                <!-- Secondary Navbar items -->
+                <div class="ml-auto flex items-center space-x-3 ">
+
+                    <a href="~/Account/Login" class="text-blue-600 hover:text-blue-800 font-medium">Đăng nhập</a>
+                    <a id="nav-signup-btn" href="~/Account/SignUp" class="md:flex hidden">
+                        <button class="bg-gradient-to-r from-blue-600 to-purple-600 hover:bg-blue-700 duration-300 text-white text-base font-regular py-2 px-4 rounded">
+                            Đăng ký
+                        </button>
+                    </a>
+                    <!-- Mobile menu button -->
+                    <div class="md:hidden flex items-center">
+                        <button class="outline-none mobile-menu-button">
+                            <svg class=" w-6 h-6 text-bl hover:text-bl" x-show="!showMenu" fill="none"
+                                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="mx-3"></div>
+                </div>
+            </div>
+
+            <!-- mobile menu -->
+            <div class="hidden mobile-menu p-3">
+                <ul class="">
+                    <li class="active" id="nav-login-btn-mobile">
+                        <a href="~/Account/Login"
+                           class="block text-sm px-2 py-4 hover:bg-gray-100 transition duration-300 text-base font-regular">
+                            Đăng
+                            nhập
+                        </a>
+                    </li>
+                    <li id="nav-signup-btn-mobile">
+                        <a href="~/Account/SignUp"
+                           class="block text-sm px-2 py-4 hover:bg-gray-100 transition duration-300 text-base font-regular">
+                            Đăng
+                            ký
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+            <script>
+                const btn = document.querySelector("button.mobile-menu-button");
+                const menu = document.querySelector(".mobile-menu");
+
+                btn.addEventListener("click", () => {
+                    menu.classList.toggle("hidden");
+                });
+            </script>
+        </nav>
+    </header>
+    <div class="bg-blue min-h-screen mt-20 flex flex-col">
+        <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+            <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+                <h1 class="mb-8 text-3xl text-center font-medium text-blue-600">Đăng ký tài khoản</h1>
+                <form id="signup-form">
+                <input type="text" class="block border border-grey-light w-full p-3 rounded mb-4 font-light"
+                       id='signup-name' name="fullname" placeholder="Họ tên" />
+
+                <input type="text" class="block border border-grey-light w-full p-3 rounded mb-4 font-light"
+                       id='signup-email' name="email" placeholder="Email" />
+
+                <input type="password" class="block border border-grey-light w-full p-3 rounded mb-4 font-light"
+                       id='signup-password' name="password" placeholder="Mật khẩu" />
+                <input type="password" class="block border border-grey-light w-full p-3 rounded mb-4 font-light"
+                       id='signup-confirm-password' name="confirm_password" placeholder="Nhắc lại mật khẩu" />
+
+                <button type="submit" id="signup-button"
+                        class="w-full text-center py-3 rounded bg-blue-600 text-white hover:bg-blue-700 focus:outline-none my-1 font-regular">
+                    Tạo tài khoản
+                </button>
+                </form>
+                <div class="text-center text-sm text-grey-dark mt-4 font-regular">
+                    Bằng cách đăng ký, bạn đồng ý với
+                    <a class="no-underline border-b text-sm border-grey-dark text-grey-dark" href="#">
+                        Điều khoản dịch vụ
+                    </a> và
+                    <a class="no-underline border-b text-sm border-grey-dark text-grey-dark" href="#">
+                        Chính sách bảo mật.
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-grey-dark mt-6 font-regular">
+                Đã có tài khoản?
+                <a class="no-underline border-b border-blue text-blue-600" href="/Account/Login">
+                    Đăng nhập
+                </a>.
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#signup-form').submit(function (e) {
+            e.preventDefault();
+
+            const fullname = $('#signup-name').val().trim();
+            const email = $('#signup-email').val().trim();
+            const password = $('#signup-password').val();
+            const confirmPassword = $('#signup-confirm-password').val();
+
+            $.ajax({
+                url: '/Account/Register',
+                method: 'POST',
+                data: {
+                    fullname: fullname,
+                    email: email,
+                    password: password,
+                    confirm_password: confirmPassword
+                },
+                success: function (res) {
+                    if (res.status === "success") {
+                        ThongBao(res.message, "success");
+                        setTimeout(() => {
+                            window.location.href = "/Account/Login";
+                        }, 1000);
+                    } else {
+                        ThongBao(res.message, "warning");
+                    }
+                },
+                error: function () {
+                    console.log(fullname, email, password, confirmPassword)
+                    ThongBao("Đã xảy ra lỗi khi gửi yêu cầu đăng ký.", "danger");
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

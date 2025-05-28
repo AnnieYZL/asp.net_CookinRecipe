@@ -1,0 +1,41 @@
+﻿<!--Hero Section-->
+<div class="bg-grey-lighter min-h-screen mt-20 flex flex-col">
+    <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+        <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+            <h1 class="mb-8 text-3xl text-center font-medium text-blue-600">Đăng ký tài khoản</h1>
+            <input type="text" class="block border border-grey-light w-full p-3 rounded mb-4 font-light"
+                   id='signup-name' name="fullname" placeholder="Họ tên" />
+
+            <input type="text" class="block border border-grey-light w-full p-3 rounded mb-4 font-light"
+                   id='signup-email' name="email" placeholder="Email" />
+
+            <input type="password" class="block border border-grey-light w-full p-3 rounded mb-4 font-light"
+                   id='signup-password' name="password" placeholder="Mật khẩu" />
+            <input type="password" class="block border border-grey-light w-full p-3 rounded mb-4 font-light"
+                   id='signup-confirm-password' name="confirm_password" placeholder="Nhắc lại mật khẩu" />
+
+            <button type="submit" onClick='signupInputHandler()'
+                    class="w-full text-center py-3 rounded bg-blue-600 text-white hover:bg-blue-700 focus:outline-none my-1 font-regular">
+                Tạo
+                tài khoản
+            </button>
+
+            <div class="text-center text-sm text-grey-dark mt-4 font-regular">
+                Bằng cách đăng ký, bạn đồng ý với
+                <a class="no-underline border-b border-grey-dark text-grey-dark" href="#">
+                    Điều khoản dịch vụ
+                </a> và
+                <a class="no-underline border-b border-grey-dark text-grey-dark" href="#">
+                    Chính sách bảo mật.
+                </a>
+            </div>
+        </div>
+
+        <div class="text-grey-dark mt-6 font-regular">
+            Đã có tài khoản?
+            <a class="no-underline border-b border-blue text-blue-600" href="login.html">
+                Đăng nhập
+            </a>.
+        </div>
+    </div>
+</div>

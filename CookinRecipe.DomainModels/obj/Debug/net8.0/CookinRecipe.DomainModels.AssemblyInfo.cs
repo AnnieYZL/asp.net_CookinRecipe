@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CookinRecipe.DomainModels")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+284c00691df5c58e98f39929888c7444894035e5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0a4f23aa8c848eb7849a71f1b46222d8c4ca37a1")]
 [assembly: System.Reflection.AssemblyProductAttribute("CookinRecipe.DomainModels")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CookinRecipe.DomainModels")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

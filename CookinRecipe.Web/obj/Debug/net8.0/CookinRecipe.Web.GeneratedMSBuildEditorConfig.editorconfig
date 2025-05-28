@@ -18,8 +18,36 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\CookinRecipe\Project\CookinRecipe\CookinRecipe.Web
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/wwwroot/Areas/Cms/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = d3d3cm9vdFxBcmVhc1xDbXNcVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/wwwroot/Areas/Cms/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = d3d3cm9vdFxBcmVhc1xDbXNcVmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/wwwroot/Areas/Cms/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = d3d3cm9vdFxBcmVhc1xDbXNcVmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/wwwroot/Areas/Cms/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = d3d3cm9vdFxBcmVhc1xDbXNcVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/wwwroot/Areas/Cms/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = d3d3cm9vdFxBcmVhc1xDbXNcVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/Account/ChangePassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxDaGFuZ2VQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/Account/SignUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxTaWduVXAuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/Course/Detail.cshtml]
@@ -52,6 +80,30 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/List/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTGlzdFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/Management/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudFxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/Management/_ManageCourses.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudFxfTWFuYWdlQ291cnNlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/Management/_ManageIngredients.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudFxfTWFuYWdlSW5ncmVkaWVudHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/Management/_ManageRecipes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudFxfTWFuYWdlUmVjaXBlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/Management/_ManageUsers.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudFxfTWFuYWdlVXNlcnMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/Management/_ManageVerifies.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFuYWdlbWVudFxfTWFuYWdlVmVyaWZpZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/Recipe/Comment.cshtml]
@@ -102,6 +154,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/User/UserInfo.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxVc2VySW5mby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -109,6 +165,10 @@ build_metadata.AdditionalFiles.CssScope =
 [D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
+
+[D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/wwwroot/Areas/Cms/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = d3d3cm9vdFxBcmVhc1xDbXNcVmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-5gag2nlj4l
 
 [D:/CookinRecipe/Project/CookinRecipe/CookinRecipe.Web/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Recipe>
+
+<div class="bg-white p-6 rounded-xl shadow-md font-sans">
+    <div class="flex flex-col md:flex-row justify-between items-center mb-4">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-2 md:mb-0">Quản lý công thức</h2>
+    </div>
+
+    <!-- Ô tìm kiếm -->
+    <div class="mb-4">
+        <input type="text" id="recipeSearch" placeholder="Tìm công thức..."
+               class="w-full md:w-1/3 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 font-sans" />
+    </div>
+
+    <div class="">
+        <table id="recipeTable" class="w-full bg-white rounded-lg text-sm text-gray-800">
+            <thead class="bg-blue-600 text-white text-sm font-semibold">
+                <tr>
+                    <th class="px-4 py-2 text-center w-16">STT</th>
+                    <th class="px-4 py-2 text-center w-40">Ảnh</th>
+                    <th class="px-4 py-2 text-center w-80">Tên công thức</th>
+                    <th class="px-4 py-2 text-center w-24">Tác giả</th>
+                    <th class="px-4 py-2 text-center w-32">Ngày tạo</th>
+                    <th class="px-4 py-2 text-center w-24">Người phê duyệt</th>
+                    <th class="px-4 py-2 text-center w-32">Ngày phê duyệt</th>
+                    <th class="px-4 py-2 text-center w-24">Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    int index = 1;
+                    foreach (var m in Model)
+                    {
+                        <tr class="hover:bg-gray-50 border-b">
+                            <td class="px-4 py-2 text-center w-16">@index</td>
+                            <td class="px-4 py-2 text-center w-40">
+                                <img src="~/FileUpload/images/recipe/@m.RecipeImage" class="w-16 h-16 object-cover rounded mx-auto" />
+                            </td>
+                            <td class="px-4 py-2 text-center text-blue-600 w-80 font-bold">@m.RecipeName</td>
+                            <td class="px-4 py-2 text-center w-24">@m.AuthorID</td>
+                            <td class="px-4 py-2 text-center w-32">@m.CreatedAt</td>
+                            <td class="px-4 py-2 text-center w-24">@m.AdminID</td>
+                            <td class="px-4 py-2 text-center w-32">@m.VerifyTime</td>
+                            <td class="px-4 py-2 text-center space-x-2 w-24">
+                                <a href="/Recipe/Detail/@m.RecipeID" class="text-gray-600" title="Xem chi tiết công thức"><i class="fa fa-eye"></i></a>
+                                <button class="btn-undo text-red-600" data-id="@m.RecipeID" title="Hủy phê duyệt">
+                                    <i class="fa fa-undo"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        index++;
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section scripts {
+    <script>
+        function approvePost(postId) {
+            if (confirm("Bạn có chắc muốn phê duyệt bài viết này?")) {
+                $.post("/Admin/ApprovePost", { postId: postId }, function () {
+                    alert("Đã phê duyệt bài viết!");
+                    location.reload();
+                });
+            }
+        }
+
+        function deletePost(postId) {
+            if (confirm("Bạn có chắc muốn xóa bài viết này?")) {
+                $.post("/Admin/DeletePost", { postId: postId }, function () {
+                    alert("Đã xóa bài viết!");
+                    location.reload();
+                });
+            }
+        }
+    </script>
+}

@@ -13,7 +13,7 @@
 			<div class="bg-white p-3 border-t-4 border-blue-600">
 				<div class="image overflow-hidden">
 					<img id="self-profile-image" class="h-auto w-full mx-auto"
-						 src="~/Themes/images/user/@Model.UserImage" alt="">
+						 src="~/FileUpload/images/user/@Model.UserImage" alt="">
 				</div>
 				<div class="flex ">
 					<h1 id="self-name" class="text-gray-900 font-medium text-xl leading-8 my-1">@Model.FullName</h1>
@@ -97,7 +97,7 @@
 							<!-- My Posted Dishes -->
 							@foreach(var item in RecipeDataService.ListRecipeOfUser(Model.UserID)){
 							<div class="h-auto rounded overflow-hidden shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 ...">
-								<img src="~/Themes/images/recipe/@item.RecipeImage"
+								<img src="~/FileUpload/images/recipe/@item.RecipeImage"
 									 class="w-full h-52 object-cover cursor-pointer" alt="Buttor Chicken">
 								<div class='px-4 py-2'>
 									<div class="mb-2 font-medium text-xl overflow-ellipsis overflow-hidden whitespace-nowrap cursor-pointer"
@@ -154,13 +154,13 @@
 										  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
 								</svg>
 							</span>
-							<span class="tracking-wide text-blue-600 ml-2 font-bold">Mẹo Tư Vấn</span>
+							<span class="tracking-wide text-blue-600 ml-2 font-bold">Công thức đang chờ duyệt</span>
 						</div>
 
 						<div id="self-posts" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
 						</div>
 						<div id="self-no-posts" class="flex">
-							<div class="text-gray-400 font-medium mx-auto my-10">Bạn chưa tạo mẹo tư vấn nào!</div>
+							<div class="text-gray-400 font-medium mx-auto my-10">Bạn chưa có công thức nào đang chờ duyệt!</div>
 						</div>
 					</div>
 				</div>
@@ -204,7 +204,7 @@
 								
 
 							<img class="h-auto w-full mx-auto" for="self-upload-profile" id="self-edit-profile"
-								 src="~/Themes/images/user/@Model.UserImage" alt="">
+								 src="~/FileUpload/images/user/@Model.UserImage" alt="">
 							<input class="w-full h-full opacity-0 absolute top-0 left-0" type="file"
 								   onChange="editProfileChange()" id="self-upload-profile"
 								   accept="image/png, image/jpeg, image/jpg" />

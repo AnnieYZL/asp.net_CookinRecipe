@@ -8,7 +8,16 @@ namespace CookinRecipe.DataLayers.SQLServer
         public IngredientDAL(string connectionString) : base(connectionString)
         {
         }
-
+        public IList<Ingredient> GetAll()
+        {
+            List<Ingredient> data = new List<Ingredient>();
+            using (var connection = OpenConnection())
+            {
+                var sql = @"select * from Ingredients";
+                data = connection.Query<Ingredient>(sql: sql, commandType: System.Data.CommandType.Text).ToList();
+            }
+            return data;
+        }
         public int Add(Ingredient data)
         {
             int id = 0;
@@ -77,10 +86,6 @@ namespace CookinRecipe.DataLayers.SQLServer
             return data;
         }
 
-        public IList<Ingredient> GetAll()
-        {
-            throw new NotImplementedException();
-        }
 
         public IList<Ingredient> GetList(long UserID)
         {
