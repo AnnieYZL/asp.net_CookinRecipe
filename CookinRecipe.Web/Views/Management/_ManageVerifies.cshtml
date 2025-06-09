@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Recipe>
+@using CookinRecipe.BusinessLayers
 @{
-    
+    var adminId = User.GetUserData();
 }
 <div class="bg-white p-6 rounded-xl shadow-md font-sans">
     <div class="flex flex-col md:flex-row justify-between items-center mb-4">
@@ -22,6 +23,7 @@
                     <th class="px-4 py-2 text-left">Tên công thức</th>
                     <th class="px-4 py-2 text-center w-32">Tác giả</th>
                     <th class="px-4 py-2 text-center w-32">Ngày tạo</th>
+                    <th class="px-4 py-2 text-center w-32">Ngày chỉnh sửa cuối</th>
                     <th class="px-4 py-2 text-center w-32">Hành động</th>
                 </tr>
             </thead>
@@ -36,15 +38,20 @@
                             <td class="px-4 py-2 text-center w-40">
                                 <img src="~/FileUpload/images/recipe/@m.RecipeImage" class="w-16 h-16 object-cover rounded mx-auto" />
                             </td>
-                            <td class="px-4 py-2 text-left text-blue-600">@m.RecipeName</td>
-                            <td class="px-4 py-2 text-center w-32">@m.AuthorID</td>
+                            <td class="px-4 py-2 text-left font-bold text-blue-600">@m.RecipeName</td>
+                            <td class="px-4 py-2 text-center w-32">@UserDataService.GetUser(@m.AuthorID).FullName</td>
                             <td class="px-4 py-2 text-center w-32">@m.CreatedAt</td>
+                            <td class="px-4 py-2 text-center w-32">
+                                @(m.UpdateTime != DateTime.MinValue ? m.UpdateTime : m.CreatedAt)
+                            </td>
                             <td class="px-4 py-2 text-center space-x-2 w-32">
                                 <a href="/Recipe/Detail/@m.RecipeID" class="text-gray-600" title="Xem chi tiết công thức"><i class="fa fa-eye"></i></a>
-                                <button class="btn-verify text-green-600" data-id="@m.RecipeID" title="Phê duyệt công thức">
+                                <button class="btn-verify text-green-600" data-id="@m.RecipeID" data-name="@m.RecipeName" data-author="@m.AuthorID" title="Phê duyệt công thức">
                                     <i class="fa fa-check"></i>
                                 </button>
-
+                                <button class="btn-notify text-blue-600" data-id="@m.RecipeID" data-author="@m.AuthorID" data-name="@m.RecipeName" title="Gửi thông báo cho tác giả">
+                                    <i class="fa fa-comment"></i>
+                                </button>
                             </td>
                         </tr>
                         index++;
@@ -54,8 +61,137 @@
         </table>
     </div>
 </div>
-@section Scripts {
-    <script>
-        
-    </script>
-}
+<!-- Modal xác nhận duyệt công thức -->
+<div id="approveModal" class="fixed inset-0 z-50 hidden font-sans items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+        <h3 class="text-lg font-semibold text-blue-600 mb-4">Xác nhận phê duyệt</h3>
+        <p class="text-gray-600 mb-6">Bạn có chắc chắn muốn phê duyệt công thức <span id="modalRecipeName" class="font-semibold text-blue-600"></span> không?</p>
+        <div class="flex justify-end space-x-2">
+            <button id="cancelApprove" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-gray-800">Huỷ</button>
+            <button id="confirmApprove" class="px-4 py-2 rounded bg-blue-600 hover:bg-blue-700 text-white">Đồng ý</button>
+        </div>
+    </div>
+</div>
+<!-- Modal gửi thông báo -->
+<div id="notifyModal" class="fixed inset-0 z-50 hidden font-sans items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg shadow-xl w-full max-w-md p-6">
+        <h3 class="text-2xl font-semibold text-blue-600 mb-4">Gửi thông báo cho tác giả</h3>
+        <p class="text-gray-700 mb-2">Công thức: <span id="notifyRecipeName" class="font-semibold text-blue-600"></span></p>
+        <textarea id="notifyMessage" rows="4" class="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Nhập nội dung thông báo..."></textarea>
+        <div class="flex justify-end space-x-2 mt-4">
+            <button id="cancelNotify" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400 text-gray-800">Huỷ</button>
+            <button id="sendNotify" class="px-4 py-2 font-bold rounded bg-blue-600 hover:bg-yellow-600 text-white">Gửi</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        let vSelectedRecipeId = null;
+        let selectedAuthorId = null;
+        let recipeNameVerify = null;
+        const admin = @adminId.UserId;
+        let $btn = null;
+        $(document).on('click', '.btn-verify', function (e) {
+            e.preventDefault();
+            $btn = $(this);
+            vSelectedRecipeId = $(this).data('id');
+            recipeNameVerify = $(this).data('name');
+            selectedAuthorId = $(this).data('author');
+            $('#modalRecipeName').text(recipeNameVerify);
+            $('#approveModal').removeClass('hidden').addClass('flex');
+        });
+        $('#cancelApprove').on('click', function () {
+            $('#approveModal').addClass('hidden').removeClass('flex');
+            vSelectedRecipeId = null;
+            selectedAuthorId = null;
+            recipeNameVerify = null;
+        });
+
+        $('#confirmApprove').on('click', function () {
+            if (vSelectedRecipeId) {
+                $.ajax({
+                    url: '/Management/VerifyRecipe',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        AuthorId: selectedAuthorId,
+                        RecipeId: vSelectedRecipeId,
+                        AdminId: admin,
+                        RecipeName: recipeNameVerify
+                    }),
+                    success: function (res) {
+                        ThongBao("Phê duyệt công thức thành công.", "success");
+                        var table = $('#verifyTable').DataTable();
+
+                        var row = $btn.closest('tr');
+
+                        table.row(row).remove().draw(false);
+                    },
+                    error: function () {
+                        if (err.status === 403) {
+                            ThongBao("Bạn không có quyền thực hiện thao tác này", "danger");
+                        } else {
+                            ThongBao("Có lỗi xảy ra khi phê duyệt công thức.", "danger");
+                        }
+                    }
+                });
+                $('#approveModal').addClass('hidden').removeClass('flex');
+                vSelectedRecipeId = null;
+            }
+        });
+        let notifyRecipeId = null;
+        let notifyAuthorId = null;
+        let recipeName = null;
+
+        $(document).on('click', '.btn-notify', function () {
+            notifyRecipeId = $(this).data('id');
+            notifyAuthorId = $(this).data('author');
+            recipeName = $(this).data('name');
+            $('#notifyRecipeName').text(recipeName);
+            $('#notifyMessage').val('');
+            $('#notifyModal').removeClass('hidden').addClass('flex');
+        });
+
+        $('#cancelNotify').on('click', function () {
+            $('#notifyModal').addClass('hidden').removeClass('flex');
+            notifyRecipeId = null;
+            notifyAuthorId = null;
+        });
+
+        $('#sendNotify').on('click', function () {
+            const message = $('#notifyMessage').val().trim();
+            if (!message) {
+                ThongBao("Vui lòng nhập nội dung thông báo.", "warning");
+                return;
+            }
+
+            $.ajax({
+                url: '/Management/SendRecipeNotify',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    Title: 'Phản hồi về công thức '+recipeName,
+                    RecipeId: notifyRecipeId,
+                    UserId: notifyAuthorId,
+                    Message: message,
+                    Type: 'From Admin',
+                    AdminId: admin
+                }),
+                success: function () {
+                    ThongBao("Gửi thông báo thành công.", "success");
+                    $('#notifyModal').addClass('hidden').removeClass('flex');
+                },
+                error: function () {
+                    if (err.status === 403) {
+                        ThongBao("Bạn không có quyền thực hiện thao tác này", "danger");
+                    } else {
+                        ThongBao("Gửi thông báo thất bại.", "danger");
+                    }
+                }
+            });
+        });
+
+    });
+
+</script>

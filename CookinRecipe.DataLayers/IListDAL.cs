@@ -21,13 +21,13 @@ namespace CookinRecipe.DataLayers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        bool Delete(int id);
+        bool Delete(long id);
         /// <summary>
         /// Lấy ds dựa vào mã
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        List? Get(int id);
+        List? Get(long id);
         /// <summary>
         /// Cập nhật thông tin ds
         /// </summary>
@@ -52,5 +52,12 @@ namespace CookinRecipe.DataLayers
         /// <param name="ListID"></param>
         /// <returns></returns>
         IList<Recipe> GetRecipesOf(long ListID);
+        /// <summary>
+        /// Xóa ds ct trong 1 list (chọn)
+        /// </summary>
+        /// <param name="listId"></param>
+        /// <param name="recipeIds"></param>
+        /// <returns></returns>
+        bool DeleteRecipesFromList(long listId, List<long> recipeIds);
     }
 }

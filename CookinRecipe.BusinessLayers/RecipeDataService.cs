@@ -341,6 +341,45 @@ namespace CookinRecipe.BusinessLayers
         {
             return recipeDB.CheckExistsInList(recipeId, userId);
         }
-
-	}
+        public static bool DeleteNotiv2(long RecipeID)
+        {
+            return recipeDB.DeleteNoti(RecipeID);
+        }
+        /// <summary>
+        /// Xóa ds cmt có liên quan tới ct
+        /// </summary>
+        /// <param name="RecipeID"></param>
+        /// <returns></returns>
+        public static bool DeleteCommentv2(long RecipeID)
+        {
+            return recipeDB.DeleteComment(RecipeID);
+        }
+        /// <summary>
+        /// Xóa lượt thích lquan
+        /// </summary>
+        /// <param name="RecipeID"></param>
+        /// <returns></returns>
+        public static bool DeleteFav2(long RecipeID)
+        {
+            return recipeDB.DeleteFav(RecipeID);
+        }
+        /// <summary>
+        /// Xóa khỏi bst
+        /// </summary>
+        /// <param name="RecipeID"></param>
+        /// <returns></returns>
+        public static bool DeleteList2(long RecipeID)
+        {
+            return recipeDB.DeleteList(RecipeID);
+        }
+        /// <summary>
+        /// Xóa khỏi đánh giá
+        /// </summary>
+        /// <param name="RecipeID"></param>
+        /// <returns></returns>
+        public static bool DeleteRate(long RecipeID)
+        {
+            return recipeDB.DeleteRate(RecipeID);
+        }
+    }
 }

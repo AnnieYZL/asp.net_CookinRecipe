@@ -5,17 +5,15 @@
     <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
 
-            <!-- Logo -->
             <a href="~/Home/Index" class="flex items-center space-x-2">
                 <h2 class="text-blue-600 font-bold text-2xl">CookinRecipe</h2>
             </a>
 
-            <!-- Navigation Menu -->
             <div class="hidden md:flex items-center space-x-6">
                 <a href="@Url.Action("Index", "Recipe")" class="text-blue-600 font-medium hover:text-blue-800">Công thức</a>
                 <a href="@Url.Action("Index", "Course")" class="text-blue-600 font-medium hover:text-blue-800">Thực đơn</a>
                 <a href="@Url.Action("Index", "Ingredient")" class="text-blue-600 font-medium hover:text-blue-800">Nguyên liệu</a>
-                @if (userData != null && userData.Roles.Contains("admin"))
+                @if (userData != null && (userData.Roles.Contains("admin") || userData.Roles.Contains("moderator")))
                 {
                     <a href="@Url.Action("Index", "Management")" class="text-blue-600 font-medium hover:text-blue-800">Quản lý</a>
                 }
@@ -27,15 +25,20 @@
                     if (userData != null)
                     {
                         <!-- Notifications -->
-                        // <div class="relative">
-                        //     <button id="messageButton" data-userid="@userData.UserId" class="text-blue-600 hover:text-blue-700">
-                        //         <i class="fas fa-bell text-xl"></i>
-                        //     </button>
-                        //     <div id="messageDropdown"
-                        //          class="hidden absolute right-0 mt-2 w-64 max-h-60 bg-white shadow-lg rounded-lg overflow-y-auto z-50">
-                        //         <div id="noti-loading" class="p-3 text-center text-gray-500">Đang tải thông báo...</div>
-                        //     </div>
-                        // </div>
+                        <div class="relative">
+                            <button id="messageButton" data-userid="@userData.UserId" class="text-blue-600 hover:text-blue-700">
+                                <i class="fas fa-bell text-xl"></i>
+                                <span id="notificationCount"
+                                      class="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold px-1.5 py-0.5 rounded-full hidden">
+                                    0
+                                </span>
+                            </button>
+                            <div id="messageDropdown"
+                                 class="hidden absolute right-0 mt-2 w-64 max-h-60 bg-white shadow-lg rounded-lg overflow-y-auto z-50"
+                                 style="overflow-x: hidden;">
+                                <div id="noti-loading" class="p-3 text-center text-gray-500">đang tải thông báo...</div>
+                            </div>
+                        </div>
 
                         <!-- Avatar Dropdown -->
                         <div class="relative">
@@ -75,15 +78,16 @@
                     else
                     {
                         <a href="~/Account/Login" class="text-blue-600 hover:text-blue-800 font-medium">Đăng nhập</a>
-                        <a id="nav-signup-btn" href="~/Account/SignUp" class="md:flex hidden">
-                            <button class="bg-gradient-to-r from-blue-600 to-purple-600 hover:bg-blue-700 duration-300 text-white text-base font-regular py-2 px-4 rounded">
+
+                        <button class="bg-gradient-to-r from-blue-600 to-purple-600 hover:bg-blue-700 duration-300 text-white text-base font-regular py-2 px-4 rounded">
+                            <a id="nav-signup-btn" href="~/Account/SignUp" class="md:flex hidden text-white">
                                 Đăng ký
-                            </button>
-                        </a>
+                            </a>
+                        </button>
+
                     }
                 }
 
-                <!-- Mobile Menu Toggle -->
                 <div class="md:hidden">
                     <button class="mobile-menu-button">
                         <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2"
@@ -97,34 +101,26 @@
 
         <!-- Mobile Menu -->
         <div class="hidden mobile-menu md:hidden mt-2 space-y-2 px-4 pb-4 border-t pt-4">
-        @if (userData == null)
-                    {
+            @if (userData == null)
+            {
                 <a href="~/Account/Login" class="font-sans block text-center text-blue-600">Đăng nhập</a>
                 <a href="~/Account/SignUp" class="font-sans text-center block text-blue-600">Đăng ký</a>
-                    }
+            }
             <a href="~/Recipe/Index" class="font-sans text-center block">Công thức</a>
             <a href="~/Course/Index" class="font-sans text-center block">Thực đơn</a>
             <a href="~/Ingredient/Index" class="font-sans text-center block">Nguyên liệu</a>
             @if (userData != null && userData.Roles.Contains("admin"))
             {
-            <a href="~/Management/Index" class="font-sans text-center block">Quản lý</a>
+                <a href="~/Management/Index" class="font-sans text-center block">Quản lý</a>
             }
         </div>
     </nav>
 
     <script>
-        // Toggle dropdown
         document.getElementById("avaButton")?.addEventListener("click", () => {
             document.getElementById("avaDropdown")?.classList.toggle("hidden");
         });
 
-        // document.getElementById("messageButton")?.addEventListener("click", () => {
-        //     const userId = $("#messageButton").data("userid");
-        //     $("#messageDropdown").html('<div class="p-3 text-center text-gray-500">Đang tải thông báo...</div>');
-        //     $.get(`/Notification/GetNotifications/${userId}`, function (data) {
-        //         $("#messageDropdown").html(data).removeClass("hidden");
-        //     });
-        // });
 
         document.addEventListener("click", (e) => {
             const avatar = document.getElementById("avaButton");
@@ -133,16 +129,131 @@
                 dropdown.classList.add("hidden");
             }
 
-            // const msgBtn = document.getElementById("messageButton");
-            // const msgDropdown = document.getElementById("messageDropdown");
-            // if (!msgBtn.contains(e.target) && !msgDropdown.contains(e.target)) {
-            //     msgDropdown.classList.add("hidden");
-            // }
         });
 
-        // Mobile toggle
         document.querySelector(".mobile-menu-button")?.addEventListener("click", () => {
             document.querySelector(".mobile-menu")?.classList.toggle("hidden");
         });
+        $(document).ready(function () {
+            const dropdown = $('#messageDropdown');
+            const loading = $('#noti-loading');
+            const badge = $('#notificationCount');
+
+            function loadNotifications() {
+                const userId = $('#messageButton').data('userid');
+                loading.text("Đang tải thông báo...");
+                dropdown.html(loading);
+
+                $.ajax({
+                    url: '/Home/GetNotifications',
+                    type: 'GET',
+                    data: { userId: userId },
+                    success: function (response) {
+                        const data = response.items;
+                        const unread = response.unread;
+                        let html = `
+                            <div class="px-4 py-2 border-b mb-2 mx-2 font-semibold font-sans select-none">
+                                Thông Báo
+                            </div>
+                        `;
+                        if (unread > 0) {
+                            badge.text(unread).removeClass('hidden');
+                        } else {
+                            badge.addClass('hidden');
+                        }
+
+                        if (data.length === 0) {
+                            dropdown.html('<div class="p-3 text-center text-gray-500 font-sans">Bạn chưa có thông báo nào.</div>');
+                        } else {
+
+                            data.forEach(item => {
+                                const link = item.recipeId ? `/Recipe/Detail/${item.recipeId}` : '#';
+                                let iconClass = 'fas fa-info-circle text-blue-500';
+                                switch (item.type) {
+                                    case 'UndoVerified':
+                                        iconClass = 'fas fa-undo text-red-500';
+                                        break;
+                                    case 'Favourite':
+                                        iconClass = 'fas fa-heart text-pink-500';
+                                        break;
+                                    case 'Rate':
+                                        iconClass = 'fas fa-star text-yellow-500';
+                                        break;
+                                    case 'Verified':
+                                        iconClass = 'fas fa-check-circle text-green-500';
+                                        break;
+                                    case 'Reply':
+                                        iconClass = 'fas fa-bullhorn text-yellow-500';
+                                        break;
+                                    case 'Comment':
+                                        iconClass = 'fas fa-comment text-blue-500';
+                                        break;
+                                    case 'Permission':
+                                        iconClass = 'fas fa-key text-yellow-500';
+                                        break;
+                                }
+
+                                html += `
+                            <a href="${link}" class="notification-link block px-4 py-3 hover:bg-blue-50 transition-all duration-200 ${item.isRead ? '' : 'bg-gray-100'} mx-2" data-notifyid="${item.notificationId}">
+                                <div class="flex items-start font-sans space-x-2">
+                                    <i class="${iconClass} mt-1 text-lg min-w-[20px] text-center"></i>
+                                    <div class="flex-1">
+                                        <div class="font-semibold font-sans text-gray-800 break-words">${item.title || 'Không có tiêu đề'}</div>
+                                        <div class="text-sm text-gray-600 font-sans break-words">${item.message || ''}</div>
+                                        <div class="text-xs text-gray-400 font-sans mt-1">${item.createdAt}</div>
+                                    </div>
+                                </div>
+                            </a>
+                            `;
+                            });
+
+                            dropdown.html(html);
+
+                            $('.notification-link').on('click', function (e) {
+                                e.preventDefault();
+
+                                const notifyId = $(this).data('notifyid');
+                                const href = $(this).attr('href');
+                                console.log(notifyId);
+                                $.ajax({
+                                    url: '/Home/MarkNotificationRead',
+                                    type: 'POST',
+                                    contentType: 'application/json',
+                                    data: JSON.stringify({ id: notifyId }),
+                                    success: function () {
+                                        window.location.href = href;
+                                    },
+                                    error: function () {
+                                        console.error('Không đánh dấu đã đọc được');
+                                        window.location.href = href;
+                                    }
+                                });
+                            });
+
+                        }
+                    },
+                    error: function () {
+                        dropdown.html('<div class="p-3 text-center text-red-500">Lỗi khi tải thông báo.</div>');
+                    }
+                });
+            }
+
+
+            $('#messageButton').on('click', function () {
+                dropdown.toggleClass('hidden');
+                if (!dropdown.hasClass('hidden')) {
+                    loadNotifications();
+                }
+            });
+
+            $(document).on('click', function (e) {
+                if (!$(e.target).closest('#messageButton, #messageDropdown').length) {
+                    dropdown.addClass('hidden');
+                }
+            });
+
+            loadNotifications();
+        });
+
     </script>
 </header>

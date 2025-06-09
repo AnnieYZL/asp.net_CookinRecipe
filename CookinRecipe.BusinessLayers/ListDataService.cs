@@ -25,7 +25,7 @@ namespace CookinRecipe.BusinessLayers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static bool DeleteList(int id)
+        public static bool DeleteList(long id)
         {
             return listDB.Delete(id);
         }
@@ -34,7 +34,7 @@ namespace CookinRecipe.BusinessLayers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static List? GetList(int id)
+        public static List? GetList(long id)
         {
             return listDB.Get(id);
         }
@@ -73,6 +73,16 @@ namespace CookinRecipe.BusinessLayers
         public static IList<Recipe> GetRecipesOf(long ListID)
         {
             return listDB.GetRecipesOf(ListID);
+        }
+        /// <summary>
+        /// Xóa ds ct được chọn khỏi bst
+        /// </summary>
+        /// <param name="listId"></param>
+        /// <param name="recipeIds"></param>
+        /// <returns></returns>
+        public static bool DeleteRecipesFromList(long listId, List<long> recipeIds)
+        {
+            return listDB.DeleteRecipesFromList(listId, recipeIds);
         }
     }
 }

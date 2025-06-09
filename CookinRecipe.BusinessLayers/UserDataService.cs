@@ -42,5 +42,51 @@ namespace CookinRecipe.BusinessLayers
         {
             return userDB.GetAllUsers().ToList();
         }
+        /// <summary>
+        /// Phân quyền người dùng
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static bool Decentralisation(User data)
+        {
+            return userDB.Decentralisation(data);
+        }
+        /// <summary>
+        /// Đếm ct duyệt/chưa
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static int GetSoCongThuc(long id, bool type)
+        {
+           return userDB.GetSoCongThuc(id, type);
+        }
+        /// <summary>
+        /// Đếm số cmt
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int CountCmt(long id)
+        {
+            return userDB.CountCmt(id);
+        }
+        /// <summary>
+        /// Đếm số rate < 3
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int CountRate(long id)
+        {
+            return userDB.CountRate(id);
+        }
+        /// <summary>
+        /// Đếm số lượt thích
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static int CountFav(long id)
+        {
+            return userDB.CountFav(id);
+        }
     }
 }

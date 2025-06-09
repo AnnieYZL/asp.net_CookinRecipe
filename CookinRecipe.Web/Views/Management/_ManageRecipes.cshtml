@@ -1,5 +1,8 @@
 ﻿@model IEnumerable<Recipe>
-
+@using CookinRecipe.BusinessLayers
+@{
+    var admin = User.GetUserData();
+}
 <div class="bg-white p-6 rounded-xl shadow-md font-sans">
     <div class="flex flex-col md:flex-row justify-between items-center mb-4">
         <h2 class="text-2xl font-semibold text-gray-800 mb-2 md:mb-0">Quản lý công thức</h2>
@@ -37,15 +40,19 @@
                                 <img src="~/FileUpload/images/recipe/@m.RecipeImage" class="w-16 h-16 object-cover rounded mx-auto" />
                             </td>
                             <td class="px-4 py-2 text-center text-blue-600 w-80 font-bold">@m.RecipeName</td>
-                            <td class="px-4 py-2 text-center w-24">@m.AuthorID</td>
+                            <td class="px-4 py-2 text-center w-24">@UserDataService.GetUser(@m.AuthorID).FullName</td>
                             <td class="px-4 py-2 text-center w-32">@m.CreatedAt</td>
-                            <td class="px-4 py-2 text-center w-24">@m.AdminID</td>
+                            <td class="px-4 py-2 text-center w-24">@UserDataService.GetUser(@m.AdminID).FullName</td>
                             <td class="px-4 py-2 text-center w-32">@m.VerifyTime</td>
                             <td class="px-4 py-2 text-center space-x-2 w-24">
                                 <a href="/Recipe/Detail/@m.RecipeID" class="text-gray-600" title="Xem chi tiết công thức"><i class="fa fa-eye"></i></a>
-                                <button class="btn-undo text-red-600" data-id="@m.RecipeID" title="Hủy phê duyệt">
+                                <button class="btn-undo text-red-600"
+                                        data-id="@m.RecipeID"
+                                        data-name="@m.RecipeName"
+                                        title="Hủy phê duyệt">
                                     <i class="fa fa-undo"></i>
                                 </button>
+
                             </td>
                         </tr>
                         index++;
@@ -55,24 +62,89 @@
         </table>
     </div>
 </div>
-@section scripts {
-    <script>
-        function approvePost(postId) {
-            if (confirm("Bạn có chắc muốn phê duyệt bài viết này?")) {
-                $.post("/Admin/ApprovePost", { postId: postId }, function () {
-                    alert("Đã phê duyệt bài viết!");
-                    location.reload();
-                });
-            }
-        }
+<!-- Modal xác nhận hủy phê duyệt -->
+<div id="confirmUndoModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center font-sans">
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-md p-6">
+        <h3 class="text-xl font-semibold text-red-600 mb-4">Xác nhận hủy phê duyệt</h3>
 
-        function deletePost(postId) {
-            if (confirm("Bạn có chắc muốn xóa bài viết này?")) {
-                $.post("/Admin/DeletePost", { postId: postId }, function () {
-                    alert("Đã xóa bài viết!");
-                    location.reload();
-                });
-            }
-        }
-    </script>
-}
+        <p class="text-gray-700 mb-6">
+            Bạn có chắc chắn muốn hủy phê duyệt công thức
+            <span id="undoRecipeName" class="text-red-600 font-bold">[Tên công thức]</span>
+            không?
+        </p>
+
+        <div class="flex justify-end space-x-3">
+            <button id="cancelUndoBtn" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-lg">Huỷ</button>
+            <button id="confirmUndoBtn" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg">Xác nhận</button>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        let selectedRecipeId = null;
+        let $selectedUndoBtn = null;
+
+        document.querySelectorAll(".btn-undo").forEach(btn => {
+            btn.addEventListener("click", function () {
+                selectedRecipeId = this.getAttribute("data-id");
+                const recipeName = this.getAttribute("data-name");
+                document.getElementById("undoRecipeName").textContent = recipeName;
+
+                $selectedUndoBtn = $(this);
+
+                document.getElementById("confirmUndoModal").classList.remove("hidden");
+                document.getElementById("confirmUndoModal").classList.add("flex");
+            });
+        });
+
+        document.getElementById("cancelUndoBtn").addEventListener("click", function () {
+            document.getElementById("confirmUndoModal").classList.add("hidden");
+            document.getElementById("confirmUndoModal").classList.remove("flex");
+            selectedRecipeId = null;
+            $selectedUndoBtn = null;
+        });
+
+        var adminId = @admin.UserId;
+
+        document.getElementById("confirmUndoBtn").addEventListener("click", function () {
+            if (!selectedRecipeId) return;
+
+            $.ajax({
+                url: '/Management/UndoVerifyRecipe',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    RecipeID: selectedRecipeId,
+                    AdminID: adminId
+                }),
+                success: function (res) {
+                    ThongBao("Đã hủy phê duyệt công thức.", "success");
+
+                    var table = $('#recipeTable').DataTable();
+
+                    if ($selectedUndoBtn) {
+                        var row = $selectedUndoBtn.closest('tr');
+                        table.row(row).remove().draw(false);
+                    }
+
+                    document.getElementById("confirmUndoModal").classList.add("hidden");
+                    document.getElementById("confirmUndoModal").classList.remove("flex");
+
+                    selectedRecipeId = null;
+                    $selectedUndoBtn = null;
+                },
+                error: function () {
+                    if (err.status === 403) {
+                        ThongBao("Bạn không có quyền thực hiện thao tác này", "danger");
+                    } else {
+                        ThongBao("Có lỗi xảy ra khi hủy phê duyệt công thức.", "danger");
+                    }
+                }
+            });
+        });
+    });
+
+
+</script>

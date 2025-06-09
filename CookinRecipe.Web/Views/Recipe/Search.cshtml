@@ -8,7 +8,7 @@
 {
     if (Model.Data.Count > 0)
     {
-        <p class="text-black text-lg mb-4 font-sans">
+        <p class="text-gray-700 text-center text-lg mb-4 font-sans">
             Đã tìm thấy <span class="font-bold">@Model.RowCount</span> công thức chứa từ khóa "@Model.SearchValue"
         </p>
     }
@@ -46,9 +46,15 @@
                                 <p class='overflow-ellipsis overflow-hidden whitespace-nowrap font-regular text-gray-600 text-base leading-normal'>
                                     <i class="fas fa-clock text-bl"></i> @item.PrepTime phút
                                 </p>
-                                <button type="button" class="ml-auto cursor-pointer">
-                                    <i class="fa fa-heart text-red-600"></i>
-                                </button>
+                                @{
+                                    var isLiked1 = me != null && FavouriteDataService.CheckFav(long.Parse(me.UserId), item.RecipeID);
+                                    var iconClass1 = isLiked1 ? "fa-solid text-red-600" : "fa-regular text-gray-500";
+                                }
+
+                                <i id="dish-page-like-btn"
+                                   class="fa-heart @iconClass1 text-xl cursor-pointer ml-auto"
+                                   onclick="toggleLikeButton(this, @item.RecipeID)">
+                                </i>
                                 @if (me != null)
                                 {
                                     <button type="button" class="saveBtn ml-5 cursor-pointer" data-recipe-id="@item.RecipeID">
@@ -96,13 +102,82 @@
             }
             else
             {
-                <p class="font-sans mx-auto text-lg mb-96">Không có công thức nào chứa từ khóa "@Model.SearchValue"</p>
+                <p class="font-sans mx-auto text-lg text-gray-700 text-center mb-96">Không có công thức nào chứa từ khóa "@Model.SearchValue"</p>
             }
         </div>
     </div>
 }
 else
 {
-    <p class="font-sans text-lg mx-auto mb-96">Nhập từ khóa để tìm kiếm công thức ngay</p>
+    <div class="w-full flex flex-1 flex-col justify-center bg-white p-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            @foreach (var item in RecipeDataService.GetAllRecipes())
+            {
+                <div class="h-auto rounded overflow-hidden shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 ...">
+                    <img src="~/FileUpload/images/recipe/@item.RecipeImage" class="w-full h-52 object-cover cursor-pointer"
+                         alt="Hình ảnh món ăn">
+                    <div class='px-4 py-2'>
+                        <div class="mb-2 font-medium text-xl overflow-ellipsis overflow-hidden whitespace-nowrap cursor-pointer"
+                             id="01">
+                            <a href="~/Recipe/Detail/@item.RecipeID">@item.RecipeName</a>
+                        </div>
+
+                        <p class='font-regular text-gray-600 text-base leading-normal h-12 overflow-ellipsis overflow-hidden w-full'>
+                            @item.Description
+                        </p>
+                    </div>
+                    <div class='px-3 pb-1 flex flex-row'>
+                        @foreach (var i in RecipeDataService.GetMainIngredient(item.RecipeID))
+                        {
+                            <a href="~/Ingredient/Index?ingredientId=@i.IngredientID">
+                                <span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">@i.IngredientName</span>
+                            </a>
+                        }
+                        @foreach (var h in RecipeDataService.GetCoursesOf(item.RecipeID))
+                        {
+                            <a href="~/Course/Detail?courseId=@h.CourseID">
+                                <span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">@h.CourseName</span>
+                            </a>
+                        }
+                    </div>
+
+                    <div class="px-4 pb-2 flex flex-row">
+                        <p class='overflow-ellipsis overflow-hidden whitespace-nowrap font-regular text-gray-600 text-base leading-normal'>
+                            <i class="fas fa-clock text-bl"></i> @item.PrepTime phút
+                        </p>
+                        @{
+                            var isLiked1 = me != null && FavouriteDataService.CheckFav(long.Parse(me.UserId), item.RecipeID);
+                            var iconClass1 = isLiked1 ? "fa-solid text-red-600" : "fa-regular text-gray-500";
+                        }
+
+                        <i id="dish-page-like-btn"
+                           class="fa-heart @iconClass1 text-xl cursor-pointer ml-auto"
+                           onclick="toggleLikeButton(this, @item.RecipeID)">
+                        </i>
+                        @if (me != null)
+                        {
+                            <button type="button" class="saveBtn ml-5 cursor-pointer" data-recipe-id="@item.RecipeID">
+                                @if (RecipeDataService.CheckExistsInList(item.RecipeID, long.Parse(me.UserId)))
+                                {
+                                    <i class="fa fa-bookmark text-blue-600"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-bookmark text-gray-500"></i>
+                                }
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" class="ml-5 cursor-pointer">
+                                <i class="fa fa-bookmark text-gray-500"></i>
+                            </button>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
 }
 <script src="/js/saveFavRate.js"></script>

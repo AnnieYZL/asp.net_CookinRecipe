@@ -43,23 +43,36 @@ namespace CookinRecipe.DataLayers.SQLServer
             return count;
         }
 
-        public bool Delete(int id)
+        public bool Delete(long id)
         {
             bool result = false;
             using (var connection = OpenConnection())
             {
-                var sql = @"delete from Lists
-	                        where ListID = @ListId;
-                            delete from ListRecipes
-                            where ListID = @ListId";
+                var sql = @" delete from ListRecipes
+                            where ListID = @ListId
+                            delete from Lists
+	                        where ListID = @ListId;";
                 var parameters = new { ListId = id };
                 result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
                 connection.Close();
             }
             return result;
         }
+        public bool DeleteRecipesFromList(long listId, List<long> recipeIds)
+        {
+            bool result = false;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"DELETE FROM ListRecipes 
+                    WHERE ListID = @ListId AND RecipeID IN @RecipeIds";
+                var parameters = new { ListId = listId, RecipeIds = recipeIds };
+                result = connection.Execute(sql, parameters) > 0;
+            }
+            return result;
+        }
 
-        public List? Get(int id)
+
+        public List? Get(long id)
         {
             List? data = null;
             using (var connection = OpenConnection())
@@ -79,12 +92,13 @@ namespace CookinRecipe.DataLayers.SQLServer
             using (var connection = OpenConnection())
             {
                 var sql = @"update Lists
-                            set ListName = @ListName
+                            set ListName = @ListName, ListImage = @ListImage
                             where ListID = @ListId";
                 var parameters = new
                 {
                     ListId = data.ListID,
-                    ListName = data.ListName ?? ""
+                    ListName = data.ListName ?? "",
+                    ListImage = data.ListImage
                 };
                 result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
                 connection.Close();
@@ -115,8 +129,9 @@ namespace CookinRecipe.DataLayers.SQLServer
             using (var connection = OpenConnection())
             {
                 var sql = @"select count(*)
-                            from ListRecipes
-                            where ListID = @ListID";
+                            from ListRecipes lr
+                            join Recipes r on r.RecipeID = lr.RecipeID
+                            where lr.ListID = @ListID and r.IsVerify = 1";
                 var parameters = new { ListID = ListID };
                 count = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
@@ -131,7 +146,7 @@ namespace CookinRecipe.DataLayers.SQLServer
             {
                 var sql = @"select r.*
                             from ListRecipes l join Recipes r on l.RecipeID = r.RecipeID
-                            where l.ListID = @ListId";
+                            where l.ListID = @ListId and r.IsVerify = 1";
                 var parameters = new
                 {
                     ListId = ListID

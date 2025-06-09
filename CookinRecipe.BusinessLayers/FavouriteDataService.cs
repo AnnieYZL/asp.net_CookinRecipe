@@ -12,11 +12,11 @@ namespace CookinRecipe.BusinessLayers
             favouriteDB = new FavouriteDAL(Configuration.ConnectionString);
         }
         /// <summary>
-        /// Thích một bài viết lần đầu
+        /// Thích một bài viết
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static int AddFav(Favourite data)
+        public static bool AddFav(Favourite data)
         {
             return favouriteDB.Add(data);
         }

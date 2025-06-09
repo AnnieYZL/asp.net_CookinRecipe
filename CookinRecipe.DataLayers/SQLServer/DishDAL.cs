@@ -28,6 +28,11 @@ namespace CookinRecipe.DataLayers.SQLServer
             return id;
         }
 
+        public bool Change(long id)
+        {
+            throw new NotImplementedException();
+        }
+
         public int Count(string searchValue = "")
         {
             int count = 0;
@@ -56,6 +61,11 @@ namespace CookinRecipe.DataLayers.SQLServer
                 connection.Close();
             }
             return count;
+        }
+
+        public int CountUnread(long userId)
+        {
+            throw new NotImplementedException();
         }
 
         public bool Delete(int id)

@@ -18,9 +18,9 @@ namespace CookinRecipe.BusinessLayers
             return userAccountDB.Authorize(userName, password);
         }
 
-        public static bool ChangePassword(string userName, string oldPassword, string newPassword)
+        public static bool ChangePassword(string userName, string newPassword)
         {
-            return userAccountDB.ChangePassword(userName, oldPassword, newPassword);
+            return userAccountDB.ChangePassword(userName, newPassword);
         }
         public static long CreateAccount(UserAccount account)
         {
@@ -30,6 +30,7 @@ namespace CookinRecipe.BusinessLayers
         {
             return userAccountDB.AuthorizeByEmail(email);
         }
+
     }
 }
 

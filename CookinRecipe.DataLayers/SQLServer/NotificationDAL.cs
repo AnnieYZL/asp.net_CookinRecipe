@@ -1,5 +1,6 @@
 ﻿using CookinRecipe.DomainModels;
 using Dapper;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CookinRecipe.DataLayers.SQLServer
 {
@@ -14,15 +15,16 @@ namespace CookinRecipe.DataLayers.SQLServer
             int id = 0;
             using (var connection = OpenConnection())
             {
-                var sql = @"insert into Notifications(UserID, RecipeID, Title, Message, Type, CreatedAt, IsRead) 
-                            VALUES(@UserID, @RecipeID, @Title, @Message, @Type, GETDATE(), 0); select @@IDENTITY";
+                var sql = @"insert into Notifications(UserID, RecipeID, Title, Message, Type, CreatedAt, IsRead, AdminID) 
+                            VALUES(@UserID, @RecipeID, @Title, @Message, @Type, GETDATE(), 0, @AdminID); select @@IDENTITY";
                 var parameters = new
                 {
                     UserID = data.UserID,
                     RecipeID = data.RecipeID,
                     Title = data.Title ?? "",
                     Message = data.Message ?? "",
-                    Type = data.Type ?? ""
+                    Type = data.Type ?? "",
+                    AdminID = data.AdminID,
                 };
                 id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
@@ -66,7 +68,20 @@ namespace CookinRecipe.DataLayers.SQLServer
 
         public bool Update(Notification data)
         {
-            throw new NotImplementedException();
+            bool result = false;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"update Notifications
+                            set IsRead = 1 
+                            WHERE NotificationID = @NotificationID";
+                var parameters = new
+                {
+                    NotificationID = data.NotificationID
+                };
+                result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
+                connection.Close();
+            }
+            return result;
         }
 
         public IList<Notification> GetList(long UserID)
@@ -74,10 +89,10 @@ namespace CookinRecipe.DataLayers.SQLServer
             List<Notification> data = new List<Notification>();
             using (var connection = OpenConnection())
             {
-                var sql = @"select top(10) *
+                var sql = @"select *
                             from Notifications
                             where UserID = @UserID
-                            order by CreatedAt desc";
+                            order by IsRead asc, CreatedAt desc";
                 var parameters = new
                 {
                     UserID = UserID
@@ -95,6 +110,39 @@ namespace CookinRecipe.DataLayers.SQLServer
         public IList<Notification> GetAll()
         {
             throw new NotImplementedException();
+        }
+
+        public int CountUnread(long userId)
+        {
+            int count = 0;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"select count(*)
+	                        from Notifications
+	                        where UserID = @UserID and IsRead = 0";
+                var parameters = new { UserID = userId };
+                count = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
+                connection.Close();
+            }
+            return count;
+        }
+
+        public bool Change(long id)
+        {
+            bool result = false;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"update Notifications
+                            set IsRead = 1
+                            WHERE NotificationID = @NotificationID";
+                var parameters = new
+                {
+                    NotificationID = id
+                };
+                result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
+                connection.Close();
+            }
+            return result;
         }
     }
 }

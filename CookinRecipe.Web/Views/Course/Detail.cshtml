@@ -2,7 +2,7 @@
 @using CookinRecipe.BusinessLayers
 @{
     ViewBag.Title = "Danh sách công thức của thực đơn";
-    var me = User.GetUserData() != null ? User.GetUserData().UserId : "";
+    var me = User.GetUserData();
 }
 <div class="md:max-w-6xl w-11/12 mt-20 mx-auto bg-white pb-24 p-6 rounded-lg shadow-md">
     <div class="flex mb-5">
@@ -62,13 +62,19 @@
                                 <p class='overflow-ellipsis overflow-hidden whitespace-nowrap font-regular text-gray-600 text-base leading-normal'>
                                     <i class="fas fa-clock text-bl"></i> @item.PrepTime phút
                                 </p>
-                                <button type="button" class="ml-auto cursor-pointer">
-                                    <i class="fa fa-heart text-red-600"></i>
-                                </button>
-                                @if (me != "")
+                                @{
+                                    var isLiked1 = me != null && FavouriteDataService.CheckFav(long.Parse(me.UserId), item.RecipeID);
+                                    var iconClass1 = isLiked1 ? "fa-solid text-red-600" : "fa-regular text-gray-500";
+                                }
+
+                                <i id="dish-page-like-btn"
+                                   class="fa-heart @iconClass1 text-xl cursor-pointer ml-auto"
+                                   onclick="toggleLikeButton(this, @item.RecipeID)">
+                                </i>
+                                @if (me != null)
                                 {
                                     <button type="button" class="saveBtn ml-5 cursor-pointer" data-recipe-id="@item.RecipeID">
-                                        @if (RecipeDataService.CheckExistsInList(item.RecipeID, long.Parse(me)))
+                                        @if (RecipeDataService.CheckExistsInList(item.RecipeID, long.Parse(me.UserId)))
                                         {
                                             <i class="fa fa-bookmark text-blue-600"></i>
                                         }
@@ -111,7 +117,7 @@
                     @foreach (var item in ListDataService.GetListOf(long.Parse(User.GetUserData().UserId)))
                     {
                         <li class="p-2 bg-gray-100 rounded flex items-center space-x-3 cursor-pointer hover:bg-gray-200" data-list-id="@item.ListID" role="button" tabindex="0">
-                            <img src="~/Themes/assets/images/vLOGO.png" class="w-12 h-12 rounded-lg" alt="Danh sách 1">
+                            <img src="~/FileUpload/images/list/@item.ListImage" class="w-12 h-12 rounded-lg" alt="Danh sách 1">
                             <div>
                                 <span class="font-medium">@item.ListName</span>
                                 <p class="text-sm text-gray-500">@ListDataService.GetListQuantity(item.ListID) công thức</p>

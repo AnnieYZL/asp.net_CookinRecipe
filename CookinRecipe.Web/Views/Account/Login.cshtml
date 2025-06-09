@@ -211,8 +211,16 @@
                 <input type="text" class="block border border-grey-light w-full p-3 rounded mb-4 font-light"
                           name="email" value="@ViewBag.Email" placeholder="Email" />
 
-                <input type="password" class="block border border-grey-light w-full p-3 rounded mb-4 font-light"
-                   name="password" placeholder="Mật khẩu" />
+                    <div class="relative mb-4">
+                        <input type="password" id="passwordInput"
+                               class="block border border-grey-light w-full p-3 rounded font-light pr-10"
+                               name="password" placeholder="Mật khẩu" />
+                        <span onclick="togglePasswordVisibility()"
+                              class="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500">
+                            <i id="eyeIcon" class="fa fa-eye"></i>
+                        </span>
+                    </div>
+
                 <div class="w-full text-red-500 px-2 font-light">
                 </div>
                     
@@ -261,6 +269,14 @@
                     ThongBao("Có lỗi xảy ra khi gửi yêu cầu đăng nhập.", "danger");
                 }
             });
+        }
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById("passwordInput");
+            const eyeIcon = document.getElementById("eyeIcon");
+            const isPassword = passwordInput.type === "password";
+
+            passwordInput.type = isPassword ? "text" : "password";
+            eyeIcon.className = isPassword ? "fa fa-eye-slash" : "fa fa-eye";
         }
     </script>
 

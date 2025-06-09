@@ -72,6 +72,13 @@ namespace CookinRecipe.Web.Controllers
             UserDataService.UpdateUser(data);
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        [Route("api/user/check-email")]
+        public IActionResult CheckEmail(string email, long userId)
+        {
+            bool exists = UserDataService.GetAllUsers().Any(u => u.Email == email && u.UserID != userId);
+            return Json(new { exists });
+        }
 
     }
 }

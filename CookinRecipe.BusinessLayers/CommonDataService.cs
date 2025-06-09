@@ -1,4 +1,5 @@
 ﻿using CookinRecipe.DataLayers;
+using CookinRecipe.DataLayers.SQLServer;
 using CookinRecipe.DomainModels;
 
 namespace CookinRecipe.BusinessLayers
@@ -220,6 +221,23 @@ namespace CookinRecipe.BusinessLayers
         public static List<Notification> GetListNoti(long UserID)
         {
             return notificationDB.GetList(UserID).ToList();
+        }
+        /// <summary>
+        /// Đếm số tb chưa đọc
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public static int CountUnread(long userId)
+        {
+            return notificationDB.CountUnread(userId);
+        }
+        /// <summary>
+        /// Đánh dấu tb đã đọc
+        /// </summary>
+        /// <returns></returns>
+        public static bool ReadNoti(long id)
+        {
+            return notificationDB.Change(id);
         }
         /// <summary>
         /// Lấy ds thực đơn k phân trang

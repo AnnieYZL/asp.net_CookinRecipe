@@ -9,7 +9,7 @@ namespace CookinRecipe.DataLayers
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        int Add(Favourite data);
+        bool Add(Favourite data);
 
         /// <summary>
         /// Hủy thích bài viết

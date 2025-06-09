@@ -23,6 +23,7 @@
         public bool IsRemove { get; set; }
         public DateTime VerifyTime { get; set; }
         public long AdminID { get; set; }
+        public DateTime UpdateTime { get; set; }
 
     }
 }

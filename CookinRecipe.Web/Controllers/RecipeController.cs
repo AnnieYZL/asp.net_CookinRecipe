@@ -1,4 +1,5 @@
 ﻿using CookinRecipe.BusinessLayers;
+using CookinRecipe.DataLayers.SQLServer;
 using CookinRecipe.DomainModels;
 using CookinRecipe.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -8,13 +9,13 @@ using static Azure.Core.HttpHeader;
 
 namespace CookinRecipe.Web.Controllers
 {
-	public class RecipeController : Controller
-	{
+    public class RecipeController : Controller
+    {
         private const int PAGE_SIZE = 20;
         private const string SEARCH_CONDITION = "recipe_search";
-		public IActionResult Index(int page = 1, string searchValue = "")
-		{
-           RecipeSearchInput? input = ApplicationContext.GetSessionData<RecipeSearchInput>(SEARCH_CONDITION);
+        public IActionResult Index(int page = 1, string searchValue = "")
+        {
+            RecipeSearchInput? input = ApplicationContext.GetSessionData<RecipeSearchInput>(SEARCH_CONDITION);
             if (input == null)
             {
                 input = new RecipeSearchInput()
@@ -42,45 +43,55 @@ namespace CookinRecipe.Web.Controllers
             return View(model);
         }
         public IActionResult Detail(long id = 0)
-		{
-			var recipe = RecipeDataService.Get(id);
-			if (recipe == null)
-			{
-				return RedirectToAction("Index");
-			}
-			ViewBag.Title = recipe.RecipeName;
-			var ingredient = RecipeDataService.ListIngredients(id);
-			var step = RecipeDataService.ListSteps(id);
-			var note = RecipeDataService.ListNotes(id);
-			int rowCount = 0;
-			var comment = CommentDataService.ListComment(out rowCount, id, 1, 0);
-			var model = new RecipeDetailModel()
-			{
-				Recipe = recipe,
-				Ingredients = ingredient,
-				Steps = step,
-				Notes = note,
-				Comments = comment,
-				RowCount = rowCount
-			};
-			return View(model);
-		}
-        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
-        public IActionResult CreateComment(string newComment = "", long recipeId = 0)
-		{
-			var userData = User.GetUserData();
-			Comment cmt = new Comment()
-			{
-				CommentContent = newComment,
-				UserID = long.Parse(userData.UserId),
-				RecipeID = recipeId
-			};
-			int n = CommentDataService.AddComment(cmt);
-            var recipe = RecipeDataService.Get(recipeId);
+        {
+            var recipe = RecipeDataService.Get(id);
             if (recipe == null)
             {
                 return RedirectToAction("Index");
             }
+            ViewBag.Title = recipe.RecipeName;
+            var ingredient = RecipeDataService.ListIngredients(id);
+            var step = RecipeDataService.ListSteps(id);
+            var note = RecipeDataService.ListNotes(id);
+            int rowCount = 0;
+            var comment = CommentDataService.ListComment(out rowCount, id, 1, 0);
+            var model = new RecipeDetailModel()
+            {
+                Recipe = recipe,
+                Ingredients = ingredient,
+                Steps = step,
+                Notes = note,
+                Comments = comment,
+                RowCount = rowCount
+            };
+            return View(model);
+        }
+        [Authorize]
+        public IActionResult CreateComment(string newComment = "", long recipeId = 0)
+        {
+            var userData = User.GetUserData();
+            Comment cmt = new Comment()
+            {
+                CommentContent = newComment,
+                UserID = long.Parse(userData.UserId),
+                RecipeID = recipeId
+            };
+            int n = CommentDataService.AddComment(cmt);
+
+            var recipe = RecipeDataService.Get(recipeId);
+
+            if (recipe == null)
+            {
+                return RedirectToAction("Index");
+            }
+            var tb = CommonDataService.AddNotification(new Notification
+            {
+                UserID = RecipeDataService.Get(recipeId).AuthorID,
+                RecipeID = recipeId,
+                Title = "Bạn có 1 thông báo mới",
+                Message = userData.FullName + " đã bình luận về công thức " + recipe.RecipeName + " của bạn",
+                Type = "Comment"
+            });
             ViewBag.Title = recipe.RecipeName;
             var ingredient = RecipeDataService.ListIngredients(recipeId);
             var step = RecipeDataService.ListSteps(recipeId);
@@ -97,49 +108,36 @@ namespace CookinRecipe.Web.Controllers
                 RowCount = rowCount
             };
             return View("Detail", model);
-		}
-        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
+        }
+        [Authorize]
         public IActionResult Edit(long id = 0)
-		{
+        {
             ViewBag.Title = "Cập nhật công thức";
             Recipe? recipe = RecipeDataService.Get(id);
             if (recipe == null)
                 return RedirectToAction("Index", "Home");
-            return View(recipe); 
-		}
-        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
+            return View(recipe);
+        }
+        [Authorize]
         public IActionResult Create()
-		{
+        {
             ViewBag.Title = "Tạo công thức mới";
             Recipe recipe = new Recipe()
             {
-				RecipeID = 0
+                RecipeID = 0
             };
             return View("Edit", recipe);
-		}
+        }
         [HttpPost]
-        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
+        [Authorize]
         public IActionResult Save(List<string> StepList, List<string> NoteList, List<int> IngredientList, List<int> QuantityList, List<int> CourseList, List<string> IngreNoteList, Recipe data, IFormFile? uploadPhoto, IFormFile? uploadVideo)
         {
             ViewBag.Title = data.RecipeID == 0 ? "Tạo công thức mới" : "Cập nhật công thức";
-            //Kiểm tra dữ liệu đầu vào có hợp lệ hay không => Ghi Task List
-            if (string.IsNullOrWhiteSpace(data.RecipeName))
-                ModelState.AddModelError(nameof(data.RecipeName), "Tên công thức không được để trống");
-            data.Description = data.Description ?? "";
-            if(data.PrepTime == 0)
-            {
-                ModelState.AddModelError(nameof(data.PrepTime), "Thời gian nấu không được để trống");
-            }
-            if (string.IsNullOrEmpty(data.Serving))
-            {
-                ModelState.AddModelError(nameof(data.Serving), "Khẩu phần không được để trống");
-            }
-            //Xử lý với ảnh upload (nếu có ảnh upload thì lưu ảnh và gán lại tên file ảnh mới cho employee)
             if (uploadPhoto != null)
             {
-                string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}"; //Tên file sẽ lưu
-                string folder = Path.Combine(ApplicationContext.WebRootPath, @"FileUpload\images\recipe"); //đường dẫn đến thư mục lưu file
-                string filePath = Path.Combine(folder, fileName); //Đường dẫn đến file cần lưu D:\images\products\photo.png
+                string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}";
+                string folder = Path.Combine(ApplicationContext.WebRootPath, @"FileUpload\images\recipe");
+                string filePath = Path.Combine(folder, fileName);
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
@@ -149,9 +147,9 @@ namespace CookinRecipe.Web.Controllers
             }
             if (uploadVideo != null)
             {
-                string fileName = $"{DateTime.Now.Ticks}_{uploadVideo.FileName}"; //Tên file sẽ lưu
-                string folder = Path.Combine(ApplicationContext.WebRootPath, @"FileUpload\videos"); //đường dẫn đến thư mục lưu file
-                string filePath = Path.Combine(folder, fileName); //Đường dẫn đến file cần lưu D:\images\products\photo.png
+                string fileName = $"{DateTime.Now.Ticks}_{uploadVideo.FileName}";
+                string folder = Path.Combine(ApplicationContext.WebRootPath, @"FileUpload\videos");
+                string filePath = Path.Combine(folder, fileName);
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
@@ -159,13 +157,10 @@ namespace CookinRecipe.Web.Controllers
                 }
                 data.RecipeVideo = fileName;
             }
-            //Nếu tồn tại lỗi => Trả về view để người sd nhập lại cho đúng
             if (!ModelState.IsValid)
             {
                 return View("Edit", data);
             }
-
-            //Gọi chức năng xử lý dưới tầng tác nghiệp nếu quá trình kiểm soát lỗi không phát hiện lỗi đầu vào
             if (data.RecipeID == 0)
             {
                 long recipeId = RecipeDataService.Add(data);
@@ -202,27 +197,27 @@ namespace CookinRecipe.Web.Controllers
                             j++;
                         }
                     }
-                    
-                }
-                if(NoteList.Count > 0) { 
-                    int j=0;
-                    for (int i = 0; i < NoteList.Count; i++)
-                    {
-                            if(NoteList[i].Trim() != null || NoteList[i].Trim() != "")
-                        {
-                                Note nt = new Note
-                                {
-                                    RecipeID = recipeId,
-                                    NoteNumber = j + 1,
-                                    NoteContent = NoteList[i]
-                                };
-                                RecipeDataService.AddNotes(nt);
-                                j++;
-                            }
-                    }
-                    
 
                 }
+                if (NoteList.Count > 0)
+                {
+                    int j = 0;
+                    for (int i = 0; i < NoteList.Count; i++)
+                    {
+                        if (!string.IsNullOrWhiteSpace(NoteList[i]))
+                        {
+                            Note nt = new Note
+                            {
+                                RecipeID = recipeId,
+                                NoteNumber = j + 1,
+                                NoteContent = NoteList[i]
+                            };
+                            RecipeDataService.AddNotes(nt);
+                            j++;
+                        }
+                    }
+                }
+
                 if (CourseList.Count > 0)
                 {
                     for (int i = 0; i < CourseList.Count; i++)
@@ -271,7 +266,7 @@ namespace CookinRecipe.Web.Controllers
                             };
                             RecipeDataService.AddSteps(st);
                             j++;
-                        }                   
+                        }
                     }
 
                 }
@@ -280,7 +275,7 @@ namespace CookinRecipe.Web.Controllers
                     int j = 0;
                     for (int i = 0; i < NoteList.Count; i++)
                     {
-                        if (NoteList[i].Trim() != null || NoteList[i].Trim() != "")
+                        if (!string.IsNullOrWhiteSpace(NoteList[i]))
                         {
                             Note nt = new Note
                             {
@@ -292,7 +287,6 @@ namespace CookinRecipe.Web.Controllers
                             j++;
                         }
                     }
-
                 }
                 if (CourseList.Count > 0)
                 {
@@ -303,13 +297,17 @@ namespace CookinRecipe.Web.Controllers
                 }
                 RecipeDataService.Update(data);
                 RecipeDataService.SetEnergy(recipeId);
-                return RedirectToAction("Detail", new {id = recipeId});
+                return RedirectToAction("Detail", new { id = recipeId });
             }
         }
-        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
+        [Authorize]
         public IActionResult Delete(long id = 0)
         {
-            
+            RecipeDataService.DeleteList2(id);
+            RecipeDataService.DeleteCommentv2(id);
+            RecipeDataService.DeleteNotiv2(id);
+            RecipeDataService.DeleteFav2(id);
+            RecipeDataService.DeleteRate(id);
             RecipeDataService.DeleteNotes(id);
             RecipeDataService.DeleteSteps(id);
             RecipeDataService.DeleteIngredients(id);
@@ -318,8 +316,8 @@ namespace CookinRecipe.Web.Controllers
             return RedirectToAction("Index", "User");
         }
         [HttpPost]
-        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
-        public JsonResult CreateList(string listName)
+        [Authorize]
+        public async Task<JsonResult> CreateList(string listName, IFormFile imageFile)
         {
             try
             {
@@ -328,22 +326,44 @@ namespace CookinRecipe.Web.Controllers
                     return Json(new { success = false, message = "Thiếu thông tin" });
 
                 var userId = long.Parse(user.UserId);
+                string savedImagePath = null;
+
+                if (imageFile != null && imageFile.Length > 0)
+                {
+                    var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "FileUpload", "images", "list");
+                    if (!Directory.Exists(uploadPath))
+                        Directory.CreateDirectory(uploadPath);
+
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                    var filePath = Path.Combine(uploadPath, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(stream);
+                    }
+
+                    savedImagePath = fileName;
+                }
+
                 long newListId = ListDataService.AddList(new List
                 {
                     ListName = listName,
                     UserID = userId,
-                    ListImage = null
+                    ListImage = savedImagePath != null ? savedImagePath : "no-image.png"
                 });
-                return Json(new { success = true, listId = newListId });
 
+                return Json(new { success = true, listId = newListId });
             }
             catch (Exception ex)
             {
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
+
+
         [HttpPost]
-        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
+        [Authorize]
         public JsonResult SaveToList(long recipeId, List<long> listIds)
         {
             try
@@ -364,7 +384,7 @@ namespace CookinRecipe.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
+        [Authorize]
         public JsonResult RateRecipe(long recipeId, int rating)
         {
             var user = User.GetUserData();
@@ -372,7 +392,7 @@ namespace CookinRecipe.Web.Controllers
                 return Json(new { success = false, message = "Bạn cần đăng nhập để đánh giá." });
             try
             {
-                if (RatingDataService.CheckExistRate(long.Parse(user.UserId), recipeId)==true)
+                if (RatingDataService.CheckExistRate(long.Parse(user.UserId), recipeId) == true)
                 {
                     RatingDataService.UpdateRating(new Rating
                     {
@@ -381,6 +401,7 @@ namespace CookinRecipe.Web.Controllers
                         Point = rating,
                         IsCancel = false
                     });
+
                 }
                 else
                 {
@@ -392,6 +413,14 @@ namespace CookinRecipe.Web.Controllers
                         IsCancel = false
                     });
                 }
+                var tb = CommonDataService.AddNotification(new Notification
+                {
+                    UserID = RecipeDataService.Get(recipeId).AuthorID,
+                    RecipeID = recipeId,
+                    Title = "Đánh giá công thức",
+                    Message = user.FullName + " đã đánh giá " + rating + " sao cho công thức " + RecipeDataService.Get(recipeId).RecipeName + " của bạn",
+                    Type = "Rate"
+                });
                 return Json(new { success = true });
             }
             catch (Exception ex)
@@ -401,7 +430,7 @@ namespace CookinRecipe.Web.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
+        [Authorize]
         public JsonResult GetUserRating(long recipeId)
         {
             var user = User.GetUserData();
@@ -413,36 +442,44 @@ namespace CookinRecipe.Web.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
-        public JsonResult ToggleLike(long recipeId)
+        [Authorize]
+        public JsonResult ToggleLike(long id)
         {
-            var user = User.GetUserData();
-            if (user == null)
-                return Json(new { success = false, message = "Bạn cần đăng nhập để like." });
+            try
+            {
+                var userData = User.GetUserData();
+                if (userData == null) return Json(new { success = false, message = "Người dùng chưa đăng nhập vào hệ thống!" });
 
-            long userId = long.Parse(user.UserId);
+                var userId = long.Parse(userData.UserId);
 
-            bool hasLiked = FavouriteDataService.CheckFav(userId, recipeId);
-
-            if (hasLiked)
-                FavouriteDataService.Delete(new Favourite
+                bool isCancel = FavouriteDataService.AddFav(new Favourite
                 {
                     UserID = userId,
-                    RecipeID = recipeId,
-                    IsCancel = true
+                    RecipeID = id,
                 });
-            else
-                FavouriteDataService.AddFav(new Favourite
+                if (!isCancel)
                 {
-                    UserID = userId,
-                    RecipeID = recipeId,
-                    IsCancel = false
-                });
+                    var tb = CommonDataService.AddNotification(new Notification
+                    {
+                        UserID = RecipeDataService.Get(id).AuthorID,
+                        RecipeID = id,
+                        Title = "Yêu thích công thức",
+                        Message = userData.FullName + " đã thích công thức " + RecipeDataService.Get(id).RecipeName + " của bạn",
+                        Type = "Favourite"
+                    });
 
-            int likeCount = RecipeDataService.CountFav(recipeId);
-            return Json(new { success = true, liked = !hasLiked, likeCount = likeCount });
+                }
+                return Json(new
+                {
+                    success = true,
+                    isCancel = isCancel,
+                    numLikes = RecipeDataService.CountFav(id)
+                });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Exception: " + ex.Message });
+            }
         }
-
-
     }
 }

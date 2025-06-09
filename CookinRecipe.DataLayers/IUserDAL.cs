@@ -30,5 +30,21 @@ namespace CookinRecipe.DataLayers
         /// </summary>
         /// <returns></returns>
         IList<User> GetAllUsers();
+        /// <summary>
+        /// Cập nhật quyền cho người dùng
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        bool Decentralisation(User data);
+        /// <summary>
+        /// Lấy số ct duyệt/chưa của người dùng
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        int GetSoCongThuc(long id, bool type);
+        int CountCmt(long id);
+        int CountRate(long id);
+        int CountFav(long id);
     }
 }

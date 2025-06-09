@@ -1,326 +1,425 @@
 ﻿@model User
 @using CookinRecipe.BusinessLayers
 @{
-
+    ViewBag.Title = "Trang cá nhân";
 }
 <div class="bg-blue-50">
-<div class="container mx-auto my-5 py-16 bg-blue-50">
+    <div class="container mx-auto my-5 py-16 bg-blue-50">
 
-	<div class="md:flex mt-3 md:mt-2 no-wrap md:-mx-2">
-		<!-- Left Side -->
-		<div class="w-full md:w-3/12">
-			<!-- Profile Card -->
-			<div class="bg-white p-3 border-t-4 border-blue-600">
-				<div class="image overflow-hidden">
-					<img id="self-profile-image" class="h-auto w-full mx-auto"
-						 src="~/FileUpload/images/user/@Model.UserImage" alt="">
-				</div>
-				<div class="flex ">
-					<h1 id="self-name" class="text-gray-900 font-medium text-xl leading-8 my-1">@Model.FullName</h1>
-					<button id="openEdit" class="modal-open text-blue-600 text-base hover:text-blue-700 ml-auto text-blue-600 font-medium">
-						<i class="fa-solid fa-pen text-blue-600 text-sm"></i> Chỉnh sửa
-					</button>
-				</div>
-				<p id="self-caption" class="text-sm text-gray-500 hover:text-gray-600 leading-6 font-regular">
-					@Model.Caption
-				</p>
-				<ul class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
-					<li class="flex items-center py-3 font-regular">
-						<span>Họ Tên</span>
-						<span id="self-created-at" class="ml-auto">@Model.FullName</span>
-					</li>
-					<li class="flex items-center py-3 font-regular">
-						<span>Giới Tính</span>
-						@if (@Model.Gender == false)
-						{
-							<span id="self-created-at" class="ml-auto">Nam</span>
-						}
-						else
-						{
-							<span id="self-created-at" class="ml-auto">Nữ</span>
-						}
+        <div class="md:flex mt-3 md:mt-2 no-wrap md:-mx-2">
+            <!-- Left Side -->
+            <div class="w-full md:w-3/12">
+                <!-- Profile Card -->
+                <div class="bg-white p-3 border-t-4 border-blue-600">
+                    <div class="image overflow-hidden">
+                        <img id="self-profile-image" class="h-auto w-full mx-auto"
+                             src="~/FileUpload/images/user/@Model.UserImage" alt="">
+                    </div>
+                    <div class="flex ">
+                        <h1 id="self-name" class="text-gray-900 font-medium text-xl leading-8 my-1">@Model.FullName</h1>
+                        <button id="openEdit" class="modal-open text-blue-600 text-base hover:text-blue-700 ml-auto text-blue-600 font-medium">
+                            <i class="fa-solid fa-pen text-blue-600 text-sm"></i> Chỉnh sửa
+                        </button>
+                    </div>
+                    <p id="self-caption" class="text-sm text-gray-500 hover:text-gray-600 leading-6 font-regular">
+                        @Model.Caption
+                    </p>
+                    <ul class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
+                        <li class="flex items-center py-3 font-regular">
+                            <span>Họ Tên</span>
+                            <span id="self-created-at" class="ml-auto">@Model.FullName</span>
+                        </li>
+                        <li class="flex items-center py-3 font-regular">
+                            <span>Giới Tính</span>
+                            @if (@Model.Gender == false)
+                            {
+                                <span id="self-created-at" class="ml-auto">Nam</span>
+                            }
+                            else
+                            {
+                                <span id="self-created-at" class="ml-auto">Nữ</span>
+                            }
 
-					</li>
-					<li class="flex items-center py-3 font-regular">
-						<span>Địa Chỉ</span>
-						<span id="self-created-at" class="ml-auto">@Model.Address</span>
-					</li>
-					<li class="flex items-center py-3 font-regular">
-						<span>Email</span>
-						<span id="self-created-at"
-							  class="ml-auto overflow-ellipsis overflow-hidden whitespace-nowrap">@Model.Email</span>
-					</li>
-					<li class="flex items-center py-3 font-regular">
-						<span>Cấp độ</span>
-						<span class="ml-auto">
-							<span id="self-badge"
-								  class="py-1 px-2 rounded text-white bg-blue-600 text-sm">Bạn Mới</span>
-					</li>
-					<li class="flex items-center py-3 font-regular">
-						<span>Ngày tạo tài khoản</span>
-						<span id="self-created-at" class="ml-auto">@Model.CreatedAt.ToShortDateString()</span>
-					</li>
-				</ul>
-			</div>
-			<!-- End of profile card -->
-		</div>
-		<div class="my-4"></div>
-		<!-- Right Side -->
-		<div class="w-full md:w-9/12 md:ml-4 h-auto">
+                        </li>
+                        <li class="flex items-center py-3 font-regular">
+                            <span>Địa Chỉ</span>
+                            <span id="self-created-at" class="ml-auto">@Model.Address</span>
+                        </li>
+                        <li class="flex items-center py-3 font-regular">
+                            <span>Email</span>
+                            <span id="self-created-at"
+                                  class="ml-auto overflow-ellipsis overflow-hidden whitespace-nowrap">@Model.Email</span>
+                        </li>
+                        @* <li class="flex items-center py-3 font-regular">
+                        <span>Cấp độ</span>
+                        <span class="ml-auto">
+                        <span id="self-badge"
+                        class="py-1 px-2 rounded text-white bg-blue-600 text-sm">Bạn Mới</span>
+                        </li> *@
+                        <li class="flex items-center py-3 font-regular">
+                            <span>Ngày tạo tài khoản</span>
+                            <span id="self-created-at" class="ml-auto">@Model.CreatedAt.ToShortDateString()</span>
+                        </li>
+                    </ul>
+                </div>
+                <!-- End of profile card -->
+            </div>
+            <div class="my-4"></div>
+            <!-- Right Side -->
+            <div class="w-full md:w-9/12 md:ml-4 h-auto">
 
-			<!-- Post menu -->
-			<div class="bg-white p-3 shadow-sm rounded-sm">
+                <!-- Post menu -->
+                <div class="bg-white p-3 shadow-sm rounded-sm">
 
-				<div class="grid grid-cols-1">
-					<div>
-						<div class="flex items-center font-semibold text-gray-900 leading-8 mb-3">
-							<span clas="text-green-500">
-								<svg class="h-5 stroke-current text-blue-600" xmlns="http://www.w3.org/2000/svg"
-									 fill="none" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-										  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-								</svg>
-							</span>
-							<span class="tracking-wide text-blue-600 ml-2 font-bold">Công Thức</span>
-							<button type="button"
-									class="flex flex-row items-center bg-gradient-to-r from-blue-600 to-purple-600 duration-300 text-white text-base font-regular py-2 px-4 rounded ml-auto">
-								<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-									 xmlns="http://www.w3.org/2000/svg">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-										  d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-								</svg>
-									<a class="text-white" href="@Url.Action("Create", "Recipe")">Tạo công thức</a>
-							</button>
-						</div>
+                    <div class="grid grid-cols-1">
+                        <div>
+                            <div class="flex items-center font-semibold text-gray-900 leading-8 mb-3">
+                                <span clas="text-green-500">
+                                    <svg class="h-5 stroke-current text-blue-600" xmlns="http://www.w3.org/2000/svg"
+                                         fill="none" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                </span>
+                                <span class="tracking-wide text-blue-600 ml-2 font-bold">Công Thức</span>
+                                <button type="button"
+                                        class="flex flex-row items-center bg-gradient-to-r from-blue-600 to-purple-600 duration-300 text-white text-base font-regular py-2 px-4 rounded ml-auto">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                         xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                                    </svg>
+                                    <a class="text-white" href="@Url.Action("Create", "Recipe")">Tạo công thức</a>
+                                </button>
+                            </div>
 
-						<div id="self-no-posts" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
-							<!-- My Posted Dishes -->
-							@foreach(var item in RecipeDataService.ListRecipeOfUser(Model.UserID)){
-							<div class="h-auto rounded overflow-hidden shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 ...">
-								<img src="~/FileUpload/images/recipe/@item.RecipeImage"
-									 class="w-full h-52 object-cover cursor-pointer" alt="Buttor Chicken">
-								<div class='px-4 py-2'>
-									<div class="mb-2 font-medium text-xl overflow-ellipsis overflow-hidden whitespace-nowrap cursor-pointer"
-										 id="01">
-											<a href="~/Recipe/Detail/@item.RecipeID">@item.RecipeName</a>
-									</div>
+                            <div id="self-no-posts" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
+                                @foreach (var item in RecipeDataService.ListRecipeOfUser(Model.UserID))
+                                {
+                                    if (item.IsVerify)
+                                    {
+                                        <div class="h-auto rounded overflow-hidden shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 ...">
+                                            <img src="~/FileUpload/images/recipe/@item.RecipeImage"
+                                                 class="w-full h-52 object-cover cursor-pointer" alt="Buttor Chicken">
+                                            <div class='px-4 py-2'>
+                                                <div class="mb-2 font-medium text-xl overflow-ellipsis overflow-hidden whitespace-nowrap cursor-pointer"
+                                                     id="01">
+                                                    <a href="~/Recipe/Detail/@item.RecipeID">@item.RecipeName</a>
+                                                </div>
 
-									<p class='font-regular text-gray-600 text-base leading-normal h-12 overflow-ellipsis overflow-hidden w-full'>
-											@item.Description
-									</p>
-								</div>
-								<div class='px-3 pb-1 flex flex-row'>
-										@foreach (var i in RecipeDataService.GetMainIngredient(item.RecipeID))
-										{
-											<a href="~/Ingredient/Index/@i.IngredientID">
-												<span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">@i.IngredientName</span>
-											</a>
-										}
+                                                <p class='font-regular text-gray-600 text-base leading-normal h-12 overflow-ellipsis overflow-hidden w-full'>
+                                                    @item.Description
+                                                </p>
+                                            </div>
+                                            <div class='px-3 pb-1 flex flex-row'>
+                                                @foreach (var i in RecipeDataService.GetMainIngredient(item.RecipeID))
+                                                {
+                                                    <a href="~/Ingredient/Index/@i.IngredientID">
+                                                        <span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">@i.IngredientName</span>
+                                                    </a>
+                                                }
 
-								</div>
+                                            </div>
 
-								<div class="px-4 pb-2 flex flex-row">
-									<p class='overflow-ellipsis overflow-hidden whitespace-nowrap font-regular text-gray-600 text-base leading-normal'>
-										<i class="fas fa-clock text-bl"></i> @item.PrepTime phút
-									</p>
-									<button type="button" class="ml-auto cursor-pointer">
-										<a href="~/Recipe/Edit/@item.RecipeID"><i class="fa fa-edit text-blue-600"></i></a>
-									</button>
-									<button type="button" class="ml-5 cursor-pointer" onclick="return confirm('Bạn có chắc chắn muốn xóa công thức này?')">
-												<a href="~/Recipe/Delete/@item.RecipeID"><i class="fa fa-trash text-red-500"></i></a>
-									</button>
-								</div>
-							</div>
-							}
-						</div>
-					</div>
-				</div>
-				<!-- End of Experience and education grid -->
-			</div>
-			<!-- End of Post menu -->
+                                            <div class="px-4 pb-2 flex flex-row">
+                                                <p class='overflow-ellipsis overflow-hidden whitespace-nowrap font-regular text-gray-600 text-base leading-normal'>
+                                                    <i class="fas fa-clock text-bl"></i> @item.PrepTime phút
+                                                </p>
+                                                <button type="button" class="ml-auto cursor-pointer">
+                                                    <a href="~/Recipe/Edit/@item.RecipeID"><i class="fa fa-edit text-blue-600"></i></a>
+                                                </button>
+                                                <button type="button" class="ml-5 cursor-pointer"
+                                                        onclick="showDeleteModal(@item.RecipeID, '@item.RecipeName.Replace("'", "\\'")')">
+                                                    <i class="fa fa-trash text-red-500"></i>
+                                                </button>
 
-			<div class="my-4"></div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-			<!-- Tips List -->
-			<div class="bg-white p-3 shadow-sm rounded-sm">
+                <div class="my-4"></div>
 
-				<div class="grid grid-cols-1">
-					<div>
-						<div class="flex items-center font-semibold text-gray-900 leading-8 mb-3">
-							<span clas="text-green-500">
-								<svg class="h-5 stroke-current text-blue-600" xmlns="http://www.w3.org/2000/svg"
-									 fill="none" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-										  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-								</svg>
-							</span>
-							<span class="tracking-wide text-blue-600 ml-2 font-bold">Công thức đang chờ duyệt</span>
-						</div>
+                <div class="bg-white p-3 shadow-sm rounded-sm">
 
-						<div id="self-posts" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
-						</div>
-						<div id="self-no-posts" class="flex">
-							<div class="text-gray-400 font-medium mx-auto my-10">Bạn chưa có công thức nào đang chờ duyệt!</div>
-						</div>
-					</div>
-				</div>
-				<!-- End of Experience and education grid -->
-			</div>
-			<!-- End of Liked Posts -->
-		</div>
-	</div>
+                    <div class="grid grid-cols-1">
+                        <div>
+                            <div class="flex items-center font-semibold text-gray-900 leading-8 mb-3">
+                                <span clas="text-green-500">
+                                    <svg class="h-5 stroke-current text-blue-600" xmlns="http://www.w3.org/2000/svg"
+                                         fill="none" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                </span>
+                                <span class="tracking-wide text-blue-600 ml-2 font-bold">Công thức đang chờ duyệt</span>
+                            </div>
+
+                            <div id="self-posts" class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
+                                @foreach (var item in RecipeDataService.ListRecipeOfUser(Model.UserID))
+                                {
+                                    if (!item.IsVerify)
+                                    {
+                                        <div class="h-auto rounded overflow-hidden shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 ...">
+                                            <img src="~/FileUpload/images/recipe/@item.RecipeImage"
+                                                 class="w-full h-52 object-cover cursor-pointer" alt="Buttor Chicken">
+                                            <div class='px-4 py-2'>
+                                                <div class="mb-2 font-medium text-xl overflow-ellipsis overflow-hidden whitespace-nowrap cursor-pointer"
+                                                     id="01">
+                                                    <a href="~/Recipe/Detail/@item.RecipeID">@item.RecipeName</a>
+                                                </div>
+
+                                                <p class='font-regular text-gray-600 text-base leading-normal h-12 overflow-ellipsis overflow-hidden w-full'>
+                                                    @item.Description
+                                                </p>
+                                            </div>
+                                            <div class='px-3 pb-1 flex flex-row'>
+                                                @foreach (var i in RecipeDataService.GetMainIngredient(item.RecipeID))
+                                                {
+                                                    <a href="~/Ingredient/Index/@i.IngredientID">
+                                                        <span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">@i.IngredientName</span>
+                                                    </a>
+                                                }
+
+                                            </div>
+
+                                            <div class="px-4 pb-2 flex flex-row">
+                                                <p class='overflow-ellipsis overflow-hidden whitespace-nowrap font-regular text-gray-600 text-base leading-normal'>
+                                                    <i class="fas fa-clock text-bl"></i> @item.PrepTime phút
+                                                </p>
+                                                <button type="button" class="ml-auto cursor-pointer">
+                                                    <a href="~/Recipe/Edit/@item.RecipeID"><i class="fa fa-edit text-blue-600"></i></a>
+                                                </button>
+                                                <button type="button" class="ml-5 cursor-pointer"
+                                                        onclick="showDeleteModal(@item.RecipeID, '@item.RecipeName.Replace("'", "\\'")')">
+                                                    <i class="fa fa-trash text-red-500"></i>
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- End of Experience and education grid -->
+                </div>
+                <!-- End of Liked Posts -->
+            </div>
+        </div>
+    </div>
 </div>
-</div>
 
+<!-- Modal xác nhận xóa -->
+<div id="deleteConfirmModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex font-sans items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg w-96 p-6">
+        <h2 class="text-lg font-semibold text-red-600 font-sans mb-4">Xác nhận xóa</h2>
+        <p class="text-gray-600 font-sans mb-6">Bạn có chắc chắn muốn xóa công thức <span id="recipeNameToDelete" class="font-bold text-red-600"></span>?</p>
+        <div class="flex justify-end space-x-3">
+            <button onclick="hideDeleteModal()" class="px-4 py-2 bg-gray-300 font-sans hover:bg-gray-400 text-gray-800 rounded">Hủy</button>
+            <a id="confirmDeleteBtn" href="#" class="px-4 py-2 font-sans bg-red-600 hover:bg-red-700 text-white rounded">Xóa</a>
+        </div>
+    </div>
+</div>
 
 
 <!--Edit Profile Modal-->
 <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center hidden" id="modalEdit">
-	<div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+    <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
 
-	<div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+    <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
 
-		<!-- Add margin if you want to see some of the overlay behind the modal-->
-		<div class="modal-content py-4 text-center px-6 overflow-y-auto h-96">
-			<!--Title-->
-			<div class="flex justify-between items-center pb-3">
-				<p class="text-2xl font-medium text-blue-600">Chỉnh sửa thông tin</p>
-				<div class="modal-close cursor-pointer z-50">
-					<svg class="fill-current text-blue-600" xmlns="http://www.w3.org/2000/svg" width="18"
-						 height="18" viewBox="0 0 18 18">
-						<path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
-						</path>
-					</svg>
-				</div>
-			</div>
-			<form class="form-horizontal" action="~/User/Save" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="@nameof(Model.UserID)" value="@Model.UserID" />
-			<!--Body-->
-			<div class="container text-left mx-auto">
-				<div class="md:flex no-wrap">
-					<div class="w-full md:w-3/12 ml-10">
-							
-						<div class="image overflow-hidden relative">
-								
+        <!-- Add margin if you want to see some of the overlay behind the modal-->
+        <div class="modal-content py-4 text-center px-6 overflow-y-auto h-96">
+            <!--Title-->
+            <div class="flex justify-between items-center pb-3">
+                <p class="text-2xl font-medium text-blue-600">Chỉnh sửa thông tin</p>
+                <div class="modal-close cursor-pointer z-50">
+                    <svg class="fill-current text-blue-600" xmlns="http://www.w3.org/2000/svg" width="18"
+                         height="18" viewBox="0 0 18 18">
+                        <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+            <form class="form-horizontal" action="~/User/Save" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="@nameof(Model.UserID)" value="@Model.UserID" />
+                <!--Body-->
+                <div class="container text-left mx-auto">
+                    <div class="md:flex no-wrap">
+                        <div class="w-full md:w-3/12 ml-10">
 
-							<img class="h-auto w-full mx-auto" for="self-upload-profile" id="self-edit-profile"
-								 src="~/FileUpload/images/user/@Model.UserImage" alt="">
-							<input class="w-full h-full opacity-0 absolute top-0 left-0" type="file"
-								   onChange="editProfileChange()" id="self-upload-profile"
-								   accept="image/png, image/jpeg, image/jpg" />
-							<label for="uploadPhoto">
-							<svg class="w-6 h-6 fill-current cursor-pointer text-blue-600 hover:text-blue-600 mx-1 my-1 absolute right-0 bottom-0"
-								 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-								<path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z">
-								</path>
-								<path fill-rule="evenodd"
-									  d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-									  clip-rule="evenodd"></path>
-							</svg>
-								</label>
-						</div>
+                            <div class="image overflow-hidden relative">
 
-							<div class="form-group">
-								<div class="col-sm-10">
-									<input type="hidden" name="@nameof(Model.UserImage)" value="@Model.UserImage" class="hidden" />
-									<input type="file" class="form-control hidden" name="uploadPhoto" accept="image/*" id="uploadPhoto"
-										   onchange="document.getElementById('self-edit-profile').src = window.URL.createObjectURL(this.files[0])" />
-								</div>
-							</div>
 
-					</div>
-					<div class="my-4"></div>
-					<!-- Right Side -->
-					<div class="w-full md:w-9/12 ml-10">
-						<h5 class="text-blue-600 text-base font-medium">Tên Người Dùng:</h5>
-						<input id="self-edit-name" type="text"
-							   class="block border border-grey-light text-base w-full p-3 rounded mb-4 font-light"
-							   name="@nameof(Model.FullName)" value="@Model.FullName" placeholder="Nhập tên người dùng" />
-							<p class="text-red-500 font-sans">@Html.ValidationMessage(nameof(Model.FullName))</p>
-						<h5 class="text-blue-600 text-base font-medium">Email:</h5>
-						<input id="self-edit-email" type="email"
-							   class="block border border-grey-light text-base w-full p-3 rounded mb-4 font-light"
-								   name="@nameof(Model.Email)" value="@Model.Email" placeholder="Email" />
-							<p class="text-red-500 font-sans">@Html.ValidationMessage(nameof(Model.Email))</p>
-						<h5 class="text-blue-600 text-base font-medium">Địa Chỉ:</h5>
-						<input id="self-edit-location" type="text"
-							   class="block border border-grey-light text-base w-full p-3 rounded mb-4 font-light"
-							   name="@nameof(Model.Address)" value="@Model.Address" placeholder="Nhập địa chỉ" />
-						<h5 class="text-blue-600 text-base font-medium">Giới Tính:</h5>
-						<div class="mb-4">
-							
-								@if (Model.Gender == false)
-								{
-								<label class="inline-flex items-center font-sans">
-									<input id="self-edit-male" type="radio" class="form-radio font-light" name="@nameof(Model.Gender)" value="false" checked>
-									<span class="ml-2">Nam</span>
-								</label>
-								<label class="inline-flex items-center ml-6 font-sans">
-									<input id="self-edit-female" type="radio" class="form-radio font-light"
-										   name="@nameof(Model.Gender)" value="true">
-									<span class="ml-2">Nữ</span>
-								</label>
-							}
-							else
-							{
-								<label class="inline-flex items-center font-sans">
-									<input id="self-edit-male" type="radio" class="form-radio font-light" name="@nameof(Model.Gender)" value="false">
-									<span class="ml-2">Nam</span>
-								</label>
-								<label class="inline-flex items-center font-sans ml-6">
-									<input id="self-edit-female" type="radio" class="form-radio font-light"
-										   name="@nameof(Model.Gender)" value="true" checked>
-									<span class="ml-2">Nữ</span>
-								</label>
-							}
+                                <img class="h-auto w-full mx-auto" for="self-upload-profile" id="self-edit-profile"
+                                     src="~/FileUpload/images/user/@Model.UserImage" alt="">
+                                <input class="w-full h-full opacity-0 absolute top-0 left-0" type="file"
+                                       onChange="editProfileChange()" id="self-upload-profile"
+                                       accept="image/png, image/jpeg, image/jpg" />
+                                <label for="uploadPhoto">
+                                    <svg class="w-6 h-6 fill-current cursor-pointer text-blue-600 hover:text-blue-600 mx-1 my-1 absolute right-0 bottom-0"
+                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z">
+                                        </path>
+                                        <path fill-rule="evenodd"
+                                              d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+                                              clip-rule="evenodd"></path>
+                                    </svg>
+                                </label>
+                            </div>
 
-						</div>
-						<h5 class="text-blue-600 text-base font-medium">Giới Thiệu:</h5>
-						<textarea id="self-edit-caption" type="text"
-								  class="block border border-grey-light text-base w-full p-3 rounded mb-4 font-light"
-									  name="@nameof(Model.Caption)" placeholder="Giới thiệu về bản thân :)">@Model.Caption</textarea>
-					</div>
-				</div>
-			</div>
+                            <div class="form-group">
+                                <div class="col-sm-10">
+                                    <input type="hidden" name="@nameof(Model.UserImage)" value="@Model.UserImage" class="hidden" />
+                                    <input type="file" class="form-control hidden" name="uploadPhoto" accept="image/*" id="uploadPhoto"
+                                           onchange="document.getElementById('self-edit-profile').src = window.URL.createObjectURL(this.files[0])" />
+                                </div>
+                            </div>
 
-			<!--Footer-->
-			<div class="flex justify-end pt-2">
-				<button class="modal-close px-4 bg-transparent p-3 rounded-lg text-blue-600 font-regular hover:bg-gray-100 mr-2" id="closeModalEdit">
-					Đóng
-				</button>
-				<button type="submit"
-						class=" px-4 bg-blue-600 p-3 rounded-lg text-white font-regular hover:bg-blue-700">
-					Lưu
-				</button>
-			</div>
-			</form>
-		</div>
-	</div>
+                        </div>
+                        <div class="my-4"></div>
+                        <!-- Right Side -->
+                        <div class="w-full md:w-9/12 ml-10">
+                            <h5 class="text-blue-600 text-base font-medium">Tên Người Dùng:</h5>
+                            <input id="self-edit-name" type="text"
+                                   class="block border border-grey-light text-base w-full p-3 rounded mb-4 font-light"
+                                   name="@nameof(Model.FullName)" value="@Model.FullName" placeholder="Nhập tên người dùng" />
+                            <p class="text-red-500 font-sans">@Html.ValidationMessage(nameof(Model.FullName))</p>
+                            <h5 class="text-blue-600 text-base font-medium">Email:</h5>
+                            <input id="self-edit-email" type="email"
+                                   class="block border border-grey-light text-base w-full p-3 rounded mb-4 font-light"
+                                   name="@nameof(Model.Email)" value="@Model.Email" placeholder="Email" />
+                            <p class="text-red-500 font-sans">@Html.ValidationMessage(nameof(Model.Email))</p>
+                            <h5 class="text-blue-600 text-base font-medium">Địa Chỉ:</h5>
+                            <input id="self-edit-location" type="text"
+                                   class="block border border-grey-light text-base w-full p-3 rounded mb-4 font-light"
+                                   name="@nameof(Model.Address)" value="@Model.Address" placeholder="Nhập địa chỉ" />
+                            <h5 class="text-blue-600 text-base font-medium">Giới Tính:</h5>
+                            <div class="mb-4">
+
+                                @if (Model.Gender == false)
+                                {
+                                    <label class="inline-flex items-center font-sans">
+                                        <input id="self-edit-male" type="radio" class="form-radio font-light" name="@nameof(Model.Gender)" value="false" checked>
+                                        <span class="ml-2">Nam</span>
+                                    </label>
+                                    <label class="inline-flex items-center ml-6 font-sans">
+                                        <input id="self-edit-female" type="radio" class="form-radio font-light"
+                                               name="@nameof(Model.Gender)" value="true">
+                                        <span class="ml-2">Nữ</span>
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label class="inline-flex items-center font-sans">
+                                        <input id="self-edit-male" type="radio" class="form-radio font-light" name="@nameof(Model.Gender)" value="false">
+                                        <span class="ml-2">Nam</span>
+                                    </label>
+                                    <label class="inline-flex items-center font-sans ml-6">
+                                        <input id="self-edit-female" type="radio" class="form-radio font-light"
+                                               name="@nameof(Model.Gender)" value="true" checked>
+                                        <span class="ml-2">Nữ</span>
+                                    </label>
+                                }
+
+                            </div>
+                            <h5 class="text-blue-600 text-base font-medium">Giới Thiệu:</h5>
+                            <textarea id="self-edit-caption" type="text"
+                                      class="block border border-grey-light text-base w-full p-3 rounded mb-4 font-light"
+                                      name="@nameof(Model.Caption)" placeholder="Giới thiệu về bản thân :)">@Model.Caption</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end pt-2">
+                    <button class="modal-close px-4 bg-transparent p-3 rounded-lg text-blue-600 font-regular hover:bg-gray-100 mr-2" id="closeModalEdit">
+                        Đóng
+                    </button>
+                    <button type="submit"
+                            class=" px-4 bg-blue-600 p-3 rounded-lg text-white font-regular hover:bg-blue-700">
+                        Lưu
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-	const openBtn = document.getElementById("openEdit");
-	const modal = document.getElementById("modalEdit");
-	const close = modal.querySelector(".modal-close");
-	const overlay = modal.querySelector(".modal-overlay");
-	const closeBtn = document.getElementById("closeModalEdit");
+    document.addEventListener("DOMContentLoaded", function () {
+        const openBtn = document.getElementById("openEdit");
+        const modal = document.getElementById("modalEdit");
+        const close = modal.querySelector(".modal-close");
+        const overlay = modal.querySelector(".modal-overlay");
+        const closeBtn = document.getElementById("closeModalEdit");
+        function openModal() {
+            modal.classList.remove("opacity-0", "pointer-events-none", "hidden");
+            modal.classList.add("opacity-100", "pointer-events-auto", "flex");
+        }
+        function closeModal() {
+            modal.classList.add("opacity-0", "pointer-events-none", "hidden");
+            modal.classList.remove("opacity-100", "pointer-events-auto", "flex");
+        }
+        openBtn.addEventListener("click", openModal);
+        closeBtn.addEventListener("click", closeModal);
+        overlay.addEventListener("click", closeModal);
+        close.addEventListener("click", closeModal);
+        const saveBtn = document.querySelector("#modalEdit button[type='submit']");
+        const form = document.querySelector("#modalEdit form");
+        const emailInput = document.getElementById("self-edit-email");
+        const nameInput = document.getElementById("self-edit-name");
 
-	// Hàm mở modal
-	function openModal() {
-		modal.classList.remove("opacity-0", "pointer-events-none", "hidden");
-		modal.classList.add("opacity-100", "pointer-events-auto", "flex");
-	}
+        saveBtn.addEventListener("click", function (e) {
+            e.preventDefault();
 
-	// Hàm đóng modal
-	function closeModal() {
-		modal.classList.add("opacity-0", "pointer-events-none", "hidden");
-		modal.classList.remove("opacity-100", "pointer-events-auto", "flex");
-	}
+            const email = emailInput.value.trim();
+            const name = nameInput.value.trim();
+            const userId = form.querySelector("input[name='@nameof(Model.UserID)']").value;
+            emailInput.classList.remove("border-red-500");
+            nameInput.classList.remove("border-red-500");
 
-	// Gắn sự kiện
-	openBtn.addEventListener("click", openModal);
-	closeBtn.addEventListener("click", closeModal);
-	overlay.addEventListener("click", closeModal);
-	close.addEventListener("click", closeModal);
-});
+            if (name === "") {
+                ThongBao("Tên người dùng không được để trống", "danger");
+                nameInput.classList.add("border-red-500");
+                nameInput.focus();
+                return;
+            }
+
+            else if (email === "") {
+                ThongBao("Email không được để trống", "danger");
+                emailInput.classList.add("border-red-500");
+                emailInput.focus();
+                return;
+            }
+            fetch(`/api/user/check-email?email=${encodeURIComponent(email)}&userId=${userId}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.exists) {
+                        ThongBao("Email đã tồn tại, vui lòng chọn email khác", "danger");
+                        emailInput.classList.add("border-red-500");
+                        emailInput.focus();
+                        return;
+                    } else {
+                        form.submit();
+                    }
+                })
+                .catch(err => {
+                    ThongBao("Có lỗi khi kiểm tra email, vui lòng thử lại.", "danger");
+                });
+        });
+        
+    });
+    function showDeleteModal(recipeId, recipeName) {
+        document.getElementById("recipeNameToDelete").textContent = recipeName;
+        document.getElementById("confirmDeleteBtn").href = `/Recipe/Delete/${recipeId}`;
+        document.getElementById("deleteConfirmModal").classList.remove("hidden");
+    }
+
+    function hideDeleteModal() {
+        document.getElementById("deleteConfirmModal").classList.add("hidden");
+    }
 </script>

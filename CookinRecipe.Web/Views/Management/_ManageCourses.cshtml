@@ -3,9 +3,9 @@
 <div class="bg-white p-6 rounded-xl shadow-md font-sans">
     <div class="flex flex-col md:flex-row justify-between items-center mb-4">
         <h2 class="text-2xl font-semibold text-gray-800 mb-2 md:mb-0">Quản lý thực đơn</h2>
-        <a href="~/Admin/CreateMenu" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+        <button id="btnCreateCourse" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
             + Tạo mới
-        </a>
+        </button>
     </div>
 
     <div class="mb-4">
@@ -18,8 +18,7 @@
             <thead class="bg-blue-600 text-white text-sm font-semibold">
                 <tr>
                     <th class="px-4 py-2 text-center w-16">STT</th>
-                    <th class="px-4 py-2 text-center w-40">Ảnh</th>
-                    <th class="px-4 py-2 text-left">Tên thực đơn</th>
+                    <th class="px-4 py-2 text-center">Tên thực đơn</th>
                     <th class="px-4 py-2 text-center w-48">Giới thiệu</th>
                     <th class="px-4 py-2 text-center w-32">Hành động</th>
                 </tr>
@@ -32,14 +31,15 @@
                     {
                         <tr class="hover:bg-gray-50 border-b">
                             <td class="px-4 py-2 text-center w-16">@index</td>
-                            <td class="px-4 py-2 text-center w-40">
-                                <img src="~/FileUpload/images/course/@m.CourseImage" class="w-16 h-16 object-cover rounded mx-auto" />
-                            </td>
-                            <td class="px-4 py-2 text-left text-blue-600">@m.CourseName</td>
+                            <td class="px-4 py-2 text-center font-bold text-blue-600">@m.CourseName</td>
                             <td class="px-4 py-2 text-center w-48">@m.Description</td>
                             <td class="px-4 py-2 text-center space-x-2 w-32">
-                                <a href="~/Admin/EditMenu/@m.CourseID" class="text-blue-600" title="Chỉnh sửa thực đơn"><i class="fa fa-edit"></i></a>
-                                <button class="text-red-600" onclick="deleteMenu('@m.CourseID')" title="Xóa thực đơn"><i class="fa fa-trash"></i></button>
+                                <a href="javascript:void(0);" class="text-blue-600 btn-edit-course" data-id="@m.CourseID" title="Chỉnh sửa thực đơn">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a href="javascript:void(0);" class="text-red-600 btn-delete-course" data-id="@m.CourseID" data-name="@m.CourseName" title="Xóa thực đơn">
+                                    <i class="fa fa-trash"></i>
+                                </a>
                             </td>
                         </tr>
                         index++;
@@ -49,3 +49,241 @@
         </table>
     </div>
 </div>
+<div id="createCourseModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 font-sans">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-lg relative">
+        <div class="flex py-3">
+            <h1 class="text-2xl font-semibold text-blue-600">Tạo mới thực đơn</h1>
+            <button type="button" class="text-gray-500 ml-auto hover:text-gray-700 text-xl" onclick="closeCourseModal()">
+                &times;
+            </button>
+        </div>
+        <form id="createCourseForm">
+            <div class="mb-4">
+                <label for="CourseName" class="block mb-1 font-semibold">Tên thực đơn <span class="text-red-500">(*)</span></label>
+                <input type="text" id="CourseName" name="CourseName" required class="w-full border border-gray-300 rounded px-3 py-2" />
+            </div>
+            <div class="mb-4">
+                <label for="Description" class="block mb-1 font-semibold">Giới thiệu</label>
+                <textarea id="Description" name="Description" class="border rounded w-full" rows="5"></textarea>
+            </div>
+            <div class="mb-4">
+                <label for="courseImage" class="block mb-1 font-semibold">Hình ảnh thực đơn <span class="text-red-500">(*)</span></label>
+                <input type="file" id="courseImage" name="uploadPhoto" accept="image/*"
+                       class="w-full border rounded px-3 py-2 mt-1" />
+                <img id="previewImage" src="" class="w-24 h-24 mt-2 hidden object-cover rounded" />
+            </div>
+            <div class="flex justify-end space-x-3">
+                <button type="button" id="btnCancelCreate" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400">Hủy</button>
+                <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Lưu</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Modal chỉnh sửa nguyên liệu -->
+<div id="editCourseModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 font-sans">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-lg relative">
+        <div class="flex py-3">
+            <h1 class="text-2xl font-semibold text-blue-600">Chỉnh sửa nguyên liệu</h1>
+            <button type="button" class="text-gray-500 ml-auto hover:text-gray-700 text-xl" onclick="closeEditCourseModal()">
+                &times;
+            </button>
+        </div>
+        <form id="editCourseForm">
+            <input type="hidden" id="EditCourseID" name="EditCourseID" />
+            <div class="mb-4">
+                <label for="EditCourseName" class="block mb-1 font-semibold">Tên nguyên liệu <span class="text-red-500">(*)</span></label>
+                <input type="text" id="EditCourseName" name="CourseName" required class="w-full border border-gray-300 rounded px-3 py-2" />
+            </div>
+            
+            <div class="mb-4">
+                <label for="EditDescription" class="block mb-1 font-semibold">Giới thiệu</label>
+                <textarea id="EditDescription" name="Description" class="border rounded w-full" rows="5"></textarea>
+            </div>
+            <div class="mb-4">
+                <label for="EditCourseImage" class="block mb-1 font-semibold">Hình ảnh thực đơn <span class="text-red-500">(*)</span></label>
+                <input type="file" id="EditCourseImage" name="uploadPhoto" accept="image/*"
+                       class="w-full border rounded px-3 py-2 mt-1" />
+                <img id="EditPreviewImage" src="" class="w-24 h-24 mt-2 hidden object-cover rounded" />
+            </div>
+            <div class="flex justify-end space-x-3">
+                <button type="button" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400" onclick="$('#editCourseModal').addClass('hidden')">Hủy</button>
+                <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Cập nhật</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Modal xác nhận xóa nguyên liệu -->
+<div id="deleteCourseModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50 font-sans">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-lg relative">
+        <div class="flex py-3">
+            <h1 class="text-xl font-semibold text-red-600">Xác nhận xóa</h1>
+            <button type="button" class="text-gray-500 ml-auto hover:text-gray-700 text-xl" onclick="$('#deleteCourseModal').addClass('hidden')">
+                &times;
+            </button>
+        </div>
+        <p class="mb-4 text-gray-700" id="deleteCourseMessage"></p>
+        <div class="flex justify-end space-x-3">
+            <button type="button" class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400" onclick="$('#deleteCourseModal').addClass('hidden')">Hủy</button>
+            <button type="button" id="btnConfirmDeleteCourse" class="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700">Xóa</button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        function closeCourseModal() {
+            document.getElementById("createCourseModal").classList.add("hidden");
+            $('#createCourseForm')[0].reset();
+        }
+        function closeEditCourseModal() {
+            document.getElementById("editCourseModal").classList.add("hidden");
+        }
+        $('#btnCreateCourse').click(function () {
+            $('#previewImage').hide();
+            $('#createCourseModal').removeClass('hidden');
+        });
+
+        $('#btnCancelCreate').click(function () {
+            $('#createCourseModal').addClass('hidden');
+            $('#createCourseForm')[0].reset();
+        });
+        //Tạo nguyên liệu mới
+        $('#createCourseForm').submit(function (e) {
+            e.preventDefault();
+
+            const formData = new FormData();
+            formData.append("CourseName", $('#CourseName').val());
+            formData.append("Description", $('#Description').val());
+
+            const fileInput = $('#courseImage')[0];
+            if (fileInput.files.length > 0) {
+                formData.append("uploadPhoto", fileInput.files[0]);
+            }
+
+            $.ajax({
+                url: '/Management/CreateCourse',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function () {
+                    ThongBao('Đã tạo thực đơn thành công!', "success");
+                    $('#createCourseModal').addClass('hidden');
+                    $('#createCourseForm')[0].reset();
+                },
+                error: function () {
+                    if (err.status === 403) {
+                        ThongBao("Bạn không có quyền thực hiện thao tác này", "danger");
+                    } else {
+                        ThongBao("Lỗi khi tạo thực đơn, vui lòng thử lại.", "danger");
+                    }
+                }
+            });
+        });
+
+        //Lấy data nguyên liệu
+        $(document).on('click', '.btn-edit-course', function () {
+            const id = $(this).data('id');
+            $.ajax({
+                url: '/Management/GetCourse/' + id,
+                type: 'GET',
+                success: function (data) {
+                    $('#EditCourseID').val(data.courseID);
+                    $('#EditCourseName').val(data.courseName);
+                    $('#EditDescription').val(data.description);
+                    if (data.courseImage) {
+                        $('#EditPreviewImage').attr('src', `/FileUpload/images/course/${data.courseImage}`).show();
+                    }
+                    $('#editCourseModal').removeClass('hidden');
+                },
+                error: function () {
+                    if (err.status === 403) {
+                        ThongBao("Bạn không có quyền thực hiện thao tác này", "danger");
+                    } else {
+                        ThongBao("Không lấy được thông tin thực đơn!", "danger");
+                    }
+                }
+            });
+        });
+        //Chỉnh sửa nguyên liệu
+        $('#editCourseForm').submit(function (e) {
+            e.preventDefault();
+
+            const formData = new FormData();
+            formData.append("CourseID", $('#EditCourseID').val());
+            formData.append("CourseName", $('#EditCourseName').val());
+            formData.append("Description", $('#EditDescription').val());
+
+            const fileInput = $('#EditCourseImage')[0];
+            if (fileInput.files.length > 0) {
+                formData.append("uploadPhoto", fileInput.files[0]);
+            }
+
+            $.ajax({
+                url: '/Management/UpdateCourse',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function () {
+                    ThongBao("Đã cập nhật thực đơn thành công!", "success");
+                    $('#editCourseModal').addClass('hidden');
+                    $('#editCourseForm')[0].reset();
+                },
+                error: function () {
+                    if (err.status === 403) {
+                        ThongBao("Bạn không có quyền thực hiện thao tác này", "danger");
+                    } else {
+                        ThongBao("Lỗi khi cập nhật thực đơn!", "danger");
+                    }
+                }
+            });
+        });
+
+        //Xóa nguyên liệu
+        let deleteCourseId = null;
+
+        $(document).on('click', '.btn-delete-course', function () {
+            deleteCourseId = $(this).data('id');
+            const name = $(this).data('name');
+            $('#deleteCourseMessage').text(`Bạn chắc chắn muốn xóa thực đơn "${name}"?`);
+            $('#deleteCourseModal').removeClass('hidden');
+        });
+
+        $('#btnConfirmDeleteCourse').click(function () {
+            if (!deleteCourseId) return;
+
+            $.ajax({
+                url: '/Management/DeleteCourse/' + deleteCourseId,
+                type: 'POST',
+                success: function () {
+                    ThongBao("Đã xóa thực đơn thành công!", "success");
+                    $('#deleteCourseModal').addClass('hidden');
+                },
+                error: function () {
+                    if (err.status === 403) {
+                        ThongBao("Bạn không có quyền thực hiện thao tác này", "danger");
+                    } else {
+                        ThongBao("Có lỗi khi xóa thực đơn", "danger");
+                    }
+                }
+            });
+        });
+
+        $('#courseImage').on('change', function () {
+            const [file] = this.files;
+            if (file) {
+                $('#previewImage').attr('src', URL.createObjectURL(file)).show();
+            }
+        });
+
+        $('#EditCourseImage').on('change', function () {
+            const [file] = this.files;
+            if (file) {
+                $('#EditPreviewImage').attr('src', URL.createObjectURL(file)).show();
+            }
+        });
+
+    });
+</script>

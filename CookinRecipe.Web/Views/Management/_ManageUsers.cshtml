@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<User>
+@using CookinRecipe.BusinessLayers
 
 <div class="bg-white p-6 rounded-xl shadow-md font-sans">
     <div class="flex flex-col md:flex-row justify-between items-center mb-4">
@@ -15,14 +16,22 @@
         <table id="userTable" class="w-full bg-white rounded-lg text-sm text-gray-800">
             <thead class="bg-blue-600 text-white text-sm font-semibold">
                 <tr>
-                    <th class="px-4 py-2 text-center w-24">STT</th>
-                    <th class="px-4 py-2 text-left">Tên người dùng</th>
-                    <th class="px-4 py-2 text-center w-32">Ngày tạo tài khoản</th>
-                    <th class="px-4 py-2 text-center w-24">Số công thức</th>
-                    <th class="px-4 py-2 text-center w-24">Cấp độ</th>
-                    <th class="px-4 py-2 text-center w-32">Hành động</th>
+                    <th class="px-4 py-2 text-center align-middle" rowspan="2">STT</th>
+                    <th class="px-4 py-2 text-center align-middle" rowspan="2">Tên người dùng</th>
+                    <th class="px-4 py-2 text-center align-middle" rowspan="2">Ngày tạo tài khoản</th>
+                    <th class="px-4 py-2 text-center" colspan="2">Số công thức</th>
+                    <th class="px-4 py-2 text-center align-middle" rowspan="2">Lượt bình luận</th>
+                    <th class="px-4 py-2 text-center align-middle" rowspan="2">Lượt đánh giá xấu</th>
+                    <th class="px-4 py-2 text-center align-middle" rowspan="2">Lượt thích</th>
+                    <th class="px-4 py-2 text-center align-middle" rowspan="2">Điểm</th>
+                    <th class="px-4 py-2 text-center align-middle" rowspan="2">Hành động</th>
+                </tr>
+                <tr>
+                    <th class="px-4 py-2 text-center">Đã duyệt</th>
+                    <th class="px-4 py-2 text-center">Chưa duyệt</th>
                 </tr>
             </thead>
+
             <tbody>
                 @if (Model != null)
                 {
@@ -31,16 +40,20 @@
                     {
                         <tr class="hover:bg-gray-50 border-b">
                             <td class="px-4 py-2 text-center w-24">@index</td>
-                            <td class="px-4 py-2 text-left text-blue-600">@ing.FullName</td>
+                            <td class="px-4 py-2 text-center font-bold text-blue-600">@ing.FullName</td>
                             <td class="px-4 py-2 text-center w-32">@ing.CreatedAt</td>
-                            <td class="px-4 py-2 text-center w-24">0</td>
-                            <td class="px-4 py-2 text-center w-24">
-                                @ing.UserPoint
-                            </td>
+                            <td class="px-4 py-2 text-center w-24">@UserDataService.GetSoCongThuc(ing.UserID,true)</td>
+                            <td class="px-4 py-2 text-center w-24">@UserDataService.GetSoCongThuc(ing.UserID, false)</td>
+                            <td class="px-4 py-2 text-center w-24">@UserDataService.CountCmt(ing.UserID)</td>
+                            <td class="px-4 py-2 text-center w-24">@UserDataService.CountRate(ing.UserID)</td>
+                            <td class="px-4 py-2 text-center w-24">@UserDataService.CountFav(ing.UserID)</td>
+                            <td class="px-4 py-2 text-center w-24">@ing.UserPoint</td>
                             <td class="px-4 py-2 text-center space-x-2 w-32">
                                 <a href="/User/UserInfo/@ing.UserID" class="text-gray-600" title="Xem chi tiết tài khoản"><i class="fa fa-eye"></i></a>
-                                <a href="~/Admin/EditIngredient/@ing.UserID" class="text-blue-600" title="Phân quyền"><i class="fa fa-user-cog"></i></a>
-                                <a href="~/Admin/EditIngredient/@ing.UserID" class="text-red-600" title="Hạn chế người dùng"><i class="fa fa-ban"></i></a>
+                                <a href="javascript:void(0)" class="text-blue-600 open-role-modal" title="Phân quyền" data-userid="@ing.UserID" data-role="@ing.RoleNames">
+                                    <i class="fa fa-user-cog"></i>
+                                </a>
+                                @* <a href="~/Admin/EditIngredient/@ing.UserID" class="text-red-600" title="Hạn chế người dùng"><i class="fa fa-ban"></i></a> *@
                             </td>
                         </tr>
                         index++;
@@ -50,17 +63,17 @@
         </table>
     </div>
 </div>
-<!-- Modal phân quyền (placeholder) -->
-<div id="roleModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+<!-- Modal phân quyền-->
+<div id="roleModal" class="hidden fixed font-sans inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
     <div class="bg-white p-6 rounded shadow-lg w-1/3">
         <h3 class="text-lg font-semibold mb-2">Phân quyền người dùng</h3>
         <form id="roleForm">
             <input type="hidden" id="selectedUserId" />
             <label class="block mb-2">Chọn quyền:</label>
             <select class="w-full border border-gray-300 rounded p-2 mb-4" id="roleSelect">
-                <option value="Member">Member</option>
-                <option value="Moderator">Moderator</option>
-                <option value="Admin">Admin</option>
+                <option value="user">Người dùng</option>
+                <option value="moderator">Người kiểm duyệt</option>
+                <option value="admin">Quản trị viên</option>
             </select>
             <div class="flex justify-end space-x-2">
                 <button type="button" class="px-4 py-2 bg-gray-300 rounded" onclick="closeRoleModal()">Hủy</button>
@@ -69,32 +82,100 @@
         </form>
     </div>
 </div>
+<!-- Modal xác nhận phân quyền -->
+<div id="confirmModeratorModal" class="hidden font-sans fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-1/3">
+        <h3 class="text-lg font-semibold mb-4 text-red-600">...</h3>
+        <p class="text-gray-700 mb-4">...</p>
+        <div class="flex justify-end space-x-3">
+            <button id="cancelConfirmBtn" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Hủy</button>
+            <button id="confirmModeratorBtn" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Xác nhận</button>
+        </div>
+    </div>
+</div>
+<script>
+    // Mở modal phân quyền
+    $(document).on('click', '.open-role-modal', function () {
+        var userId = $(this).data('userid');
+        var currentRole = $(this).data('role');
 
-@section scripts {
-    <script>
-        // $(document).ready(function () {
-        //     $('#userTable').DataTable();
-        // });
+        $('#selectedUserId').val(userId);
+        $('#roleSelect').val(currentRole || 'user');
+        $('#roleModal').removeClass('hidden');
+    });
 
-        // function openRoleModal(userId) {
-        //     $('#selectedUserId').val(userId);
-        //     $('#roleModal').removeClass('hidden');
-        // }
+    function closeRoleModal() {
+        $('#roleModal').addClass('hidden');
+    }
+    $('#roleForm').on('submit', function (e) {
+        e.preventDefault();
+        var userId = $('#selectedUserId').val();
+        var role = $('#roleSelect').val();
 
-        // function closeRoleModal() {
-        //     $('#roleModal').addClass('hidden');
-        // }
+        console.log('Phân quyền:', userId, role);
+        closeRoleModal();
+    });
+    let pendingUserId = null;
+    let pendingRole = null;
 
-        // $('#roleForm').submit(function (e) {
-        //     e.preventDefault();
-        //     const userId = $('#selectedUserId').val();
-        //     const role = $('#roleSelect').val();
-        //     // Gọi API phân quyền
-        //     $.post('/Admin/UpdateUserRole', { userId, role }, function () {
-        //         alert('Cập nhật quyền thành công!');
-        //         closeRoleModal();
-        //         location.reload();
-        //     });
-        // });
-    </script>
-}
+    $('#roleForm').on('submit', function (e) {
+        e.preventDefault();
+
+        const userId = $('#selectedUserId').val();
+        const role = $('#roleSelect').val();
+
+        // Nếu là moderator, mở modal xác nhận
+        if (role === 'moderator' || role === 'admin') {
+            pendingUserId = userId;
+            pendingRole = role;
+
+            // Đổi nội dung modal tuỳ theo role
+            const title = role === 'admin' ? 'Xác nhận phân quyền quản trị viên' : 'Xác nhận phân quyền kiểm duyệt';
+            const message = role === 'admin'
+                ? 'Bạn có chắc chắn muốn phân quyền <strong>Quản trị viên</strong> cho người dùng không?<br />Người dùng này sẽ có toàn quyền quản lý trên trang web.'
+                : 'Bạn có chắc chắn muốn phân quyền <strong>Người kiểm duyệt</strong> cho người dùng không?<br />Người dùng này sẽ có quyền xem và phê duyệt công thức trên trang web.';
+
+            $('#confirmModeratorModal h3').text(title).addClass('text-red-600');
+            $('#confirmModeratorModal p').html(message);
+            $('#confirmModeratorModal').removeClass('hidden');
+        } else {
+            saveUserRole(userId, role);
+        }
+
+    });
+
+    // Bấm nút xác nhận trong modal xác nhận
+    $('#confirmModeratorBtn').on('click', function () {
+        saveUserRole(pendingUserId, pendingRole);
+        $('#confirmModeratorModal').addClass('hidden');
+        closeRoleModal();
+    });
+
+    // Bấm nút hủy xác nhận
+    $('#cancelConfirmBtn').on('click', function () {
+        $('#confirmModeratorModal').addClass('hidden');
+    });
+    function saveUserRole(userId, role) {
+        $.ajax({
+            url: '/Management/Decentralisation',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                UserID: userId,
+                RoleNames: role
+            }),
+            success: function () {
+                ThongBao("Phân quyền cho người dùng thành công", "success");
+                closeRoleModal();
+            },
+            error: function () {
+                if (err.status === 403) {
+                    ThongBao("Bạn không có quyền thực hiện thao tác này", "danger");
+                } else {
+                    ThongBao("Có lỗi khi phân quyền", "success");
+                }
+            }
+        });
+    }
+
+</script>

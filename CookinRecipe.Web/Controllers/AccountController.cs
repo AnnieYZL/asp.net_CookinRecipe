@@ -10,19 +10,20 @@ using CookinRecipe.Web.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.AspNetCore.Authentication.Google;
 using System.Security.Claims;
+using CookinRecipe.DataLayers.SQLServer;
 
 
 namespace CookinRecipe.Web.Controllers
 {
-	[Authorize]
-	public class AccountController : Controller
-	{
-		[AllowAnonymous]
-		[HttpGet]
-		public IActionResult Login()
-		{
-			return View();
-		}
+    [Authorize]
+    public class AccountController : Controller
+    {
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
         [AllowAnonymous]
         [HttpGet]
         public IActionResult SignUp()
@@ -120,47 +121,42 @@ namespace CookinRecipe.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ChangePassword(string userName = "", string oldPassword = "", string newPassword = "", string confirmPassword = "")
+        public async Task<IActionResult> ChangePassword(string userName, string oldPassword, string newPassword, string confirmPassword)
         {
-            // Lưu lại các giá trị đã nhập để trả lại view nếu có lỗi
             ViewBag.oldPassword = oldPassword;
             ViewBag.newPassword = newPassword;
             ViewBag.confirmPassword = confirmPassword;
-
-            if (string.IsNullOrWhiteSpace(oldPassword))
-            {
-                TempData["ErrorMessage"] = "Vui lòng nhập mật khẩu hiện tại!";
-                return View();
-            }
-
-            if (string.IsNullOrWhiteSpace(newPassword))
-            {
-                TempData["ErrorMessage"] = "Vui lòng nhập mật khẩu mới!";
-                return View();
-            }
-
-            if (string.IsNullOrWhiteSpace(confirmPassword))
-            {
-                TempData["ErrorMessage"] = "Bạn phải xác nhận mật khẩu!";
-                return View();
-            }
-
             if (newPassword != confirmPassword)
             {
-                TempData["ErrorMessage"] = "Mật khẩu xác nhận không đúng!";
+                TempData["ErrorMessage"] = "Mật khẩu mới và mật khẩu xác nhận không khớp!";
+                return View();
+            }
+            var user = UserAccountService.AuthorizeByEmail(userName);
+            if (user == null)
+            {
+                TempData["ErrorMessage"] = "Người dùng không tồn tại!";
+                return View();
+            }
+            bool isOldPasswordValid = BCrypt.Net.BCrypt.Verify(oldPassword, user.Password);
+            if (!isOldPasswordValid)
+            {
+                TempData["ErrorMessage"] = "Mật khẩu hiện tại không chính xác!";
                 return View();
             }
 
-            bool isChangePassword = UserAccountService.ChangePassword(userName, oldPassword, newPassword);
-            if (!isChangePassword)
+            string newPasswordHash = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            bool updateResult = UserAccountService.ChangePassword(userName, newPasswordHash);
+            if (!updateResult)
             {
-                TempData["ErrorMessage"] = "Mật khẩu hiện tại không chính xác!";
+                TempData["ErrorMessage"] = "Đổi mật khẩu thất bại, vui lòng thử lại!";
                 return View();
             }
 
             TempData["SuccessMessage"] = "Đổi mật khẩu thành công. Bạn cần đăng nhập lại!";
             return View();
         }
+
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult GoogleLogin()

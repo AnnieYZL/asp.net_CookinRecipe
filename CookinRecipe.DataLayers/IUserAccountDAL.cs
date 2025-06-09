@@ -23,7 +23,7 @@ namespace CookinRecipe.DataLayers
         /// <param name="oldPassword"></param>
         /// <param name="newPassword"></param>
         /// <returns></returns>
-        bool ChangePassword(string email, string oldPassword, string newPassword);
+        bool ChangePassword(string email, string newPassword);
         /// <summary>
         /// Tạo tài khoản mới
         /// </summary>

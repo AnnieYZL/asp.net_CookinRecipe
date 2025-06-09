@@ -65,5 +65,17 @@ namespace CookinRecipe.DataLayers
         /// </summary>
         /// <returns></returns>
         IList<T> GetAll();
+        /// <summary>
+        /// Lấy số tb chưa đọc
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        int CountUnread(long userId);
+        /// <summary>
+        /// Đổi trạng thái dựa vào id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        bool Change(long id);
     }
 }

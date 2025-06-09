@@ -248,5 +248,35 @@ namespace CookinRecipe.DataLayers
         /// <param name="userId"></param>
         /// <returns></returns>
         bool CheckExistsInList(long recipeId, long userId);
+        /// <summary>
+        /// Xóa tb có liên quan tới công thức
+        /// </summary>
+        /// <param name="RecipeID"></param>
+        /// <returns></returns>
+        bool DeleteNoti(long RecipeID);
+        /// <summary>
+        /// Xóa ds cmt có liên quan tới ct
+        /// </summary>
+        /// <param name="RecipeID"></param>
+        /// <returns></returns>
+        bool DeleteComment(long RecipeID);
+        /// <summary>
+        /// Xóa lượt thích lquan
+        /// </summary>
+        /// <param name="RecipeID"></param>
+        /// <returns></returns>
+        bool DeleteFav(long RecipeID);
+        /// <summary>
+        /// Xóa khỏi bst
+        /// </summary>
+        /// <param name="RecipeID"></param>
+        /// <returns></returns>
+        bool DeleteList(long RecipeID);
+        /// <summary>
+        /// Xóa khỏi đánh giá
+        /// </summary>
+        /// <param name="RecipeID"></param>
+        /// <returns></returns>
+        bool DeleteRate(long RecipeID);
     }
 }

@@ -1,8 +1,7 @@
 ﻿$(document).ready(function () {
     let currentRecipeId = null;
     let selectedListIds = new Set();
-
-    // Mở modal và thiết lập công thức được chọn
+    
     document.querySelectorAll('.saveBtn').forEach(btn => {
         btn.addEventListener('click', function () {
             currentRecipeId = this.getAttribute('data-recipe-id');
@@ -15,13 +14,10 @@
             document.getElementById('modalSave').classList.remove('hidden');
         });
     });
-
-    // Đóng modal
     document.getElementById('closeModalSave').addEventListener('click', function () {
         document.getElementById('modalSave').classList.add('hidden');
     });
-
-    // Nút tạo danh sách mới
+    
     document.getElementById('newListBtn').addEventListener('click', function () {
         const listContainer = document.getElementById('listContainer');
 
@@ -32,7 +28,7 @@
         newItem.className = "p-2 bg-gray-100 rounded flex items-center space-x-3 cursor-pointer hover:bg-gray-200";
 
         const img = document.createElement('img');
-        img.src = "/Themes/assets/images/vLOGO.png";
+        img.src = "/FileUpload/images/list/no-image.png";
         img.className = "w-12 h-12 rounded-lg";
         img.alt = "New List";
 
@@ -89,8 +85,7 @@
         newItem.appendChild(cancelBtn);
         listContainer.appendChild(newItem);
     });
-
-    // Xử lý chọn/deselect danh sách
+    
     document.getElementById('listContainer').addEventListener('click', function (e) {
         if (!(e.target instanceof Element)) return;
 
@@ -106,11 +101,9 @@
             li.classList.add('bg-blue-100');
         }
     });
-
-    // ✅ Nút lưu công thức vào danh sách (chỉ gán 1 lần duy nhất)
     document.getElementById('doneBtn').addEventListener('click', function () {
         if (selectedListIds.size === 0) {
-            ThongBao("Vui lòng chọn ít nhất một bộ sưu tập!", "warning");
+            //ThongBao("Vui lòng chọn ít nhất một bộ sưu tập!", "warning");
             return;
         }
 
@@ -142,4 +135,34 @@
             }
         });
     });
+    
 });
+function toggleLikeButton(btn, recipeId) {
+    fetch(`/Recipe/ToggleLike/${recipeId}`, {
+        method: "POST"
+    })
+        .then(res => {
+            if (!res.ok) throw new Error("Lỗi khi gửi yêu cầu thích");
+            return res.json();
+        })
+        .then(data => {
+            if (data.success) {
+                if (data.isCancel) {
+                    ThongBao("Đã hủy thích công thức", "success");
+                    btn.classList.remove("fa-solid", "text-red-600");
+                    btn.classList.add("fa-regular", "text-gray-500");
+                } else {
+                    ThongBao("Đã thích công thức", "success");
+                    btn.classList.remove("fa-regular", "text-gray-500");
+                    btn.classList.add("fa-solid", "text-red-600");
+                }
+
+                document.getElementById("dish-page-num-likes").textContent = data.numLikes;
+            } else {
+                ThongBao("Không thể thực hiện thao tác", "danger");
+            }
+        })
+        .catch(err => {
+            console.error("Toggle like failed:", err);
+        });
+}

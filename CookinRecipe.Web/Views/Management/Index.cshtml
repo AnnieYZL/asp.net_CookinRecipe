@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Quản lý";
-    var adminId = User.GetUserData().UserId;
+    var admin = User.GetUserData();
 }
 <div class="flex min-h-screen mt-20">
     <!-- Sidebar -->
@@ -165,7 +165,7 @@
                 case "Recipes": return "Công thức đã duyệt";
                 case "Ingredients": return "Nguyên liệu";
                 case "Courses": return "Thực đơn";
-                default: return "";
+                default: return "Công thức chưa phê duyệt";
             }
         }
 
@@ -173,26 +173,36 @@
             $(".sidebar-item").removeClass("active");
             $(`.sidebar-item:contains("${getMenuText(pageName)}")`).addClass("active");
             sessionStorage.setItem('adminSelectedPage', pageName);
-            $.get("/Management/" + pageName, function (data) {
-                $("#adminContent").html(data);
 
-                if (pageName === "Ingredients") {
-                    initIngredientTable();
-                }
-                else if (pageName === "Courses") {
-                    initCourseTable();
-                }
-                else if (pageName === "Users") {
-                    initUserTable();
-                }
-                else if (pageName === "Recipes") {
-                    initRecipeTable();
-                }
-                else if (pageName === "Verifies") {
-                    initVerifyTable();
+            $.ajax({
+                url: "/Management/" + pageName,
+                method: "GET",
+                success: function (data) {
+                    $("#adminContent").html(data);
+
+                    // Gọi init tương ứng
+                    if (pageName === "Ingredients") {
+                        initIngredientTable();
+                    } else if (pageName === "Courses") {
+                        initCourseTable();
+                    } else if (pageName === "Users") {
+                        initUserTable();
+                    } else if (pageName === "Recipes") {
+                        initRecipeTable();
+                    } else if (pageName === "Verifies") {
+                        initVerifyTable();
+                    }
+                },
+                error: function (xhr) {
+                    if (xhr.status === 403) {
+                        ThongBao("Bạn không có quyền truy cập trang này", "danger");
+                    } else {
+                        ThongBao("Đã xảy ra lỗi khi tải trang", "danger");
+                    }
                 }
             });
         }
+
         function initIngredientTable() {
             const tableIngre = $('#ingredientTable').DataTable({
                 "autoWidth": false,
@@ -360,63 +370,35 @@
                 tableVerify.search(this.value).draw();
             });
         }
-        const admin = @adminId;
-        $(document).on('click', '.btn-verify', function (e) {
-            e.preventDefault();
-            const recipeId = $(this).data('id');
-            const $btn = $(this);
-            if (!confirm("Bạn có chắc muốn phê duyệt công thức này?")) return;
+        // var admin = @admin.UserId;
+        // $(document).on('click', '.btn-undo', function (e) {
+        //     e.preventDefault();
+        //     const recipeId = $(this).data('id');
+        //     const $btn = $(this);
 
-            $.ajax({
-                url: '/Management/VerifyRecipe',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    recipeId: recipeId,
-                    adminId: admin
-                }),
-                success: function (res) {
-                    ThongBao("Phê duyệt công thức thành công.", "success");
-                    var table = $('#verifyTable').DataTable();
+        //     $.ajax({
+        //         url: '/Management/UndoVerifyRecipe',
+        //         method: 'POST',
+        //         contentType: 'application/json',
+        //         data: JSON.stringify({
+        //             recipeId: recipeId,
+        //             adminId: admin
+        //         }),
+        //         success: function (res) {
+        //             ThongBao("Đã hủy phê duyệt công thức.", "success");
+        //             var table = $('#recipeTable').DataTable();
 
-                    var row = $btn.closest('tr');
+        //             // Tìm row chứa nút vừa click
+        //             var row = $btn.closest('tr');
 
-                    table.row(row).remove().draw(false);
-                },
-                error: function () {
-                    ThongBao("Có lỗi xảy ra khi phê duyệt công thức.", "danger");
-                }
-            });
-        });
-        $(document).on('click', '.btn-undo', function (e) {
-            e.preventDefault();
-            const recipeId = $(this).data('id');
-            const $btn = $(this);
-            if (!confirm("Bạn có chắc muốn hủy phê duyệt công thức này?")) return;
-
-            $.ajax({
-                url: '/Management/UndoVerifyRecipe',
-                method: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    recipeId: recipeId,
-                    adminId: admin
-                }),
-                success: function (res) {
-                    ThongBao("Đã hủy phê duyệt công thức.", "success");
-                    var table = $('#recipeTable').DataTable();
-
-                    // Tìm row chứa nút vừa click
-                    var row = $btn.closest('tr');
-
-                    // Xóa row khỏi DataTable
-                    table.row(row).remove().draw(false);
-                },
-                error: function () {
-                    ThongBao("Có lỗi xảy ra khi hủy phê duyệt công thức.", "danger");
-                }
-            });
-        });
+        //             // Xóa row khỏi DataTable
+        //             table.row(row).remove().draw(false);
+        //         },
+        //         error: function () {
+        //             ThongBao("Có lỗi xảy ra khi hủy phê duyệt công thức.", "danger");
+        //         }
+        //     });
+        // });
         $(document).ready(function () {
             var selectedPage = sessionStorage.getItem('adminSelectedPage');
 

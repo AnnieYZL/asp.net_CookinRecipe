@@ -3,6 +3,7 @@
 @using CookinRecipe.BusinessLayers
 @{
     Layout = "_Layout";
+    var me = User.GetUserData();
 }
 <!-- Dish -->
 <div class="mt-20 md:max-w-6xl w-full mx-auto bg-white p-6 rounded-lg shadow-lg">
@@ -176,7 +177,7 @@
                 <img src="~/FileUpload/images/recipe/@Model.Recipe.RecipeImage" class="w-full mx-auto md:w-1/2 mt-4"
                      alt="dishPicture">
             </div>
-            @if (Model.Notes != null)
+            @if (Model.Notes.Count > 0)
             {
                 <div class="mt-6 p-4 bg-blue-100 rounded-lg font-sans">
                     <div class="flex">
@@ -222,15 +223,19 @@
 
     <!-- Like and Rating Section -->
     <div class="mt-6 flex border-t pt-4" id="likeDish">
-        <div class="flex w-2/5 mx-auto">
-            <svg id="dish-page-like-btn" onClick="toggleLikeButton(this)" class="w-6 h-6 cursor-pointer"
-                 fill="#FFFFFF" stroke="red" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
-                </path>
-            </svg>
-            <span id="dish-page-num-likes" class="ml-2 font-sans">@RecipeDataService.CountFav(Model.Recipe.RecipeID)</span>
+        <div class="flex w-2/5 mx-auto items-center">
+            @{
+                var isLiked = me != null && FavouriteDataService.CheckFav(long.Parse(me.UserId), Model.Recipe.RecipeID);
+                var iconClass = isLiked ? "fa-solid text-red-600" : "fa-regular text-gray-500";
+            }
+
+            <i id="dish-page-like-btn"
+               class="fa-heart @iconClass text-xl cursor-pointer"
+               onclick="toggleLikeButton(this, @Model.Recipe.RecipeID)">
+            </i>
+            <span id="dish-page-num-likes" class="ml-2 font-sans text-base">@RecipeDataService.CountFav(Model.Recipe.RecipeID)</span>
         </div>
+
 
         <div class="flex justify-center items-center space-x-1 ml-auto w-3/5" id="rating">
             <p class="mr-5 text-lg mx-auto text-blue-600 font-bold ">Đánh giá của bạn: </p>
@@ -277,12 +282,34 @@
                         <p class='overflow-ellipsis overflow-hidden whitespace-nowrap font-regular text-gray-600 text-base leading-normal'>
                             <i class="fas fa-clock text-bl"></i> @ct.PrepTime phút
                         </p>
-                        <button type="button" class="ml-auto cursor-pointer">
-                            <i class="fa fa-heart text-red-600"></i>
-                        </button>
-                        <button type="button" class="saveBtn ml-5 cursor-pointer" data-recipe-id="@ct.RecipeID">
-                            <i class="fa fa-bookmark text-gray-500"></i>
-                        </button>
+                        @{
+                            var isLiked1 = me != null && FavouriteDataService.CheckFav(long.Parse(me.UserId), ct.RecipeID);
+                            var iconClass1 = isLiked1 ? "fa-solid text-red-600" : "fa-regular text-gray-500";
+                        }
+
+                        <i id="dish-page-like-btn"
+                           class="fa-heart @iconClass1 text-xl cursor-pointer ml-auto"
+                           onclick="toggleLikeButton(this, @ct.RecipeID)">
+                        </i>
+                        @if (me != null)
+                        {
+                            <button type="button" class="saveBtn ml-5 cursor-pointer" data-recipe-id="@ct.RecipeID">
+                                @if (RecipeDataService.CheckExistsInList(ct.RecipeID, long.Parse(me.UserId)))
+                                {
+                                    <i class="fa fa-bookmark text-blue-600"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-bookmark text-gray-500"></i>
+                                }
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" class="ml-5 cursor-pointer">
+                                <i class="fa fa-bookmark text-gray-500"></i>
+                            </button>
+                        }
                     </div>
                 </div>
 
@@ -392,7 +419,7 @@
                     @foreach (var item in ListDataService.GetListOf(long.Parse(User.GetUserData().UserId)))
                     {
                         <li class="p-2 bg-gray-100 rounded flex items-center space-x-3 cursor-pointer hover:bg-gray-200" data-list-id="@item.ListID" role="button" tabindex="0">
-                            <img src="~/Themes/assets/images/vLOGO.png" class="w-12 h-12 rounded-lg" alt="Danh sách 1">
+                            <img src="~/FileUpload/images/list/@item.ListImage" class="w-12 h-12 rounded-lg" alt="Danh sách 1">
                             <div>
                                 <span class="font-medium">@item.ListName</span>
                                 <p class="text-sm text-gray-500">@ListDataService.GetListQuantity(item.ListID) công thức</p>
@@ -419,6 +446,7 @@
     <script>
         const stars = document.querySelectorAll('.star');
         let selectedRating = 0;
+        let recipeId = @Model.Recipe.RecipeID;
 
         stars.forEach(star => {
             star.addEventListener('click', function () {
@@ -465,25 +493,9 @@
             });
         });
 
-        function toggleLikeButton(el) {
-            const svg = el.tagName === 'svg' ? el : el.closest('svg');
+       
 
-            fetch('/Recipe/ToggleLike', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ recipeId: @Model.Recipe.RecipeID })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        svg.setAttribute('fill', data.liked ? 'red' : '#FFFFFF');
-                        document.getElementById('dish-page-num-likes').textContent = data.likeCount;
-                    } else {
-                        ThongBao("Đã xảy ra lỗi khi thích công thức", "warning");
-                    }
-                });
-        }
+
+
     </script>
 }

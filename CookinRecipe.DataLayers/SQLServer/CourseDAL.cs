@@ -30,6 +30,11 @@ namespace CookinRecipe.DataLayers.SQLServer
             return id;
         }
 
+        public bool Change(long id)
+        {
+            throw new NotImplementedException();
+        }
+
         public int Count(string searchValue = "")
         {
             int count = 0;
@@ -51,13 +56,19 @@ namespace CookinRecipe.DataLayers.SQLServer
             using (var connection = OpenConnection())
             {
                 var sql = @"select count(*)
-	                        from CourseRecipes
-	                        where CourseID = @CourseID";
+	                        from CourseRecipes cr 
+                            join Recipes r on r.RecipeID = cr.RecipeID
+	                        where cr.CourseID = @CourseID and r.IsVerify = 1";
                 var parameters = new { CourseID = id};
                 count = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
             }
             return count;
+        }
+
+        public int CountUnread(long userId)
+        {
+            throw new NotImplementedException();
         }
 
         public bool Delete(int id)
@@ -151,7 +162,8 @@ namespace CookinRecipe.DataLayers.SQLServer
                 {
                     CourseName = data.CourseName ?? "",
                     Description = data.Description ?? "",
-                    CourseImage = data.CourseImage ?? ""
+                    CourseImage = data.CourseImage ?? "",
+                    CourseId = data.CourseID
                 };
                 result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
                 connection.Close();

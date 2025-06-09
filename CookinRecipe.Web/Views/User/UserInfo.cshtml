@@ -2,6 +2,7 @@
 @using CookinRecipe.BusinessLayers
 @{
 	var me = User.GetUserData();
+	ViewBag.Title = "Thông tin người dùng";
 }
 <div class="bg-blue-50">
 	<div class="container mx-auto my-5 py-16 bg-blue-50">
@@ -43,17 +44,6 @@
 							<span id="self-created-at" class="ml-auto">@Model.Address</span>
 						</li>
 						<li class="flex items-center py-3 font-regular">
-							<span>Email</span>
-							<span id="self-created-at"
-								  class="ml-auto overflow-ellipsis overflow-hidden whitespace-nowrap">@Model.Email</span>
-						</li>
-						<li class="flex items-center py-3 font-regular">
-							<span>Cấp độ</span>
-							<span class="ml-auto">
-								<span id="self-badge"
-									  class="py-1 px-2 rounded text-white bg-blue-600 text-sm">Bạn Mới</span>
-						</li>
-						<li class="flex items-center py-3 font-regular">
 							<span>Ngày tạo tài khoản</span>
 							<span id="self-created-at" class="ml-auto">@Model.CreatedAt.ToShortDateString()</span>
 						</li>
@@ -85,57 +75,66 @@
 								<!-- My Posted Dishes -->
 								@foreach (var item in RecipeDataService.ListRecipeOfUser(Model.UserID))
 								{
-									<div class="h-auto rounded overflow-hidden shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 ...">
-										<img src="~/FileUpload/images/recipe/@item.RecipeImage"
-											 class="w-full h-52 object-cover cursor-pointer" alt="Buttor Chicken">
-										<div class='px-4 py-2'>
-											<div class="mb-2 font-medium text-xl overflow-ellipsis overflow-hidden whitespace-nowrap cursor-pointer"
-												 id="01">
-												<a href="~/Recipe/Detail/@item.RecipeID">@item.RecipeName</a>
+									if (item.IsVerify)
+									{
+										<div class="h-auto rounded overflow-hidden shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 ...">
+											<img src="~/FileUpload/images/recipe/@item.RecipeImage"
+												 class="w-full h-52 object-cover cursor-pointer" alt="Buttor Chicken">
+											<div class='px-4 py-2'>
+												<div class="mb-2 font-medium text-xl overflow-ellipsis overflow-hidden whitespace-nowrap cursor-pointer"
+													 id="01">
+													<a href="~/Recipe/Detail/@item.RecipeID">@item.RecipeName</a>
+												</div>
+
+												<p class='font-regular text-gray-600 text-base leading-normal h-12 overflow-ellipsis overflow-hidden w-full'>
+													@item.Description
+												</p>
+											</div>
+											<div class='px-3 pb-1 flex flex-row'>
+												@foreach (var i in RecipeDataService.GetMainIngredient(item.RecipeID))
+												{
+													<a href="~/Ingredient/Index/@i.IngredientID">
+														<span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">@i.IngredientName</span>
+													</a>
+												}
+
 											</div>
 
-											<p class='font-regular text-gray-600 text-base leading-normal h-12 overflow-ellipsis overflow-hidden w-full'>
-												@item.Description
-											</p>
-										</div>
-										<div class='px-3 pb-1 flex flex-row'>
-											@foreach (var i in RecipeDataService.GetMainIngredient(item.RecipeID))
-											{
-												<a href="~/Ingredient/Index/@i.IngredientID">
-													<span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">@i.IngredientName</span>
-												</a>
-											}
+											<div class="px-4 pb-2 flex flex-row">
+												<p class='overflow-ellipsis overflow-hidden whitespace-nowrap font-regular text-gray-600 text-base leading-normal'>
+													<i class="fas fa-clock text-bl"></i> @item.PrepTime phút
+												</p>
+												@{
+													var isLiked1 = me != null && FavouriteDataService.CheckFav(long.Parse(me.UserId), item.RecipeID);
+													var iconClass1 = isLiked1 ? "fa-solid text-red-600" : "fa-regular text-gray-500";
+												}
 
-										</div>
-
-										<div class="px-4 pb-2 flex flex-row">
-											<p class='overflow-ellipsis overflow-hidden whitespace-nowrap font-regular text-gray-600 text-base leading-normal'>
-												<i class="fas fa-clock text-bl"></i> @item.PrepTime phút
-											</p>
-											<button type="button" class="ml-auto cursor-pointer">
-												<i class="fa fa-heart text-red-600"></i>
-											</button>
-											@if (me != null)
-											{
-												<button type="button" class="saveBtn ml-5 cursor-pointer" data-recipe-id="@item.RecipeID">
-													@if (RecipeDataService.CheckExistsInList(item.RecipeID, long.Parse(me.UserId)))
-													{
-														<i class="fa fa-bookmark text-blue-600"></i>
-													}
-													else
-													{
+												<i id="dish-page-like-btn"
+												   class="fa-heart @iconClass1 text-xl cursor-pointer ml-auto"
+												   onclick="toggleLikeButton(this, @item.RecipeID)">
+												</i>
+												@if (me != null)
+												{
+													<button type="button" class="saveBtn ml-5 cursor-pointer" data-recipe-id="@item.RecipeID">
+														@if (RecipeDataService.CheckExistsInList(item.RecipeID, long.Parse(me.UserId)))
+														{
+															<i class="fa fa-bookmark text-blue-600"></i>
+														}
+														else
+														{
+															<i class="fa fa-bookmark text-gray-500"></i>
+														}
+													</button>
+												}
+												else
+												{
+													<button type="button" class="ml-5 cursor-pointer">
 														<i class="fa fa-bookmark text-gray-500"></i>
-													}
-												</button>
-											}
-											else
-											{
-												<button type="button" class="ml-5 cursor-pointer">
-													<i class="fa fa-bookmark text-gray-500"></i>
-												</button>
-											}
+													</button>
+												}
+											</div>
 										</div>
-									</div>
+									}
 								}
 							</div>
 						</div>
@@ -163,7 +162,7 @@
                     @foreach (var item in ListDataService.GetListOf(long.Parse(User.GetUserData().UserId)))
                     {
                         <li class="p-2 bg-gray-100 rounded flex items-center space-x-3 cursor-pointer hover:bg-gray-200" data-list-id="@item.ListID" role="button" tabindex="0">
-                            <img src="~/Themes/assets/images/vLOGO.png" class="w-12 h-12 rounded-lg" alt="Danh sách 1">
+							<img src="~/FileUpload/images/list/@item.ListImage" class="w-12 h-12 rounded-lg" alt="Danh sách 1">
                             <div>
                                 <span class="font-medium">@item.ListName</span>
                                 <p class="text-sm text-gray-500">@ListDataService.GetListQuantity(item.ListID) công thức</p>

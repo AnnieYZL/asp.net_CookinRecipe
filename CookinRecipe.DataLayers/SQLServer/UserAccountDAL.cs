@@ -45,18 +45,17 @@ namespace CookinRecipe.DataLayers.SQLServer
             return data;
         }
 
-        public bool ChangePassword(string email, string oldPassword, string newPassword)
+        public bool ChangePassword(string email, string newPassword)
         {
             bool result = false;
             using (var cn = OpenConnection())
             {
                 var sql = @"update Users
                             set Password=@NewPassword 
-                            where Email=@Email and Password=@OldPassword";
+                            where Email=@Email";
                 var parameters = new
                 {
                     Email = email,
-                    OldPassword = oldPassword,
                     NewPassword = newPassword
                 };
                 result = cn.Execute(sql, parameters) > 0;
@@ -84,5 +83,6 @@ namespace CookinRecipe.DataLayers.SQLServer
             }
             return id;
         }
+
     }
 }

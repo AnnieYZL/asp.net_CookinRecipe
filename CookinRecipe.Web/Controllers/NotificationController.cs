@@ -7,9 +7,8 @@ using System.Runtime.InteropServices;
 
 namespace CookinRecipe.Web.Controllers
 {
-	[Authorize(Roles = $"{WebUserRoles.Administrator},{WebUserRoles.User}")]
-
-	
+	[Authorize]
+		
 	public class NotificationController : Controller
 	{
 		[HttpPost]

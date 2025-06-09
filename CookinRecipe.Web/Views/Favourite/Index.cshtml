@@ -1,0 +1,116 @@
+﻿@using CookinRecipe.BusinessLayers
+@{
+    var me = User.GetUserData();
+}
+<div class="mt-20 md:max-w-6xl lg:flex w-11/12 mx-auto bg-white p-6 rounded-lg shadow-lg">
+    <!-- Danh sách bài viết -->
+    <div class="w-full lg:pt-0 h-fit p-4">
+        <div class="border-b pb-3 flex items-center">
+            <h1 class="text-2xl font-bold text-blue-600">Bài viết đã thích</h1>
+        </div>
+        <div class="mt-4">
+            <div id="postList" class="w-full block grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                @if (me != null)
+                {
+                    foreach (var item in FavouriteDataService.ListFav(long.Parse(me.UserId), 1, 0))
+                    {
+                        var ct = RecipeDataService.Get(item.RecipeID);
+                        <div class="h-auto rounded overflow-hidden shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 ...">
+                            <img src="~/FileUpload/images/recipe/@ct.RecipeImage"
+                                 class="w-full h-52 object-cover cursor-pointer" alt="Buttor Chicken">
+                            <div class='px-4 py-2'>
+                                <div class="mb-2 font-medium text-xl overflow-ellipsis overflow-hidden whitespace-nowrap cursor-pointer"
+                                     id="01">
+                                    <a href="~/Recipe/Detail/@ct.RecipeID">@ct.RecipeName</a>
+                                </div>
+
+                                <p class='font-regular text-gray-600 text-base leading-normal h-12 overflow-ellipsis overflow-hidden w-full'>
+                                    @ct.Description
+                                </p>
+                            </div>
+                            <div class='px-3 pb-1 flex flex-row'>
+                                @foreach (var i in RecipeDataService.GetMainIngredient(ct.RecipeID))
+                                {
+                                    <a href="~/Ingredient/Index/@i.IngredientID">
+                                        <span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-sm font-medium text-gray-700 mr-2 mb-2">@i.IngredientName</span>
+                                    </a>
+                                }
+
+                            </div>
+
+                            <div class="px-4 pb-2 flex flex-row">
+                                <p class='overflow-ellipsis overflow-hidden whitespace-nowrap font-regular text-gray-600 text-base leading-normal'>
+                                    <i class="fas fa-clock text-bl"></i> @ct.PrepTime phút
+                                </p>
+                                @{
+                                    var isLiked1 = me != null && FavouriteDataService.CheckFav(long.Parse(me.UserId), item.RecipeID);
+                                    var iconClass1 = isLiked1 ? "fa-solid text-red-600" : "fa-regular text-gray-500";
+                                }
+
+                                <i id="dish-page-like-btn"
+                                   class="fa-heart @iconClass1 text-xl cursor-pointer ml-auto"
+                                   onclick="toggleLikeButton(this, @item.RecipeID)">
+                                </i>
+                                @if (me != null)
+                                {
+                                    <button type="button" class="saveBtn ml-5 cursor-pointer" data-recipe-id="@item.RecipeID">
+                                        @if (RecipeDataService.CheckExistsInList(item.RecipeID, long.Parse(me.UserId)))
+                                        {
+                                            <i class="fa fa-bookmark text-blue-600"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa fa-bookmark text-gray-500"></i>
+                                        }
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="ml-5 cursor-pointer">
+                                        <i class="fa fa-bookmark text-gray-500"></i>
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Save -->
+<div id="modalSave" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden z-50">
+    <div id="modalSaveContent"
+         class="bg-white p-4 rounded-lg shadow-lg w-96 h-[500px] max-h-[80vh] overflow-hidden transition-all relative">
+        <div class="flex justify-between items-center border-b pb-2 mb-2">
+            <h2 class="text-xl text-blue-600 font-medium">Lưu vào</h2>
+            <button id="closeModalSave" class="text-2xl font-bold text-black cursor-pointer" aria-label="Đóng modal">×</button>
+        </div>
+        @if (User.GetUserData() != null)
+        {
+            <div class="overflow-y-auto max-h-72 min-h-[50px]" tabindex="0">
+                <ul id="listContainer" class="space-y-2">
+                    @foreach (var item in ListDataService.GetListOf(long.Parse(User.GetUserData().UserId)))
+                    {
+                        <li class="p-2 bg-gray-100 rounded flex items-center space-x-3 cursor-pointer hover:bg-gray-200" data-list-id="@item.ListID" role="button" tabindex="0">
+                            <img src="~/FileUpload/images/list/@item.ListImage" class="w-12 h-12 rounded-lg" alt="Danh sách 1">
+                            <div>
+                                <span class="font-medium">@item.ListName</span>
+                                <p class="text-sm text-gray-500">@ListDataService.GetListQuantity(item.ListID) công thức</p>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+        <button id="newListBtn"
+                class="mt-4 w-full font-sans flex items-center justify-center gap-2 bg-gray-200 text-black py-2 rounded-lg hover:bg-gray-300 cursor-pointer">
+            + Bộ sưu tập mới
+        </button>
+        <button id="doneBtn"
+                class="mt-4 w-full font-sans bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 cursor-pointer">
+            Lưu
+        </button>
+    </div>
+</div>
+<script src="/js/saveFavRate.js"></script>

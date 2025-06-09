@@ -141,7 +141,7 @@
 
     @RenderSection("style", false)
 </head>
-<body class="bg-white">
+<body class="bg-blue-50">
 
     <!-- Header Navigation Section -->
     @{
@@ -150,11 +150,6 @@
     <section>
         @RenderBody()
     </section>
-    <!-- Foooter -->
-    @{
-        await Html.RenderPartialAsync("_Footer");
-    }
-    @RenderSection("scripts", false)
     <!-- 💬 AI Chatbox -->
     <div id="ai-chatbox" style="position: fixed; bottom: 20px; right: 20px; width: 320px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; z-index: 9999; box-shadow: 0 4px 8px rgb(0 0 0 / 0.1); border-radius: 10px; overflow: hidden;">
         <div id="chat-toggle" style="
@@ -168,7 +163,7 @@
 		user-select: none;
 		text-align: center;
 		box-shadow: 0 2px 6px rgb(0 0 0 / 0.2);
-    ">
+    " class="font-sans">
             💬 Hỏi AI nè!
         </div>
         <div id="chat-body" style="
@@ -190,14 +185,15 @@
 			border-radius: 8px;
 			font-size: 14px;
 			box-sizing: border-box;
-        " />
+        "
+                   class="font-sans" />
         </div>
     </div>
     @{
-        var userName = User.GetUserData()?.FullName ?? "Bạn";
+        var userName = "Bạn";
     }
     <script>
-        const username = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(userName));
+        const username = "Bạn";
 
         $('#chat-toggle').click(function () {
             $('#chat-body').toggle();
@@ -208,7 +204,7 @@
                 const message = $(this).val().trim();
                 if (!message) return;
 
-                $('#chat-messages').append(`<div><b>${username}:</b> ${escapeHtml(message)}</div>`);
+                $('#chat-messages').append(`<div class="font-sans"><b>${username}:</b> ${escapeHtml(message)}</div>`);
                 $(this).val('');
 
                 fetch('/AI/Chat', {
@@ -218,11 +214,11 @@
                 })
                     .then(res => res.json())
                     .then(data => {
-                        $('#chat-messages').append(`<div style="margin-top:5px;"><b>CookinRecipe AI:</b> ${escapeHtml(data.reply)}</div>`);
+                        $('#chat-messages').append(`<div style="margin-top:5px;" class="font-sans"><b>CookinRecipe AI:</b> ${escapeHtml(data.reply)}</div>`);
                         $('#chat-body').scrollTop($('#chat-body')[0].scrollHeight);
                     })
                     .catch(() => {
-                        $('#chat-messages').append(`<div style="margin-top:5px; font-style: italic; color: #888;">AI không phản hồi được rồi 😢</div>`);
+                        $('#chat-messages').append(`<div style="margin-top:5px; font-style: italic; color: #888;" class="font-sans">Bạn hãy đăng nhập để chat với CookinRecipe AI nhé!</div>`);
                     });
             }
         });
@@ -259,7 +255,11 @@
             scrollbar-color: #2563EB #f0f0f0;
         }
     </style>
-
+    <!-- Foooter -->
+    @{
+        await Html.RenderPartialAsync("_Footer");
+    }
+    @RenderSection("scripts", false)
 
 </body>
 </html>

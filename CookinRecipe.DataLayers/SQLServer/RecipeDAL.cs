@@ -98,14 +98,14 @@ namespace CookinRecipe.DataLayers.SQLServer
             {
                 var sql = @"insert into Notes(RecipeID, NoteNumber, NoteContent) 
                             VALUES(@RecipeID, @NoteNumber, @NoteContent); select @@IDENTITY";
-               
-                    var parameters = new
-                    {
-                        RecipeID = data.RecipeID,
-                        NoteNumber = data.NoteNumber,
-                        NoteContent = data.NoteContent ?? "",
-                    };
-                    id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
+
+                var parameters = new
+                {
+                    RecipeID = data.RecipeID,
+                    NoteNumber = data.NoteNumber,
+                    NoteContent = data.NoteContent ?? "",
+                };
+                id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
             }
             return id;
@@ -118,13 +118,13 @@ namespace CookinRecipe.DataLayers.SQLServer
             {
                 var sql = @"insert into Steps(RecipeID, StepNumber, Description) 
                             VALUES(@RecipeID, @StepNumber, @Description); select @@IDENTITY";
-                    var parameters = new
-                    {
-                        RecipeID = data.RecipeID,
-                        StepNumber = data.StepNumber,
-                        Description = data.Description ?? "",
-                    };
-                    id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
+                var parameters = new
+                {
+                    RecipeID = data.RecipeID,
+                    StepNumber = data.StepNumber,
+                    Description = data.Description ?? "",
+                };
+                id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
             }
             return id;
@@ -155,7 +155,7 @@ namespace CookinRecipe.DataLayers.SQLServer
             {
                 var sql = @"select count(*)
 	                        from Recipes
-	                        where (RecipeName like @searchValue) or (Description like @searchValue)";
+	                        where (RecipeName like @searchValue) or (Description like @searchValue) and IsVerify = 1";
                 var parameters = new { searchValue = $"%{searchValue}%" };
                 count = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
@@ -185,7 +185,7 @@ namespace CookinRecipe.DataLayers.SQLServer
             {
                 var sql = @"select count(*)
 	                        from Favourites
-	                        where RecipeID = @RecipeID";
+	                        where RecipeID = @RecipeID and IsCancel = 0";
                 var parameters = new { RecipeID = RecipeID };
                 count = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
@@ -312,13 +312,16 @@ namespace CookinRecipe.DataLayers.SQLServer
             List<Recipe> data = new List<Recipe>();
             using (var connection = OpenConnection())
             {
-                var sql = @"select * from (
-	            select * , row_number() over (order by CreatedAt desc) as RowNumber
-	            from Recipes
-	            where (RecipeName like @searchValue) or (Description like @searchValue) and IsVerify = 1
-            ) as t
-            where (@pageSize = 0) or (RowNumber between (@page - 1) * @pageSize+1 and @page * @pageSize)
-            order by RowNumber;";
+                var sql = @"
+                        select * from (
+                            select *, row_number() over (order by CreatedAt desc) as RowNumber
+                            from Recipes
+                            where ((RecipeName like @searchValue) or (Description like @searchValue)) and IsVerify = 1
+                        ) as t
+                        where (@pageSize = 0) or (RowNumber between (@page - 1) * @pageSize + 1 and @page * @pageSize)
+                        order by RowNumber;
+                        ";
+
                 var parameters = new
                 {
                     page,
@@ -381,7 +384,7 @@ namespace CookinRecipe.DataLayers.SQLServer
             using (var connection = OpenConnection())
             {
                 var sql = @"update Recipes
-                            set RecipeName = @RecipeName, Description = @Description, PrepTime = @PrepTime, Serving = @Serving, Difficulty = @Difficulty, RecipeImage = @RecipeImage, RecipeVideo = @RecipeVideo, Energy = @Energy, IsVerify = @IsVerify 
+                            set RecipeName = @RecipeName, Description = @Description, PrepTime = @PrepTime, Serving = @Serving, Difficulty = @Difficulty, RecipeImage = @RecipeImage, RecipeVideo = @RecipeVideo, Energy = @Energy, IsVerify = @IsVerify, UpdateTime = GETDATE()
                             where RecipeID = @RecipeID";
                 var parameters = new
                 {
@@ -456,23 +459,23 @@ namespace CookinRecipe.DataLayers.SQLServer
             return data;
         }
 
-		public IList<Ingredient> ListMainIngredients(long RecipeID)
-		{
-			List<Ingredient> data = new List<Ingredient>();
-			using (var connection = OpenConnection())
-			{
+        public IList<Ingredient> ListMainIngredients(long RecipeID)
+        {
+            List<Ingredient> data = new List<Ingredient>();
+            using (var connection = OpenConnection())
+            {
                 var sql = @"select top(2) i.*
                             from RecipeIngredients p
 	                            join Ingredients i on p.IngredientID = i.IngredientID
                             where i.IsMain = 1 and p.RecipeID = @RecipeID";
-				var parameters = new
-				{
-					RecipeID = RecipeID
-				};
-				data = connection.Query<Ingredient>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text).ToList();
-			}
-			return data;
-		}
+                var parameters = new
+                {
+                    RecipeID = RecipeID
+                };
+                data = connection.Query<Ingredient>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text).ToList();
+            }
+            return data;
+        }
 
         public IList<Recipe> GetListRecipe(List<int> ListIng)
         {
@@ -492,22 +495,22 @@ namespace CookinRecipe.DataLayers.SQLServer
             return data;
         }
 
-		public IList<Recipe> ListRecipeOfUser(long id)
-		{
-			List<Recipe> data = new List<Recipe>();
-			using (var connection = OpenConnection())
-			{
-				var sql = @"select *
+        public IList<Recipe> ListRecipeOfUser(long id)
+        {
+            List<Recipe> data = new List<Recipe>();
+            using (var connection = OpenConnection())
+            {
+                var sql = @"select *
                             from Recipes
                             where AuthorID = @UserId";
-				var parameters = new
-				{
-					UserId = id
-				};
-				data = connection.Query<Recipe>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text).ToList();
-			}
-			return data;
-		}
+                var parameters = new
+                {
+                    UserId = id
+                };
+                data = connection.Query<Recipe>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text).ToList();
+            }
+            return data;
+        }
 
         public IList<Ingredient> ListTagIngredients(long RecipeID)
         {
@@ -566,12 +569,12 @@ namespace CookinRecipe.DataLayers.SQLServer
             {
                 var sql = @"insert into CourseRecipes(RecipeID, CourseID) 
                             VALUES(@RecipeID, @CourseID); select @@IDENTITY";
-                    var parameters = new
-                    {
-                        RecipeID = RecipeID,
-                        CourseID = CourseId,
-                    };
-                    id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
+                var parameters = new
+                {
+                    RecipeID = RecipeID,
+                    CourseID = CourseId,
+                };
+                id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
             }
             return id;
@@ -626,12 +629,12 @@ namespace CookinRecipe.DataLayers.SQLServer
             return result;
         }
 
-		public bool CheckExistsInList(long recipeId, long userId)
-		{
-			bool result = false;
-			using (var connection = OpenConnection())
-			{
-				var sql = @"SELECT CASE 
+        public bool CheckExistsInList(long recipeId, long userId)
+        {
+            bool result = false;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"SELECT CASE 
                              WHEN EXISTS (
                                 SELECT 1
                                 FROM ListRecipes lr
@@ -640,15 +643,85 @@ namespace CookinRecipe.DataLayers.SQLServer
                              ) THEN 1
                              ELSE 0
 		                     END";
-				var parameters = new
-				{
-					RecipeID = recipeId,
-					UserID = userId,
-				};
-				result = connection.QuerySingle<bool>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
-				connection.Close();
-			}
-			return result;
-		}
-	}
+                var parameters = new
+                {
+                    RecipeID = recipeId,
+                    UserID = userId,
+                };
+                result = connection.QuerySingle<bool>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
+                connection.Close();
+            }
+            return result;
+        }
+
+        public bool DeleteNoti(long RecipeID)
+        {
+            bool result = false;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"delete from Notifications
+	                        where RecipeID = @RecipeID";
+                var parameters = new { RecipeID = RecipeID };
+                result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
+                connection.Close();
+            }
+            return result;
+        }
+
+        public bool DeleteComment(long RecipeID)
+        {
+            bool result = false;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"delete from Comments
+	                        where RecipeID = @RecipeID";
+                var parameters = new { RecipeID = RecipeID };
+                result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
+                connection.Close();
+            }
+            return result;
+        }
+
+        public bool DeleteFav(long RecipeID)
+        {
+            bool result = false;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"delete from Favourites
+	                        where RecipeID = @RecipeID";
+                var parameters = new { RecipeID = RecipeID };
+                result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
+                connection.Close();
+            }
+            return result;
+        }
+
+        public bool DeleteList(long RecipeID)
+        {
+            bool result = false;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"delete from ListRecipes
+	                        where RecipeID = @RecipeID";
+                var parameters = new { RecipeID = RecipeID };
+                result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
+                connection.Close();
+            }
+            return result;
+        }
+
+        public bool DeleteRate(long RecipeID)
+        {
+            bool result = false;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"delete from Ratings
+	                        where RecipeID = @RecipeID";
+                var parameters = new { RecipeID = RecipeID };
+                result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
+                connection.Close();
+            }
+            return result;
+        }
+    }
 }

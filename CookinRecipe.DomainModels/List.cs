@@ -10,4 +10,5 @@
         public string ListName { get; set; } = string.Empty;
         public string ListImage { get; set; } = string.Empty;
     }
+    
 }

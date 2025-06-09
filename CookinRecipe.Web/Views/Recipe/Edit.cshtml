@@ -9,24 +9,27 @@
     <form class="form-horizontal" action="~/Recipe/Save" method="post" enctype="multipart/form-data">
         <input type="hidden" name="@nameof(Model.RecipeID)" value="@Model.RecipeID" />
         <input type="hidden" name="@nameof(Model.AuthorID)" value="@User.GetUserData().UserId" />
-        <label class="block mb-2 text-lg font-sans">Hình ảnh của món ăn</label>
+        <label class="block mb-2 text-lg font-sans">Hình ảnh của món ăn <span class="text-red-500">(*)</span></label>
         <div class="form-group">
             <div class="col-sm-10">
                 <input type="hidden" name="@nameof(Model.RecipeImage)" value="@Model.RecipeImage" />
-                <input type="file" class="form-control mb-2 block bg-blue-50 w-full cursor-pointer border border-gray-300 text-gray-900 font-sans focus:outline-none focus:border-transparent text-sm rounded-lg" name="uploadPhoto" accept="image/*"
-                       onchange="document.getElementById('RecipePhoto').src = window.URL.createObjectURL(this.files[0])" />
+                <input type="file"
+                       class="form-control mb-2 block bg-blue-50 w-full cursor-pointer border border-gray-300 text-gray-900 font-sans focus:outline-none focus:border-transparent text-sm rounded-lg"
+                       name="uploadPhoto" accept="image/*"
+                       onchange="previewImage(this)" />
             </div>
         </div>
         <div class="form-group">
             <div class="col-lg-offset-2 col-sm-10 mb-2">
-                <img id="RecipePhoto" src="~/FileUpload/images/recipe/@Model.RecipeImage" class="img img-bordered font-sans" style="width:250px" />
+                <img id="RecipePhoto" src="~/FileUpload/images/recipe/@Model.RecipeImage"
+                     class="img img-bordered font-sans"
+                     style="width:250px; display:@(string.IsNullOrEmpty(Model.RecipeImage) ? "none" : "block")" />
             </div>
         </div>
-
-        <div class="font-sans mb-4 text-sm text-gray-500" id="user_avatar_help">Hình ảnh thành quả của món ăn.</div>
         <p class="text-red-500 font-sans">@Html.ValidationMessage(nameof(Model.RecipeImage))</p>
 
-        <label class="block font-sans text-lg mb-2">Video hướng dẫn (Không bắt buộc)</label>
+
+        <label class="block font-sans text-lg mb-2">Video hướng dẫn</label>
         <div class="form-group">
             <div class="col-sm-10">
                 <input type="hidden" name="@nameof(Model.RecipeVideo)" value="@Model.RecipeVideo" />
@@ -40,12 +43,14 @@
 
         <div class="form-group">
             <div class="col-sm-10 mb-2">
-                <video id="RecipeVideo" class="rounded" width="320" height="240" controls>
-                    <source src="~/FileUpload/videos/@Model.RecipeVideo" type="video/mp4">
+                <video id="RecipeVideo" class="rounded" width="320" height="240" controls
+                       style="display:@(string.IsNullOrEmpty(Model.RecipeVideo) ? "none" : "block")">
+                    <source src="~/FileUpload/videos/@Model.RecipeVideo" type="video/mp4" />
                     Trình duyệt không hỗ trợ video.
                 </video>
             </div>
         </div>
+
 
         <script>
             function previewVideo(input) {
@@ -57,15 +62,28 @@
                     video.src = url;
                     video.load();
                     video.style.display = 'block';
+                } else {
+                    // Nếu không chọn file, ẩn video
+                    video.style.display = 'none';
+                    video.src = "";
+                }
+            }
+            function previewImage(input) {
+                const file = input.files[0];
+                const img = document.getElementById('RecipePhoto');
+
+                if (file) {
+                    const url = URL.createObjectURL(file);
+                    img.src = url;
+                    img.style.display = 'block';
+                } else {
+                    img.style.display = 'none';
+                    img.src = "";
                 }
             }
         </script>
 
-        <div class="font-sans mb-4 text-sm text-gray-500" id="user_avatar_help">
-            Video hướng dẫn giúp mọi người thực hiện món ăn dễ dàng hơn.
-        </div>
-
-        <label class="block font-sans text-lg mb-2">Tên món ăn</label>
+        <label class="block font-sans text-lg mb-2">Tên món ăn <span class="text-red-500">(*)</span></label>
         <input type="text" name="@nameof(Model.RecipeName)" value="@Model.RecipeName"
                class="w-full font-sans p-2 border bg-blue-50 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-4"
                placeholder="Nhập tên món ăn">
@@ -76,7 +94,7 @@
                class="w-full font-sans p-2 border bg-blue-50 border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-4"
                placeholder="Nhập mô tả">
 
-        <label class="block text-lg font-sans mb-2">Mức độ</label>
+        <label class="block text-lg font-sans mb-2">Mức độ <span class="text-red-500">(*)</span></label>
         <select name="@nameof(Model.Difficulty)" class="w-full font-sans p-2 border mb-4 border-gray-300 bg-blue-50 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600">
             @if (Model.RecipeID == 0)
             {
@@ -104,19 +122,19 @@
             }
         </select>
 
-        <label class="block text-lg font-sans mb-2">Thời gian nấu (phút)</label>
-        <input type="number" name="@nameof(Model.PrepTime)" value="@Model.PrepTime"
+        <label class="block text-lg font-sans mb-2">Thời gian nấu (phút) <span class="text-red-500">(*)</span></label>
+        <input type="text" name="@nameof(Model.PrepTime)" value="@Model.PrepTime"
                class="bg-blue-50 font-sans border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 w-full p-2 border mb-4"
                placeholder="Nhập thời gian">
         <p class="text-red-500 font-sans">@Html.ValidationMessage(nameof(Model.PrepTime))</p>
 
-        <label class="block text-lg font-sans mb-2">Khẩu phần (số người ăn)</label>
+        <label class="block text-lg font-sans mb-2">Khẩu phần (số người ăn) <span class="text-red-500">(*)</span></label>
         <input type="text" name="@nameof(Model.Serving)" value="@Model.Serving"
                class="bg-blue-50 font-sans w-full p-2 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-4"
                placeholder="Nhập số người ăn">
         <p class="text-red-500 font-sans">@Html.ValidationMessage(nameof(Model.Serving))</p>
 
-        <label class="block text-lg font-sans mb-2">Nguyên liệu</label>
+        <label class="block text-lg font-sans mb-2">Nguyên liệu <span class="text-red-500">(*)</span></label>
         <input type="text" id="ingredient-search"
                class="w-full font-sans bg-blue-50 p-2 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-600 focus:border-blue-600 mb-2"
                placeholder="Thêm nguyên liệu..." oninput="searchIngredient()">
@@ -139,12 +157,12 @@
                             {
                                 <input type="number" name="QuantityList" value="@item.Quantity" class="p-2 border border-gray-300 text-gray-900 focus:ring-blue-600 bg-blue-50 focus:border-blue-600 rounded-lg w-1/12" placeholder="Số lượng" />
                                 <span class="p-2 border rounded bg-gray-100">@ingredient.Unit</span>
-                                <input type="text" name="IngreNoteList" class="p-2 border border-gray-300 text-gray-900 focus:ring-blue-600 bg-blue-50 focus:border-blue-600 rounded-lg w-1/4" placeholder="Ghi chú" />
+                                <input type="text" name="IngreNoteList" value="@item.IngreNote" class="p-2 border border-gray-300 text-gray-900 focus:ring-blue-600 bg-blue-50 focus:border-blue-600 rounded-lg w-1/4" placeholder="Ghi chú" />
                             }
                             else
                             {
                                 <input type="hidden" name="QuantityList" value="-99" />
-                                <input type="text" name="IngreNoteList" class="p-2 border border-gray-300 text-gray-900 focus:ring-blue-600 bg-blue-50 focus:border-blue-600 rounded-lg w-1/4" placeholder="Ghi chú" />
+                                <input type="text" name="IngreNoteList" value="@item.IngreNote" class="p-2 border border-gray-300 text-gray-900 focus:ring-blue-600 bg-blue-50 focus:border-blue-600 rounded-lg w-1/4" placeholder="Ghi chú" />
                             }
                             <button type="button" onclick="removeIngredient('@ingredient.IngredientName', this)" class="text-red-500 text-lg font-bold">×</button>
                         </div>
@@ -156,7 +174,7 @@
             </div>
         </div>
 
-        <label class="block mt-4 text-lg font-sans mb-2">Các bước làm</label>
+        <label class="block mt-4 text-lg font-sans mb-2">Các bước làm <span class="text-red-500">(*)</span></label>
         <div id="steps" class="font-sans">
             @if (RecipeDataService.ListSteps(Model.RecipeID).Count > 0)
             {
@@ -231,10 +249,10 @@
             </div>
         </div>
 
-        <button type="submit"
-                class="w-full font-sans bg-gradient-to-r from-blue-600 to-purple-600 text-white p-2 rounded mt-8">
-            Tạo công thức
+        <button type="submit" id="submitBtn" class="w-full font-bold font-sans bg-gradient-to-r from-blue-600 to-purple-600 text-white p-2 rounded mt-8">
+            @ViewBag.Title
         </button>
+
     </form>
 </div>
 
@@ -420,4 +438,58 @@
             addTag(tagInput.value.trim());
         }
     }
+    document.getElementById("submitBtn").addEventListener("click", function (event) {
+        event.preventDefault();
+
+        const tenMon = document.querySelector('input[name="RecipeName"]').value.trim();
+        const prepTime = document.querySelector('input[name="PrepTime"]').value.trim();
+        const serving = document.querySelector('input[name="Serving"]').value.trim();
+        const imageUploaded = document.querySelector('input[name="uploadPhoto"]').files.length > 0;
+        const imageExisting = document.querySelector('input[name="RecipeImage"]').value.trim() !== "";
+        const imageValid = imageUploaded || imageExisting;
+
+        const stepList = document.getElementsByName("StepList");
+        const hasStep = Array.from(stepList).some(step => step.value.trim() !== "");
+
+        const ingredientList = document.getElementsByName("IngredientList");
+        const hasIngredient = ingredientList.length > 0;
+
+        let isValid = true;
+
+        if (!imageValid) {
+            ThongBao("Vui lòng thêm hình ảnh món ăn.", "danger");
+            isValid = false;
+        }
+
+        else if (tenMon === "") {
+            ThongBao("Tên món ăn không được để trống.", "danger");
+            isValid = false;
+        }
+
+        else if (prepTime === "" || isNaN(prepTime) || parseInt(prepTime) <= 0) {
+            ThongBao("Thời gian nấu phải là số lớn hơn 0.", "danger");
+            isValid = false;
+        }
+
+        else if (serving === "") {
+            ThongBao("Khẩu phần ăn phải là số lớn hơn 0.", "danger");
+            isValid = false;
+        }
+
+        else if (!hasIngredient) {
+            ThongBao("Vui lòng thêm ít nhất một nguyên liệu.", "danger");
+            isValid = false;
+        }
+
+        else if (!hasStep) {
+            ThongBao("Vui lòng thêm ít nhất một bước nấu ăn.", "danger");
+            isValid = false;
+        }
+
+        if (isValid) {
+            event.target.closest("form").submit();
+        }
+    });
+
+
 </script>

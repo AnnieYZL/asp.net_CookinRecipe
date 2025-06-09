@@ -1,8 +1,12 @@
 ﻿using CookinRecipe.BusinessLayers;
+using CookinRecipe.DomainModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace CookinRecipe.Web.Controllers
 {
+    [Authorize]
     public class ListController : Controller
     {
         public IActionResult Index()
@@ -29,21 +33,52 @@ namespace CookinRecipe.Web.Controllers
             }).ToList();
             return Json(posts);
         }
+        
         [HttpPost]
-        public JsonResult DeleteRecipesFromList([FromBody] DeletePostsRequest request)
+        public JsonResult RemoveRecipesFromList([FromBody] RemoveRecipesRequest request)
         {
-            foreach (var recipeId in request.RecipeIds)
+            try
             {
-                RecipeDataService.DeleteFromList(request.ListId, recipeId);
+                var success = ListDataService.DeleteRecipesFromList(request.ListId, request.RecipeIds);
+                return Json(new { success });
             }
+            catch
+            {
+                return Json(new { success = false });
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditList(long listId, string listName, IFormFile imageFile)
+        {
+            var list = ListDataService.GetList(listId);
+            if (list == null)
+                return Json(new { success = false, message = "Không tìm thấy bộ sưu tập." });
+            list.ListName = listName;
+            if (imageFile != null && imageFile.Length > 0)
+            {
+                var folderPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "FileUpload", "images", "list");
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+                var fileName = $"{Guid.NewGuid()}{Path.GetExtension(imageFile.FileName)}";
+                var fullPath = Path.Combine(folderPath, fileName);
+                using (var stream = new FileStream(fullPath, FileMode.Create))
+                {
+                    await imageFile.CopyToAsync(stream);
+                }
+                list.ListImage = fileName;
+            }
+            var save = ListDataService.UpdateList(list);
 
             return Json(new { success = true });
         }
 
-        public class DeletePostsRequest
+        [HttpDelete]
+        public async Task<IActionResult> Delete(long id)
         {
-            public List<long> RecipeIds { get; set; }
-            public long ListId { get; set; }
+            var list = ListDataService.DeleteList(id);
+            return Ok(new { message = "Xoá thành công" });
         }
 
 

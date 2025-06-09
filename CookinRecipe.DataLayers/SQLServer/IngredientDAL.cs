@@ -144,5 +144,15 @@ namespace CookinRecipe.DataLayers.SQLServer
             }
             return result;
         }
+
+        public int CountUnread(long userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Change(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

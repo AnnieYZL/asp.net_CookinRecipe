@@ -18,6 +18,7 @@
         public DateTime CreatedAt { get; set; }
         public string Caption { get; set; } = string.Empty;
         public bool IsLocked { get; set; }
+        public string RoleNames {  get; set; }
        
     }
 }

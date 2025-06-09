@@ -126,6 +126,9 @@ namespace CookinRecipe.Web
 
         [Display(Name = "Người dùng")]
         public const string User = "user";
+
+        [Display(Name = "Người kiểm duyệt")]
+        public const string Moderator = "moderator";
     }
 
     /// <summary>

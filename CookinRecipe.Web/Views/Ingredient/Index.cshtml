@@ -58,7 +58,7 @@
                     @foreach (var item in ListDataService.GetListOf(long.Parse(User.GetUserData().UserId)))
                     {
                         <li class="p-2 bg-gray-100 rounded flex items-center space-x-3 cursor-pointer hover:bg-gray-200" data-list-id="@item.ListID" role="button" tabindex="0">
-                            <img src="~/Themes/assets/images/vLOGO.png" class="w-12 h-12 rounded-lg" alt="Danh sách 1">
+                            <img src="~/FileUpload/images/list/@item.ListImage" class="w-12 h-12 rounded-lg" alt="Danh sách 1">
                             <div>
                                 <span class="font-medium">@item.ListName</span>
                                 <p class="text-sm text-gray-500">@ListDataService.GetListQuantity(item.ListID) công thức</p>

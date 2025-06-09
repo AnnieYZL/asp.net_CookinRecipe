@@ -14,19 +14,32 @@ namespace CookinRecipe.DataLayers.SQLServer
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public int Add(Favourite data)
+        public bool Add(Favourite data)
         {
-            int id = 0;
+            bool id = false;
             using (var connection = OpenConnection())
             {
-                var sql = @"insert into Favourites(UserID, RecipeID, CreatedAt, IsCancel) 
-                            VALUES(@UserID, @RecipeID, GETDATE(), 0); select @@IDENTITY";
+                var sql = @"IF EXISTS (
+                            SELECT 1 FROM Favourites WHERE UserID = @UserID AND RecipeID = @RecipeID
+                        )
+                        BEGIN
+                            UPDATE Favourites
+                            SET IsCancel = CASE WHEN IsCancel = 1 THEN 0 ELSE 1 END,
+                                CreatedAt = GETDATE()
+                            WHERE UserID = @UserID AND RecipeID = @RecipeID;
+                        END
+                        ELSE
+                        BEGIN
+                            INSERT INTO Favourites(UserID, RecipeID, CreatedAt, IsCancel)
+                            VALUES(@UserID, @RecipeID, GETDATE(), 0);
+                        END;
+                        SELECT IsCancel FROM Favourites WHERE UserID = @UserID AND RecipeID = @RecipeID;";
                 var parameters = new
                 {
                     UserID = data.UserID,
                     RecipeID = data.RecipeID
                 };
-                id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
+                id = connection.ExecuteScalar<bool>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
             }
             return id;
@@ -72,7 +85,7 @@ namespace CookinRecipe.DataLayers.SQLServer
                     UserID = userID,
                     RecipeID = recipeID
                 };
-                result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
+                result = connection.QueryFirst<bool>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
             }
             return result;
@@ -104,7 +117,6 @@ namespace CookinRecipe.DataLayers.SQLServer
         /// </summary>
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
-        /// <param name="searchValue"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         public IList<Favourite> List(long UserID, int page, int pageSize)
@@ -113,12 +125,12 @@ namespace CookinRecipe.DataLayers.SQLServer
             using (var connection = OpenConnection())
             {
                 var sql = @"select * from (
-	            select * , row_number() over (order by CreatedAt desc) as RowNumber
-	            from Favourites
-	            where UserID = @UserID
-            ) as t
-            where (@pageSize = 0) or (RowNumber between (@page - 1) * @pageSize+1 and @page * @pageSize)
-            order by RowNumber;";
+	            select f.* , row_number() over (order by f.CreatedAt desc) as RowNumber
+	            from Favourites f join Recipes r on r.RecipeID = f.RecipeID
+	            where f.UserID = @UserID and r.IsVerify = 1 and f.IsCancel = 0
+                ) as t
+                where (@pageSize = 0) or (RowNumber between (@page - 1) * @pageSize+1 and @page * @pageSize)
+                order by RowNumber;";
                 var parameters = new
                 {
                     page,

@@ -11,8 +11,8 @@
             <div id="collectionList" class="">
                 @foreach (var item in ListDataService.GetListOf(long.Parse(User.GetUserData().UserId)))
                 {
-                    <div class="flex items-center mx-auto p-2 mb-1 rounded-lg hover:bg-gray-100 cursor-pointer" onclick="loadListPosts(@item.ListID)" data-name="@item.ListName">
-                        <img src="~/Themes/assets/images/vLOGO.png" class="w-12 h-12 rounded-lg" alt="list-picture">
+                    <div class="flex items-center mx-auto p-2 mb-1 rounded-lg hover:bg-gray-100 cursor-pointer" onclick="loadListPosts(@item.ListID, event)" data-id="@item.ListID" data-name="@item.ListName" data-image="@item.ListImage">
+                        <img src="~/FileUpload/images/list/@item.ListImage" class="w-12 h-12 rounded-lg" alt="list-picture">
                         <div class="ml-3">
                             <p class="font-semibold font-sans">@item.ListName</p>
                             <p class="text-sm text-gray-500 font-sans">@ListDataService.GetListQuantity(item.ListID) công thức</p>
@@ -27,7 +27,7 @@
             </button>
         </div>
     </div>
-    <!-- Danh sách bài viết -->
+    <!-- Chi tiết bst -->
     <div class="lg:w-3/4 w-full lg:ml-6 lg:pt-0 h-fit p-4">
         <div class="border-b pb-3 flex items-center">
             <h1 class="text-2xl font-bold text-blue-600"></h1>
@@ -37,19 +37,13 @@
                     <i class="fa fa-trash text-red-500"></i>
                 </button>
             </div>
-            <script>
-                function deleteList() {
-                    if (confirm("Bạn có chắc chắn xóa danh sách?")) {
-                    }
-                }
-            </script>
         </div>
         <div class="mt-4">
 
-            <div class="flex items-center mb-2 p-2">
-                <input type="checkbox" class="" name="" id="">
+            <div id="selectRow" class="flex items-center mb-2 p-2 hidden">
+                <input type="checkbox" class="" name="" id="selectAllRecipes">
                 <p class="ml-2 font-sans">Tất cả</p>
-                <button class="ml-auto"><i class="fa fa-trash text-red-500"></i></button>
+                <button class="ml-auto" id="deleteListRecipe"><i class="fa fa-trash text-red-500"></i></button>
             </div>
             <div id="postList" class="w-full block grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2"></div>
 
@@ -63,8 +57,16 @@
             <div class="text-xl border-b w-full pb-3 font-bold">Tạo bộ sưu tập</div>
             <button id="closeModal" class="pb-3 text-gray-500">&times;</button>
         </div>
+        <label class="block mb-2 font-bold font-sans">Tên bộ sưu tập <span class="text-red-500">(*)</span></label>
         <input id="collectionName" type="text" placeholder="Đặt tên cho bộ sưu tập của bạn..."
                class="w-full font-sans p-2 border rounded-lg mb-4">
+
+        <!-- Thêm input chọn ảnh -->
+        <label class="block mb-2 font-bold font-sans">Chọn ảnh đại diện:</label>
+        <input type="file" id="collectionImage" accept="image/*" class="mb-3 w-full" />
+        <!-- Preview ảnh -->
+        <img id="imagePreview" src="#" alt="Ảnh xem trước" class="hidden mb-4 w-full h-40 object-contain rounded border" />
+
         <div class="flex justify-end space-x-5">
             <button id="cancel" class="text-blue-500 font-sans">Hủy</button>
             <button id="createCollection" class="font-sans bg-gray-300 text-gray-500 px-4 py-2 rounded-lg"
@@ -75,48 +77,83 @@
     </div>
 </div>
 
-
-
-
-
-<!-- Modal đổi tên bộ sưu tập -->
-<div id="modalEditName" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+<!-- Modal chỉnh sửa bộ sưu tập -->
+<div id="modalEditList" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
     <div class="bg-white p-6 rounded-lg shadow-lg w-96">
         <div class="flex justify-between items-center mb-4">
-            <div class="text-xl border-b pb-3 w-full font-bold">Đổi tên bộ sưu tập</div>
-            <button id="closeModalEdit" class="text-gray-500 pb-3">&times;</button>
+            <div class="text-xl border-b pb-3 w-full font-bold">Chỉnh sửa bộ sưu tập</div>
+            <button id="closeModalEditList" class="text-gray-500 pb-3">&times;</button>
         </div>
-        <input id="changeNameInput" type="text" placeholder="Nhập tên mới..."
-               class="w-full p-2 border rounded-lg mb-4">
+        <label class="block mb-2 font-bold font-sans">Tên bộ sưu tập <span class="text-red-500">(*)</span></label>
+        <input id="editListName" type="text" placeholder="Nhập tên mới..."
+               class="w-full p-2 border rounded-lg mb-4 font-sans">
+
+        <label class="block mb-2 font-sans">Chọn ảnh đại diện:</label>
+        <input type="file" id="editListImage" accept="image/*" class="mb-3 w-full" />
+
+        <img id="editImagePreview" src="#" alt="Xem trước ảnh" class="hidden mb-4 w-full h-40 object-contain rounded border" />
+
         <div class="flex justify-end space-x-5">
-            <button id="cancelEdit" class="text-blue-500">Hủy</button>
-            <button id="editName" class="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg" disabled>Đổi tên</button>
+            <button id="cancelEditList" class="text-blue-500 font-sans">Hủy</button>
+            <button id="saveEditList" class="font-sans bg-gray-300 text-gray-500 px-4 py-2 rounded-lg" disabled>
+                Lưu
+            </button>
         </div>
     </div>
 </div>
+@* Modal xác nhận xóa bst *@
+<div id="deleteConfirmModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-md">
+        <h2 class="text-xl font-bold mb-4 text-red-600">Xác nhận xoá</h2>
+        <p id="deleteConfirmText" class="mb-6 font-sans"></p>
+        <div class="flex justify-end space-x-2 font-sans">
+            <button onclick="closeDeleteModal()" class="px-4 py-2 bg-gray-300 hover:bg-gray-400 rounded">Huỷ</button>
+            <button onclick="deleteListConfirmed()" class="px-4 py-2 bg-red-500 text-white hover:bg-red-600 rounded">Xoá</button>
+        </div>
+    </div>
+</div>
+<!-- Modal xác nhận xoá công thức khỏi bộ sưu tập -->
+<div id="deleteRecipeModal" class="fixed inset-0 bg-black bg-opacity-40 z-50 hidden flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+        <h2 class="text-xl font-bold mb-4 text-red-600">Xác nhận xoá</h2>
+        <p class="font-sans mb-4">Bạn có chắc chắn muốn xoá các công thức đã chọn khỏi bộ sưu tập không?</p>
+        <div class="flex justify-end mt-4 font-sans">
+            <button onclick="closeDeleteRecipeModal()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded mr-2">Hủy</button>
+            <button onclick="confirmDeleteRecipes()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">Xoá</button>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script>
         let currentListId = null;
-        function loadListPosts(listId) {
+        let currentListImage = null;
+        let currentListName = "";
+        function loadListPosts(listId, event) {
             currentListId = listId;
             const clickedElement = event.currentTarget || event.target.closest('[onclick^="loadListPosts"]');
-            const listName = clickedElement.getAttribute('data-name');
+            currentListName = clickedElement.getAttribute('data-name');
             const heading = document.querySelector('h1.text-2xl.font-bold.text-blue-600');
-            if (heading && listName) {
-                heading.textContent = listName;
+            currentListImage = clickedElement.getAttribute('data-image');
+            if (heading && currentListName) {
+                heading.textContent = currentListName;
             }
 
             fetch('/List/GetPostsInList?listId=' + listId)
                 .then(response => response.json())
                 .then(data => {
                     const postList = document.getElementById('postList');
+                    const selectRow = document.getElementById('selectRow');
                     postList.innerHTML = '';
+                    document.getElementById('selectAllRecipes').checked = false;
+
 
                     if (data.length === 0) {
-                        postList.innerHTML = '<p class="text-gray-500">Danh sách này chưa có bài viết nào.</p>';
+                        selectRow.classList.add("hidden");
+                        postList.innerHTML = '<p class="text-gray-500 font-sans">Danh sách này đang trống :<</p>';
                         return;
                     }
-
+                    selectRow.classList.remove("hidden");
                     data.forEach(ct => {
                         const html = `
                                 <div class="h-auto rounded overflow-hidden shadow-lg transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-105 ...">
@@ -136,12 +173,13 @@
                                         <p class='overflow-ellipsis overflow-hidden whitespace-nowrap font-regular text-gray-600 text-base leading-normal'>
                                             <i class="fas fa-clock text-bl"></i> ${ct.prepTime} phút
                                         </p>
+                                                <input type="checkbox" class="absolute top-2 left-2 z-10 form-checkbox w-5 h-5 selectedRecipe" value="${ct.recipeID}">
                                     </div>
                                 </div>
                         `;
                         postList.insertAdjacentHTML('beforeend', html);
                     });
-
+                    bindCheckboxEvents();
                 })
                 .catch(error => {
                     console.error('Lỗi khi load bài viết:', error);
@@ -152,144 +190,304 @@
         window.onload = function () {
             const firstListItem = document.querySelector('#collectionList .flex');
             if (firstListItem) {
-                // Gọi sự kiện click vào item đầu tiên
                 firstListItem.click();
             }
         };
-        document.querySelector('.fa-trash-alt.text-red-500').addEventListener('click', function () {
-            const checkedBoxes = document.querySelectorAll('#postList input[type="checkbox"]:checked');
-            if (checkedBoxes.length === 0) {
-                alert("Vui lòng chọn ít nhất một bài viết để xoá.");
+        const modal = document.getElementById("modal");
+        const addBtn = document.getElementById("addCollection");
+        const closeBtn = document.getElementById("closeModal");
+        const cancelBtn = document.getElementById("cancel");
+        const inputName = document.getElementById("collectionName");
+        const createBtn = document.getElementById("createCollection");
+
+        // Modal tạo bst
+        addBtn.addEventListener("click", () => {
+            modal.classList.remove("hidden");
+            inputName.value = "";
+            createBtn.disabled = true;
+        });
+        closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+        cancelBtn.addEventListener("click", () => modal.classList.add("hidden"));
+        inputName.addEventListener("input", () => {
+            const isEmpty = inputName.value.trim() === "";
+            createBtn.disabled = isEmpty;
+            if (!isEmpty) {
+                createBtn.classList.remove("bg-gray-300", "text-gray-500");
+                createBtn.classList.add("bg-blue-600", "text-white");
+            } else {
+                createBtn.classList.add("bg-gray-300", "text-gray-500");
+                createBtn.classList.remove("bg-blue-600", "text-white");
+            }
+        });
+        const collectionImageInput = document.getElementById('collectionImage');
+        const imagePreview = document.getElementById('imagePreview');
+
+        collectionImageInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.classList.remove('hidden');
+                }
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.src = '#';
+                imagePreview.classList.add('hidden');
+            }
+        });
+
+
+        createBtn.addEventListener("click", () => {
+            const name = inputName.value.trim();
+            if (name === "") {
+                inputName.classList.add("border-red-500");
+                inputName.focus();
+                ThongBao("Tên bộ sưu tập không được trống", "danger");
                 return;
             }
 
-            if (!confirm("Bạn có chắc chắn muốn xoá các bài viết đã chọn khỏi bộ sưu tập?")) return;
+            const formData = new FormData();
+            formData.append("listName", name);
 
-            const recipeIds = Array.from(checkedBoxes).map(cb => cb.getAttribute('data-id'));
+            if (collectionImageInput.files[0]) {
+                formData.append("imageFile", collectionImageInput.files[0]);
+            }
 
-            // Gửi yêu cầu xoá
-            fetch('/List/DeleteRecipesFromList', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ recipeIds: recipeIds, listId: currentListId })
+            fetch("/Recipe/CreateList", {
+                method: "POST",
+                body: formData
             })
-                .then(response => {
-                    if (!response.ok) throw new Error("Lỗi khi xoá");
-                    return response.json();
-                })
-                .then(result => {
-                    // Xoá khỏi DOM
-                    recipeIds.forEach(id => {
-                        const box = document.querySelector(`#postList input[data-id="${id}"]`);
-                        if (box) {
-                            box.closest('.w-full.flex').remove(); // Xoá div cha chứa recipe
-                        }
-                    });
-
-                    // Nếu không còn bài nào
-                    if (document.querySelectorAll('#postList .w-full.flex').length === 0) {
-                        document.getElementById('postList').innerHTML = '<p class="text-gray-500">Danh sách này chưa có bài viết nào.</p>';
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        ThongBao("Tạo bộ sưu tập thành công!", "success");
+                        modal.classList.add("hidden");
+                        setTimeout(() => location.reload(), 1000);
+                    } else {
+                        ThongBao("Có lỗi xảy ra khi tạo bộ sưu tập", "danger");
                     }
                 })
-                .catch(error => {
-                    console.error('Xoá lỗi:', error);
-                    alert("Đã xảy ra lỗi khi xoá.");
+                .catch(err => {
+                    console.error(err);
+                    ThongBao("Lỗi khi tạo bộ sưu tập!", "danger");
                 });
         });
 
-        //Tạo bst
-        const addCollectionBtn = document.getElementById('addCollection');
-        const modal = document.getElementById('modal');
-        const closeModalBtn = document.getElementById('closeModal');
-        const cancelBtn = document.getElementById('cancel');
-        const createCollectionBtn = document.getElementById('createCollection');
-        const collectionNameInput = document.getElementById('collectionName');
-        const collectionList = document.getElementById('collectionList');
+        let selectedRecipeIds = []; // biến tạm lưu các ID cần xoá
 
-        addCollectionBtn.addEventListener('click', () => {
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                document.getElementById("collectionName").focus();
-            }, 0);
+        document.getElementById('deleteListRecipe').addEventListener('click', () => {
+            const checkedBoxes = document.querySelectorAll('.selectedRecipe:checked');
+            if (checkedBoxes.length === 0) {
+                ThongBao("Bạn chưa chọn công thức nào!", "warning");
+                return;
+            }
+
+            selectedRecipeIds = Array.from(checkedBoxes).map(cb => parseInt(cb.value));
+            openDeleteRecipeModal(); // hiển thị modal xác nhận
         });
 
-        closeModalBtn.addEventListener('click', () => {
-            modal.classList.add('hidden');
+        function openDeleteRecipeModal() {
+            document.getElementById('deleteRecipeModal').classList.remove('hidden');
+        }
+
+        function closeDeleteRecipeModal() {
+            document.getElementById('deleteRecipeModal').classList.add('hidden');
+        }
+        function closeDeleteModal() {
+            document.getElementById('deleteConfirmModal').classList.add('hidden');
+        }
+
+        function confirmDeleteRecipes() {
+            fetch("/List/RemoveRecipesFromList", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    listId: currentListId,
+                    recipeIds: selectedRecipeIds
+                })
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error("Lỗi kết nối");
+                    return res.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        ThongBao("Xóa công thức thành công!", "success");
+                        loadListPosts(currentListId);
+                    } else {
+                        ThongBao("Lỗi khi xóa công thức!", "danger");
+                    }
+                })
+                .catch(err => {
+                    console.error("Fetch Error:", err);
+                })
+                .finally(() => {
+                    closeDeleteRecipeModal(); // đóng modal sau khi xử lý
+                });
+        }
+
+        function bindCheckboxEvents() {
+            const selectAll = document.getElementById('selectAllRecipes');
+            if (selectAll) {
+                selectAll.addEventListener('change', function (e) {
+                    e.stopPropagation();
+                    const isChecked = this.checked;
+                    const checkboxes = document.querySelectorAll('.selectedRecipe');
+                    checkboxes.forEach(cb => cb.checked = isChecked);
+                });
+            }
+
+            document.querySelectorAll('.selectedRecipe').forEach(cb => {
+                cb.addEventListener('change', function (e) {
+                    e.stopPropagation();
+                    const allCheckboxes = document.querySelectorAll('.selectedRecipe');
+                    const allChecked = Array.from(allCheckboxes).every(cb => cb.checked);
+                    document.getElementById('selectAllRecipes').checked = allChecked;
+                });
+            });
+        }
+
+        document.getElementById("editNameBtn").addEventListener("click", () => {
+            const modal = document.getElementById("modalEditList");
+            const nameInput = document.getElementById("editListName");
+            const preview = document.getElementById("editImagePreview");
+            const imageInput = document.getElementById("editListImage");
+            const saveBtn = document.getElementById("saveEditList");
+
+            modal.classList.remove("hidden");
+            nameInput.value = document.querySelector("h1.text-2xl.font-bold.text-blue-600").textContent.trim();
+
+            // Hiển thị ảnh đại diện hiện tại nếu có
+            if (currentListImage && currentListImage !== "") {
+                preview.src = `/FileUpload/images/list/${currentListImage}`;
+                preview.classList.remove("hidden");
+            } else {
+                preview.classList.add("hidden");
+            }
+
+            imageInput.value = "";
+            saveBtn.disabled = true;
+            toggleSaveButton(); // cập nhật trạng thái nút lưu
         });
 
-        cancelBtn.addEventListener('click', () => {
-            modal.classList.add('hidden');
+        // Đóng modal
+        document.getElementById("closeModalEditList").addEventListener("click", () => {
+            document.getElementById("modalEditList").classList.add("hidden");
+        });
+        document.getElementById("cancelEditList").addEventListener("click", () => {
+            document.getElementById("modalEditList").classList.add("hidden");
         });
 
-        collectionNameInput.addEventListener('input', () => {
-            createCollectionBtn.disabled = collectionNameInput.value.trim() === '';
-            createCollectionBtn.classList.toggle('bg-blue-600', collectionNameInput.value.trim() !== '');
-            createCollectionBtn.classList.toggle('text-white', collectionNameInput.value.trim() !== '');
-            createCollectionBtn.classList.toggle('bg-gray-300', collectionNameInput.value.trim() === '');
-            createCollectionBtn.classList.toggle('text-gray-500', collectionNameInput.value.trim() === '');
-        });
-
-        createCollectionBtn.addEventListener('click', () => {
-            const collectionName = collectionNameInput.value.trim();
-            if (collectionName) {
-                const newCollection = document.createElement('div');
-                newCollection.classList.add('flex', 'items-center', 'space-x-3', 'p-2', 'hover:bg-gray-100', 'cursor-pointer');
-                newCollection.innerHTML = `
-                                        <img src="/Themes/assets/images/vLOGO.png" class="w-12 h-12 object-cover" alt="${collectionName}">
-                                        <div>
-                                            <p class="font-semibold">${collectionName}</p>
-                                            <p class="text-sm font-sans text-gray-500">0 công thức</p>
-                                        </div>
-                                    `;
-                collectionList.appendChild(newCollection);
-                modal.classList.add('hidden');
-                collectionNameInput.value = '';
-                createCollectionBtn.disabled = true;
+        // Xem trước ảnh
+        document.getElementById("editListImage").addEventListener("change", function () {
+            const file = this.files[0];
+            const preview = document.getElementById("editImagePreview");
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.classList.remove("hidden");
+                };
+                reader.readAsDataURL(file);
+            } else {
+                preview.classList.add("hidden");
             }
         });
 
-        //Đổi tên bst
-        const editNameBtn = document.getElementById('editNameBtn');
-        const modalEdit = document.getElementById('modalEditName');
-        const closeModalEdit = document.getElementById('closeModalEdit');
-        const cancelBtnEdit = document.getElementById('cancelEdit');
-        const editName = document.getElementById('editName');
-        const changeNameInput = document.getElementById('changeNameInput');
-
-        editNameBtn.addEventListener('click', () => {
-            modalEdit.classList.remove('hidden');
-            setTimeout(() => {
-                document.getElementById("changeNameInput").focus();
-            }, 0);
-        });
-
-        closeModalEdit.addEventListener('click', () => {
-            modalEdit.classList.add('hidden');
-        });
-
-        cancelBtnEdit.addEventListener('click', () => {
-            modalEdit.classList.add('hidden');
-        });
-
-        changeNameInput.addEventListener('input', () => {
-            editName.disabled = changeNameInput.value.trim() === '';
-            editName.classList.toggle('bg-gradient-to-r', changeNameInput.value.trim() !== '');
-            editName.classList.toggle('from-blue-600', changeNameInput.value.trim() !== '');
-            editName.classList.toggle('to-purple-600', changeNameInput.value.trim() !== '');
-            editName.classList.toggle('text-white', changeNameInput.value.trim() !== '');
-            editName.classList.toggle('bg-gray-300', changeNameInput.value.trim() === '');
-            editName.classList.toggle('text-gray-500', changeNameInput.value.trim() === '');
-        });
-
-        editName.addEventListener('click', () => {
-            const newName = changeNameInput.value.trim();
-            if (newName) {
-                modalEdit.classList.add('hidden');
-                changeNameInput.value = '';
-                editName.disabled = true;
+        // Kích hoạt nút Lưu khi có dữ liệu hợp lệ
+        document.getElementById("editListName").addEventListener("input", toggleSaveButton);
+        function toggleSaveButton() {
+            const name = document.getElementById("editListName").value.trim();
+            const saveBtn = document.getElementById("saveEditList");
+            if (name !== "") {
+                saveBtn.disabled = false;
+                saveBtn.classList.remove("bg-gray-300", "text-gray-500");
+                saveBtn.classList.add("bg-blue-600", "text-white");
+            } else {
+                saveBtn.disabled = true;
+                saveBtn.classList.add("bg-gray-300", "text-gray-500");
+                saveBtn.classList.remove("bg-blue-600", "text-white");
             }
+        }
+
+        document.getElementById("saveEditList").addEventListener("click", () => {
+            const name = document.getElementById("editListName").value.trim();
+            const imageFile = document.getElementById("editListImage").files[0];
+
+            if (!name) {
+                ThongBao("Tên bộ sưu tập không được để trống", "warning");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append("listId", currentListId);
+            formData.append("listName", name);
+            if (imageFile) {
+                formData.append("imageFile", imageFile);
+            }
+            fetch("/List/EditList", {
+                method: "POST",
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        ThongBao("Cập nhật bộ sưu tập thành công!", "success");
+                        document.getElementById("modalEditList").classList.add("hidden");
+                        setTimeout(() => location.reload(), 1000);
+                    } else {
+                        ThongBao("Không thể cập nhật bộ sưu tập", "danger");
+                    }
+                })
+                .catch(err => {
+                    console.error("Lỗi khi cập nhật:", err);
+                    ThongBao("Đã xảy ra lỗi", "danger");
+                });
         });
+        function deleteList() {
+            if (!currentListId) {
+                ThongBao("Bạn chưa chọn bộ sưu tập nào!", "danger");
+                return;
+            }
+
+            // Hiện modal xác nhận
+            document.getElementById("deleteConfirmText").innerHTML =
+                `Bạn có chắc chắn muốn xoá bộ sưu tập <span class="font-semibold text-red-600">${currentListName}</span> không?`;
+
+
+            document.getElementById("deleteConfirmModal").classList.remove("hidden");
+        }
+
+        function deleteListConfirmed() {
+            fetch(`/List/Delete/${currentListId}`, {
+                method: 'DELETE'
+            })
+                .then(res => {
+                    if (res.ok) {
+                        document.querySelector(`[data-id="${currentListId}"]`)?.remove();
+
+                        document.querySelector("h1.text-2xl").textContent = "";
+                        document.getElementById("postList").innerHTML = "";
+                        currentListId = null;
+                        currentListName = "";
+                        ThongBao("Xoá bộ sưu tập thành công", "success");
+                        document.getElementById('deleteConfirmModal').classList.add('hidden');
+                    } else {
+                        ThongBao("Xoá bộ sưu tập thất bại!", "danger");
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                })
+                .finally(() => {
+                    closeDeleteModal();
+                });
+        }
+
+
+
     </script>
 }
